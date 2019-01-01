@@ -35,7 +35,7 @@ describe('Authentication', () => {
       </BrowserRouter>
     );
   });
-  it('navigate to login', async () => {
+  it.only('navigate to login', async () => {
     fireEvent.click(screen.getByTestId(/nav-login/i));
     const lazyload = await waitForElement(() =>
       screen.getByTestId(/loginform/i)

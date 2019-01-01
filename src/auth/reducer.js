@@ -8,7 +8,7 @@ export const initState = {
   loading: false,
   confirm: ''
 };
-export default function reducer(state, action) {
+export default function reducer(state = initState, action) {
   switch (action.type) {
     case actionTypes.VALUE_CHANGED:
       return { ...state, [action.payload.propName]: action.payload.value };

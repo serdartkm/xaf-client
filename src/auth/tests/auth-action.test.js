@@ -1,8 +1,12 @@
 /* eslint-disable no-native-reassign */
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import * as actions from '../actions';
 import actionTypes from '../actionType';
-import Store from './Store';
 import actionType from '../actionType';
+
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
 describe('Action', () => {
   it('handles VALUE_CHANGE action', () => {
     expect(
@@ -16,9 +20,9 @@ describe('Action', () => {
     });
   });
 
-  it('handles LOGIN_SUCCESS', (done) => {
-    const store = new Store();
-    let expetedActions = [
+  it('handles LOGIN_SUCCESS', done => {
+    const store = mockStore({ auth: { email: '', password: '' } });
+    let expectedActions = [
       { type: actionTypes.LOGIN_STARTED },
       { type: actionTypes.LOGIN_SUCCESS }
     ];
@@ -33,23 +37,16 @@ describe('Action', () => {
         });
       });
     });
-    actions
-      .login({
-        email: 'tkm.house.new@gmail.com',
-        password: '1234',
-        dispatch: store.dispatch
-      })
-      .then(() => {
-       
-        expect(store.getActions()).toStrictEqual(expetedActions);
-    done() 
-    })
-
+    return store.dispatch(actions.login()).then(() => {
+      // return of async actions
+      expect(store.getActions()).toEqual(expectedActions);
+      done();
+    });
   });
 
-  it('handle LOGIN_FAILED', (done) => {
-    const store = new Store();
-    let expectActions = [
+  it('handle LOGIN_FAILED', done => {
+    const store = mockStore({ auth: { email: '', password: '' } });
+    let expectedActions = [
       { type: actionTypes.LOGIN_STARTED },
       {
         type: actionTypes.LOGIN_FAILED,
@@ -62,23 +59,15 @@ describe('Action', () => {
       });
     });
 
-    actions
-      .login({
-        email: 'tkm.house.new@gmail.com',
-        password: '1234',
-        dispatch: store.dispatch
-      })
-      .then(() => {
-    
-        expect(store.getActions()).toStrictEqual(expectActions);
-    done()  
-    })
-
+    return store.dispatch(actions.login()).then(() => {
+      // return of async actions
+      expect(store.getActions()).toEqual(expectedActions);
+      done();
+    });
   });
-  it('handles SIGNUP_SUCCESS', (done) => {
-    const store = new Store();
-
-    const expdActions = [
+  it('handles SIGNUP_SUCCESS', done => {
+    const store = mockStore({ auth: { email: '', password: '' } });
+    const expectedActions = [
       { type: actionTypes.SIGNUP_STARTED },
       { type: actionTypes.SIGNUP_SUCCESS }
     ];
@@ -94,25 +83,16 @@ describe('Action', () => {
       });
     });
 
-    actions
-      .signup({
-        username: 'webapis',
-        email: 'webapis.github@gmail.com',
-        password: '123',
-        dispatch: store.dispatch
-      })
-      .then(() => {
-      
-        const actions = store.getActions();
-
-        expect(actions).toStrictEqual(expdActions);
-        done()
-      })
+    return store.dispatch(actions.signup()).then(() => {
+      // return of async actions
+      expect(store.getActions()).toEqual(expectedActions);
+      done();
+    });
   });
 
-  it('handle SIGNUP_FAILED', (done) => {
-    const store = new Store();
-    const expetedActions = [
+  it('handle SIGNUP_FAILED', done => {
+    const store = mockStore({ auth: { email: '', password: '' } });
+    const expectedActions = [
       { type: actionType.SIGNUP_STARTED },
       {
         type: actionTypes.SIGNUP_FAILED,
@@ -124,20 +104,14 @@ describe('Action', () => {
         reject({ message: 'signup failed' });
       });
     });
-    actions
-      .signup({
-        email: 'webapis.github@gmail.com',
-        username: 'github',
-        password: '1234',
-        dispatch: store.dispatch
-      })
-      .then(() => {
-        expect(store.getActions()).toStrictEqual(expetedActions);
-    done() 
-    })
+    return store.dispatch(actions.signup()).then(() => {
+      // return of async actions
+      expect(store.getActions()).toEqual(expectedActions);
+      done();
+    });
   });
-  it('handles CHANGE_PASSWORD SUCCESS ', (done) => {
-    const store = new Store();
+  it('handles CHANGE_PASSWORD SUCCESS ', done => {
+    const store = mockStore({ auth: { email: '', password: '' } });
     global.fetch = jest.fn().mockImplementationOnce(() => {
       return new Promise((resolve, reject) => {
         resolve({
@@ -149,48 +123,38 @@ describe('Action', () => {
         });
       });
     });
-    const expetedActions = [
+    const expectedActions = [
       { type: actionTypes.CHANGE_PASSWORD_STARTED },
       { type: actionTypes.CHANGE_PASSWORD_SUCCESS }
     ];
-    actions
-      .changePassword({
-        password: '123',
-        email: 'github@gmail.com',
-        dispatch: store.dispatch
-      })
-      .then(() => {
-        expect(store.getActions()).toStrictEqual(expetedActions);
-   done()
+    return store.dispatch(actions.changePassword()).then(() => {
+      // return of async actions
+      expect(store.getActions()).toEqual(expectedActions);
+      done();
     });
   });
-  it('handle CHANGE_PASSWORD_FAILED', (done) => {
-    const store = new Store();
+  it('handle CHANGE_PASSWORD_FAILED', done => {
+    const store = mockStore({ auth: { email: '', password: '' } });
     global.fetch = jest.fn().mockImplementationOnce(() => {
       return new Promise((resolve, reject) => {
         reject({ message: 'the password is not strong enough' });
       });
     });
-    const expectActions = [
+    const expectedActions = [
       { type: actionTypes.CHANGE_PASSWORD_STARTED },
       {
         type: actionTypes.CHANGE_PASSWORD_FAILED,
         payload: { error: { message: 'the password is not strong enough' } }
       }
     ];
-    actions
-      .changePassword({
-        email: 'github@gmail.com',
-        password: '123',
-        dispatch: store.dispatch
-      })
-      .then(() => {
-        expect(store.getActions()).toStrictEqual(expectActions);
-    done() 
-    })
+    return store.dispatch(actions.changePassword()).then(() => {
+      // return of async actions
+      expect(store.getActions()).toEqual(expectedActions);
+      done();
+    });
   });
-  it('handles REQUEST_PASS_CHANGE_SUCCESS ', (done) => {
-    const store = new Store();
+  it('handles REQUEST_PASS_CHANGE_SUCCESS ', done => {
+    const store = mockStore({ auth: { email: '', password: '' } });
     global.fetch = jest.fn().mockImplementationOnce(() => {
       return new Promise((resolve, reject) => {
         resolve({
@@ -202,18 +166,14 @@ describe('Action', () => {
         });
       });
     });
-    const expectActions = [
-        { type: actionTypes.REQUEST_PASS_CHANGE_STARTED },
+    const expectedActions = [
+      { type: actionTypes.REQUEST_PASS_CHANGE_STARTED },
       { type: actionTypes.REQUEST_PASS_CHANGE_SUCCESS }
     ];
-    actions
-      .requestPassChange({
-        email: 'github@gmail.com',
-        dispatch: store.dispatch
-      })
-      .then(() => {
-        expect(store.getActions()).toStrictEqual(expectActions);
-    done()  
-    })
+    return store.dispatch(actions.requestPassChange()).then(() => {
+      // return of async actions
+      expect(store.getActions()).toEqual(expectedActions);
+      done();
+    });
   });
 });

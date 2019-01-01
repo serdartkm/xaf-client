@@ -1,8 +1,10 @@
-import { useReducer } from 'react';
-import reducer, { initState } from './reducer';
+import { useDispatch, useSelector } from 'react-redux';
+
 import * as actions from './actions';
 export default function useAuth() {
-  const [state, dispatch] = useReducer(reducer,initState);
+  const state = useSelector(state => state);
+  debugger;
+  const dispatch = useDispatch();
 
   function handleChange(e) {
     debugger;
@@ -11,21 +13,17 @@ export default function useAuth() {
     dispatch(actions.valueChanged({ propName: name, value }));
   }
   function handleLogin() {
-    const { email, password } = state;
-    dispatch(actions.login({ email, password, dispatch }));
+    dispatch(actions.login());
   }
 
   function handleSignup() {
-    const { username, email, password } = state;
-    dispatch(actions.signup({ username, password, email, dispatch }));
+    dispatch(actions.signup());
   }
   function handleChangePass() {
-    const { email, password } = state;
-    dispatch(actions.changePassword({ password, email, dispatch }));
+    dispatch(actions.changePassword());
   }
   function handleRequestPassChange() {
-    const { email } = state;
-    dispatch({ type: actions.requestPassChange({ email, dispatch }) });
+    dispatch({ type: actions.requestPassChange() });
   }
 
   return {
@@ -34,6 +32,6 @@ export default function useAuth() {
     handleLogin,
     handleRequestPassChange,
     handleSignup,
-    state
+    state: state.auth
   };
 }

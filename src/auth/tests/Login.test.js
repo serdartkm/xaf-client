@@ -1,32 +1,20 @@
 import '@testing-library/jest-dom';
 import React from 'react';
-
+import { BrowserRouter } from 'react-router-dom';
 import { render, screen, fireEvent, wait } from '@testing-library/react';
-import AuthProvider from '../AuthProvider';
 import Login from '../Login';
-
+import renderWithRedux from '../../utils/renderWithRedux';
+import reducer, { initState } from '../reducer';
 describe('Login', () => {
   beforeEach(() => {
-    render(
-      <AuthProvider>
-        {({
-          handleChange,
-          handleLogin,
-
-          state
-        }) => {
-          return (
-            <Login
-              state={state}
-              handleChange={handleChange}
-              handleLogin={handleLogin}
-            />
-          );
-        }}
-      </AuthProvider>
+    renderWithRedux(
+      <BrowserRouter>
+        <Login />
+      </BrowserRouter>,
+      { reducer: { auth: reducer }, initialState: initState }
     );
   });
-  it('ui controls are visible', () => {
+  it.only('ui controls are visible', () => {
     expect(screen.queryByTestId(/email/i)).toBeVisible();
     expect(screen.queryByTestId(/password/i)).toBeVisible();
     expect(screen.queryByTestId('login-btn')).toBeVisible();
