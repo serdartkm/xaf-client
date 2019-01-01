@@ -107,8 +107,9 @@ export default function Input({
           placeholder={placeholder}
           onFocus={handleFocus}
         />
-        {validationState && ((validationState===validationStates.INVALID)||(validationState===validationStates.VALID))
-          && (
+        {validationState &&
+          (validationState === validationStates.INVALID ||
+            validationState === validationStates.VALID) && (
             <ValidityIcon valid={validationState} />
           )}
       </div>

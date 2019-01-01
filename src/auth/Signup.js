@@ -2,6 +2,7 @@ import React from 'react';
 import './css/style.css';
 import Form from '../form/Form';
 import Input from '../form/Input';
+import validationTypes from '../form/validationTypes'
 export default function Signup({
   state,
   handleChange,
@@ -18,7 +19,7 @@ export default function Signup({
           data-testid="username"
           name="username"
           placeholder="username"
-  
+          validationType={validationTypes.USERNAME}
         />
         <Input
         
@@ -28,7 +29,7 @@ export default function Signup({
           data-testid="email"
           name="email"
           value={state.email}
-         
+          validationType={validationTypes.EMAIL}
         />
         <Input
         
@@ -38,7 +39,7 @@ export default function Signup({
           data-testid="password"
           name="password"
           value={state.password}
-        
+          validationType={validationTypes.PASSWORD}
         />
         <button
           className="btn"
