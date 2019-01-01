@@ -71,13 +71,22 @@ export function validateUserNameConstraint({ username }) {
 }
 
 export function validateEmailOrUsername({ value }) {
-  if (emailRegex.test(value) || usernameRegex.test(value)) {
+  if (emailRegex.test(value)) {
+    debugger;
+    return {
+      validationType: validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION,
+      validationState: validationState.VALID,
+      message: ''
+    };
+  } else if (usernameRegex.test(value)) {
+    debugger;
     return {
       validationType: validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION,
       validationState: validationState.VALID,
       message: ''
     };
   } else {
+    debugger;
     return {
       validationType: validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION,
       validationState: validationState.INVALID,
@@ -107,7 +116,7 @@ export function validateEmptyString({ value }) {
 export function validatePasswordMatch({ state }) {
   const { password, confirm } = state.auth;
   debugger;
-  if (password !=="" && password !== confirm) {
+  if (password !== '' && password !== confirm) {
     return {
       validationState: validationState.INVALID,
       message: validationMessages.PASSWORDS_DO_NOT_MATCH,

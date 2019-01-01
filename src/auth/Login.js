@@ -5,8 +5,10 @@ import Input from '../form/Input';
 import Button from '../form/Button';
 import Form from '../form/Form';
 import validationTypes from '../form/validationTypes';
-
+import useForm from '../form/useFormState'
 export default function Login({ state, handleLogin, handleChange }) {
+  const {formState}=useForm()
+
   return (
     <div data-testid="loginform" className="auth-form">
       <Form formTitle="Login">
@@ -24,6 +26,7 @@ export default function Login({ state, handleLogin, handleChange }) {
             validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION,
             validationTypes.INVALID_CREDENTIALS
           ]}
+          
         />
       
  
@@ -42,6 +45,7 @@ export default function Login({ state, handleLogin, handleChange }) {
         
 
         <Button
+          disabled={formState !=='VALID'}
           className="btn"
           type="button"
           data-testid="login-btn"

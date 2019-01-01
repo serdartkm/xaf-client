@@ -1,24 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import validationStates from './validationStates';
-import validationTypes from './validationTypes'
-export default function Button({ onClick, title }) {
-  const state = useSelector(state => state);
+import React from 'react';
 
-  const [inputFormState, setInputFormState] = useState(
-    validationStates.INACTIVE
-  );
+export default function Button({ onClick, title,disabled }) {
 
-  useEffect(() => {
-    if (state.form.validation) {
-      const {formState} = state.form.validation;
-      setInputFormState(formState);
-    }
-  }, [state]);
+
+ 
 
   return (
     <button
-      disabled={inputFormState !== validationStates.VALID}
+      disabled={disabled}
       style={{ borderRadius: 2, height: 33 }}
       onClick={onClick}
     >
