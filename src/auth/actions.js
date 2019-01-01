@@ -98,10 +98,12 @@ export function validateEmailConstraint({ email }) {
   );
 
   if (emailRegex.test(email)) {
+    debugger;
     return {
       type: actionTypes.EMAIL_CONSTRAINT_VALID
     };
   } else {
+    debugger
     return {
       type: actionTypes.EMAIL_CONSTRAINT_NOT_VALID,
       payload: { message: 'email is not valid' }
@@ -134,10 +136,10 @@ export function validateUserNameConstraint({ username }) {
   const usernameRegex = new RegExp(/[a-zA-Z]+[-_]*[a-zA-Z]+/g);
 
   if (usernameRegex.test(username)) {
-    debugger;
+   
     return { type: actionTypes.USERNAME_CONSTRAINT_VALID };
   } else {
-    debugger;
+  
     return {
       type: actionTypes.USERNAME_CONSTRAINT_NOT_VALID,
       payload: {
@@ -156,4 +158,11 @@ export function validateEmptyString({ propName, value }) {
   } else {
     return { type: actionTypes.STRING_CONSTRAINT_VALID, payload: { propName } };
   }
+}
+
+export function resetConstraint({ propName }) {
+  return {
+    type: actionTypes.RESET_CONSTRAINT,
+    payload: { propName }
+  };
 }

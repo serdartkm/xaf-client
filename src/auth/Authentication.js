@@ -21,13 +21,16 @@ export default function Authentication({ children, sidebar }) {
   const {
     validateEmailConstraint,
     validatePasswordConstraint,
-    validateEmptyString
+    validateUserNameConstraint,
+    validateEmptyString,
+    resetConstraint
   } = useValidation();
   return (
     <Suspense fallback={<div className="loading">Loading...</div>}>
       <Switch>
         <Route path="/auth/login">
           <Login
+          resetConstraint={resetConstraint}
             validateEmptyString={validateEmptyString}
             validateEmailConstraint={validateEmailConstraint}
             handleLogin={handleLogin}
@@ -37,6 +40,7 @@ export default function Authentication({ children, sidebar }) {
         </Route>
         <Route path="/auth/signup">
           <Signup
+          resetConstraint={resetConstraint}
             validateEmailConstraint={validateEmailConstraint}
             validatePasswordConstraint={validatePasswordConstraint}
             validateUserNameConstraint={validateUserNameConstraint}
@@ -47,6 +51,7 @@ export default function Authentication({ children, sidebar }) {
         </Route>
         <Route path="/auth/changepassword">
           <ChangePassword
+          resetConstraint={resetConstraint}
             changePass={handleChangePass}
             handleChange={handleChange}
             state={state}
@@ -54,6 +59,7 @@ export default function Authentication({ children, sidebar }) {
         </Route>
         <Route path="/auth/requestpasschange">
           <ForgotPassword
+          resetConstraint={resetConstraint}
             requestPassChange={handleRequestPassChange}
             handleChange={handleChange}
             state={state}

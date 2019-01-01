@@ -50,10 +50,17 @@ export default function Input({
   value,
   handleInputValidation,
   isValid,
-  errorMessage
+  errorMessage,
+  resetConstraint
 }) {
   const [validationActive, setValidationActive] = useState(false);
   const [borderColor, setBorderColor] = useState('');
+
+useEffect(()=>{
+if(!validationActive){
+  resetConstraint(name)
+}
+},[validationActive])
   useEffect(() => {
     if (validationActive && isValid) {
       setBorderColor('green');
@@ -65,8 +72,10 @@ export default function Input({
       setBorderColor('#4fc3f7');
     }
   }, [isValid, errorMessage, validationActive]);
-  function handleFocus(e) {
+  function handleFocus() {
+   
     setValidationActive(false);
+  
   }
   function handleBlur(e) {
     setValidationActive(true);

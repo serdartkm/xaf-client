@@ -8,12 +8,14 @@ export default function Signup({
   handleSignup,
   validateEmailConstraint,
   validateUserNameConstraint,
-  validatePasswordConstraint
+  validatePasswordConstraint,
+  resetConstraint
 }) {
   return (
     <div data-testid="signupform" className="auth-form">
       <Form formTitle="Sign up">
         <Input
+        resetConstraint={resetConstraint}
           onChange={handleChange}
           value={state.username}
           type="text"
@@ -25,6 +27,7 @@ export default function Signup({
           errorMessage={state.validation.username.message}
         />
         <Input
+         resetConstraint={resetConstraint}
           placeholder="email"
           type="email"
           data-testid="email"
@@ -34,6 +37,7 @@ export default function Signup({
           errorMessage={state.validation.email.message}
         />
         <Input
+        resetConstraint={resetConstraint}
           placeholder="password"
           type="password"
           data-testid="password"

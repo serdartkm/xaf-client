@@ -3,9 +3,11 @@ import * as actions from './actions';
 export default function useValidation() {
   const state = useSelector(state => state);
   const { username, email, password } = state.auth;
+
   const dispatch = useDispatch();
 
-  function validateUserName() {
+  function validateUserNameConstraint() {
+
     dispatch(actions.validateUserNameConstraint({ username }));
   }
   function validateEmailConstraint() {
@@ -18,10 +20,16 @@ export default function useValidation() {
     const { name, value } = e.target;
     dispatch(actions.validateEmptyString({ propName: name, value }));
   }
+
+  function resetConstraint(propName) {
+ 
+    dispatch(actions.resetConstraint({ propName }));
+  }
   return {
     validateEmailConstraint,
     validatePasswordConstraint,
-    validateUserName,
-    validateEmptyString
+    validateUserNameConstraint,
+    validateEmptyString,
+    resetConstraint
   };
 }
