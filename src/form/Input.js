@@ -69,27 +69,33 @@ export default function Input({
   validationType,
   calculatedValidation
 }) {
-  useEffect(() => {
-    dispatch(actions.initValidationState({ propName: name }));
-  }, []);
-  const state = useSelector(state => state);
-  const validationState =
-    state.form.validation && state.form.validation[name].validationState;
-  const message = state.form.validation && state.form.validation[name].message;
-
   const dispatch = useDispatch();
+  const state = useSelector(state => state);
+  const [inputValidation, setInputValidation] = useState({
+    validationState: validationStates.INACTIVE,
+    message: ''
+  });
+  useEffect(() => {
+    if (state.form.validation && name && state.form.validation[name]) {
+      const { validationState, message } = state.form.validation[name];
+      setInputValidation({ validationState: validationState, message });
+    }
+  }, [state, name]);
+
+
+
   const [borderColor, setBorderColor] = useState('');
   useEffect(() => {
-    if (validationState && validationState === validationStates.VALID) {
+    if (inputValidation && inputValidation.validationState === validationStates.VALID) {
       setBorderColor('green');
     }
-    if (validationState && validationState === validationStates.INVALID) {
+    if (inputValidation && inputValidation.validationState === validationStates.INVALID) {
       setBorderColor('red');
     }
-    if (validationState && validationState === validationStates.INACTIVE) {
+    if (inputValidation && inputValidation.validationState === validationStates.INACTIVE) {
       setBorderColor('#4fc3f7');
     }
-  }, [validationState]);
+  }, [inputValidation]);
   function handleFocus() {
     dispatch(actions.inputFocused({ propName: name }));
   }
@@ -104,6 +110,7 @@ export default function Input({
       calculatedValidation();
     }
   }
+
   return (
     <div style={style.root}>
       <div style={style.inputContainer}>
@@ -117,14 +124,14 @@ export default function Input({
           placeholder={placeholder}
           onFocus={handleFocus}
         />
-        {validationState &&
-          (validationState === validationStates.INVALID ||
-            validationState === validationStates.VALID) && (
-            <ValidityIcon valid={validationState} />
+        {inputValidation &&
+          (inputValidation.validationState === validationStates.INVALID ||
+            inputValidation.validationState === validationStates.VALID) && (
+            <ValidityIcon valid={inputValidation.validationState} />
           )}
       </div>
-      {validationState && validationState === validationStates.INVALID && (
-        <div style={style.message}>*{message}</div>
+      { inputValidation.validationState === validationStates.INVALID && (
+        <div style={style.message}>*{inputValidation.message}</div>
       )}
     </div>
   );

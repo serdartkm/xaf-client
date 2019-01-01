@@ -34,9 +34,6 @@ export function validateInput({ propName, validationType, value }) {
   return { type: actionTypes.INPUT_BLURRED, ...validation };
 }
 
-export function initValidationState({ propName }) {
-  return { type: actionTypes.INIT_VALIDATION_STATE, propName };
-}
 export function initFormValidationState() {
   return { type: actionTypes.INIT_FORM_VALIDATION_STATE };
 }

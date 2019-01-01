@@ -16,18 +16,7 @@ export default function reducer(state = {}, action) {
       };
 
       return nextState;
-    case actionTypes.INIT_VALIDATION_STATE:
-      return {
-        ...state,
-        validation: {
-          ...state.validation,
-          formState: validationState.INACTIVE ,
-          [action.propName]: {
-            validationState: validationState.INACTIVE,
-            message: ''
-          }
-        }
-      };
+   
     case actionTypes.INPUT_FOCUSED:
       return {
         ...state,

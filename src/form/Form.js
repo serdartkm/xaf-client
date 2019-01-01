@@ -9,9 +9,9 @@ const style = {
 };
 
 export default function Form({ children, formTitle }) {
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(validationActions.initFormValidationState());
+  //  dispatch(validationActions.initFormValidationState());
   }, []);
   return (
     <fieldset style={style}>
