@@ -3,6 +3,13 @@
   padding: 5px;
   border: 1px solid white;
   border-radius: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .auth-form input {
@@ -16,9 +23,6 @@
 }
 
 .auth-form fieldset {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
   padding: 10px;
   color: white;
 }
@@ -53,5 +57,11 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+input:invalid {
+  -webkit-box-shadow: 0 0 5px 1px red;
+          box-shadow: 0 0 5px 1px red;
+  color: red;
 }
 /*# sourceMappingURL=style.css.map */

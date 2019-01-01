@@ -1,5 +1,4 @@
 import actionTypes from './actionType';
-
 export function valueChanged({ propName, value }) {
   return {
     type: actionTypes.VALUE_CHANGED,
@@ -91,4 +90,71 @@ export function requestPassChange() {
         })
       );
   };
+}
+
+export function validateEmailConstraint({email}) {
+  const emailRegex = new RegExp(
+    /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g
+  );
+
+  if (emailRegex.test(email)) {
+    return {
+      type: actionTypes.EMAIL_CONSTRAINT_VALID
+    };
+  } else {
+    return {
+      type: actionTypes.EMAIL_CONSTRAINT_NOT_VALID,
+      payload: { message: 'email is not valid' }
+    };
+  }
+}
+
+export function validatePasswordConstraint({password}) {
+  const passwordRegex = new RegExp(
+    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,'g'
+  );
+ 
+  if (passwordRegex.test(password)) {
+    debugger
+    return {
+      type: actionTypes.PASSWORD_CONSTRAINT_VALID
+    };
+  }
+  if (!passwordRegex.test(password)) {
+    debugger;
+    return {
+      type: actionTypes.PASSWORD_CONSTRAINT_NOT_VALID,
+      payload: {
+        message: `at least 8 characters, must contain at least 1 uppercase letter,  1 lowercase letter, Can contain special characters`
+      }
+    };
+  }
+}
+
+export function validateUserNameConstraint({username}) {
+  const usernameRegex = new RegExp(/[a-zA-Z]+[-_]*[a-zA-Z]+/g);
+
+  if (usernameRegex.test(username)) {
+    return { type: actionTypes.USERNAME_VALID };
+  } else {
+    return {
+      type: actionTypes.USERNAME_NOT_VALID,
+      payload: {
+        message: `Only Letters a-z or A-Z and the Symbols - and _ are allowed`
+      }
+    };
+  }
+}
+
+export function validateEmptyString({ propName, value }) {
+  if (value.length === 0) {
+   
+    return {
+      type: actionTypes.STRING_CONSTRAINT_NOT_VALID,
+      payload: { propName, message: 'empty string not allowed' }
+    };
+  } else {
+   
+    return { type: actionTypes.STRING_CONSTRAINT_VALID, payload: { propName } };
+  }
 }

@@ -1,18 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux';
-
 import * as actions from './actions';
 export default function useAuth() {
   const state = useSelector(state => state);
-  debugger;
   const dispatch = useDispatch();
 
   function handleChange(e) {
-    debugger;
     const { value, name } = e.target;
-    debugger;
+
     dispatch(actions.valueChanged({ propName: name, value }));
   }
-  function handleLogin() {
+  function handleLogin(e) {
+    e.preventDefault();
     dispatch(actions.login());
   }
 
@@ -25,6 +23,7 @@ export default function useAuth() {
   function handleRequestPassChange() {
     dispatch({ type: actions.requestPassChange() });
   }
+
 
   return {
     handleChange,

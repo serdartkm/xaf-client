@@ -26,7 +26,7 @@
         "--inspect-brk",
         "${workspaceRoot}/node_modules/jest/bin/jest.js",
         "--runInBand",
-        "DetailView.test.js"
+        "auth-action.test.js"
       ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
