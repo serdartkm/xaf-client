@@ -92,7 +92,7 @@ export function requestPassChange() {
   };
 }
 
-export function validateEmailConstraint({email}) {
+export function validateEmailConstraint({ email }) {
   const emailRegex = new RegExp(
     /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g
   );
@@ -109,19 +109,18 @@ export function validateEmailConstraint({email}) {
   }
 }
 
-export function validatePasswordConstraint({password}) {
+export function validatePasswordConstraint({ password }) {
   const passwordRegex = new RegExp(
-    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,'g'
+    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
+    'g'
   );
- 
+
   if (passwordRegex.test(password)) {
-    debugger
     return {
       type: actionTypes.PASSWORD_CONSTRAINT_VALID
     };
   }
   if (!passwordRegex.test(password)) {
-    debugger;
     return {
       type: actionTypes.PASSWORD_CONSTRAINT_NOT_VALID,
       payload: {
@@ -131,7 +130,7 @@ export function validatePasswordConstraint({password}) {
   }
 }
 
-export function validateUserNameConstraint({username}) {
+export function validateUserNameConstraint({ username }) {
   const usernameRegex = new RegExp(/[a-zA-Z]+[-_]*[a-zA-Z]+/g);
 
   if (usernameRegex.test(username)) {
@@ -148,13 +147,11 @@ export function validateUserNameConstraint({username}) {
 
 export function validateEmptyString({ propName, value }) {
   if (value.length === 0) {
-   
     return {
       type: actionTypes.STRING_CONSTRAINT_NOT_VALID,
       payload: { propName, message: 'empty string not allowed' }
     };
   } else {
-   
     return { type: actionTypes.STRING_CONSTRAINT_VALID, payload: { propName } };
   }
 }
