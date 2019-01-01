@@ -1,73 +1,148 @@
 import * as actions from '../actions';
 import actionTypes from '../actionTypes';
+import validationTypes from '../validationTypes';
+import validationStates from '../validationStates';
+describe('Input focused', () => {
+  it(`dispatch INPUT_FOCUSED`, () => {
+    expect(actions.inputFocused({ propName: 'email' })).toStrictEqual({
+      type: actionTypes.INPUT_FOCUSED,
+      propName: 'email'
+    });
+  });
+});
 describe('validateEmailConstraint', () => {
-  describe('validatePasswordConstraint', () => {
-    it(`${actionTypes.PASSWORD_CONSTRAINT_VALID}`, () => {
+  describe(`${validationTypes.EMAIL}`, () => {
+    it('validationState VALID', () => {
       expect(
-        actions.validatePasswordConstraint({ password: 'Testing193!' })
-      ).toStrictEqual({ type: actionTypes.PASSWORD_CONSTRAINT_VALID });
+        actions.validateInput({
+          propName: 'email',
+          validationType: validationTypes.EMAIL,
+          value: 'test@gmail.com'
+        })
+      ).toStrictEqual({
+        type: actionTypes.INPUT_BLURRED,
+        propName: 'email',
+        payload: { validationState: validationStates.VALID, message: '' }
+      });
     });
 
-    it(`${actionTypes.PASSWORD_CONSTRAINT_NOT_VALID}`, () => {
+    it('validationState INVALID', () => {
       expect(
-        actions.validatePasswordConstraint({ password: '!' })
+        actions.validateInput({
+          propName: 'email',
+          validationType: validationTypes.EMAIL,
+          value: 'testgmail.com'
+        })
       ).toStrictEqual({
-        type: actionTypes.PASSWORD_CONSTRAINT_NOT_VALID,
+        type: actionTypes.INPUT_BLURRED,
+        propName: 'email',
         payload: {
-          message: `at least 8 characters, must contain at least 1 uppercase letter,  1 lowercase letter, Can contain special characters`
+          validationState: validationStates.INVALID,
+          message: 'email is not valid'
         }
       });
     });
   });
 
-  describe('validateEmailConstraint', () => {
-    it(`${actionTypes.EMAIL_CONSTRAINT_VALID}`, () => {
+  describe('validatePasswordConstraint', () => {
+    it('validationState VALID', () => {
       expect(
-        actions.validateEmailConstraint({ email: 'test@gmail.com' })
-      ).toStrictEqual({ type: actionTypes.EMAIL_CONSTRAINT_VALID });
-    });
-
-    it(`${actionTypes.EMAIL_CONSTRAINT_NOT_VALID}`, () => {
-      expect(
-        actions.validateEmailConstraint({ email: 'testgmail.com' })
+        actions.validateInput({
+          propName: 'password',
+          validationType: validationTypes.PASSWORD,
+          value: 'Test12345!'
+        })
       ).toStrictEqual({
-        type: actionTypes.EMAIL_CONSTRAINT_NOT_VALID,
-        payload: { message: 'email is not valid' }
+        type: actionTypes.INPUT_BLURRED,
+        propName: 'password',
+        payload: {
+          validationState: validationStates.VALID,
+          message: ''
+        }
+      });
+    });
+    it('validationState INVALID', () => {
+      expect(
+        actions.validateInput({
+          propName: 'password',
+          validationType: validationTypes.PASSWORD,
+          value: 'T'
+        })
+      ).toStrictEqual({
+        type: actionTypes.INPUT_BLURRED,
+        propName: 'password',
+        payload: {
+          validationState: validationStates.INVALID,
+          message: `at least 8 characters, must contain at least 1 uppercase letter,  1 lowercase letter, Can contain special characters`
+        }
       });
     });
   });
   describe('validateEmptyString', () => {
-    it(`${actionTypes.STRING_CONSTRAINT_VALID}`, () => {
+    it('validationState INVALID', () => {
       expect(
-        actions.validateEmptyString({ propName: 'password', value: '123' })
+        actions.validateInput({
+          propName: 'password',
+          validationType: validationTypes.EMPTY_STRING,
+          value: '1234'
+        })
       ).toStrictEqual({
-        type: actionTypes.STRING_CONSTRAINT_VALID,
-        payload: { propName: 'password' }
+        type: actionTypes.INPUT_BLURRED,
+        propName: 'password',
+        payload: {
+          validationState: validationStates.VALID,
+          message: ``
+        }
       });
     });
-
-    it(`${actionTypes.STRING_CONSTRAINT_NOT_VALID}`, () => {
+    it('validationState INVALID', () => {
       expect(
-        actions.validateEmptyString({ propName: 'password', value: '' })
+        actions.validateInput({
+          propName: 'password',
+          validationType: validationTypes.EMPTY_STRING,
+          value: ''
+        })
       ).toStrictEqual({
-        type: actionTypes.STRING_CONSTRAINT_NOT_VALID,
-        payload: { propName: 'password', message: 'empty string not allowed' }
+        type: actionTypes.INPUT_BLURRED,
+        propName: 'password',
+        payload: {
+          validationState: validationStates.INVALID,
+          message: `empty string not allowed`
+        }
       });
     });
   });
 
   describe('validateUserName', () => {
-    it(`${actionTypes.USERNAME_CONSTRAINT_VALID}`, () => {
+    it('validationState INVALID', () => {
       expect(
-        actions.validateUserNameConstraint({ username: 'dragos' })
-      ).toStrictEqual({ type: actionTypes.USERNAME_CONSTRAINT_VALID });
-    });
-    it(`${actionTypes.USERNAME_CONSTRAINT_NOT_VALID}`, () => {
-      expect(
-        actions.validateUserNameConstraint({ username: '' })
+        actions.validateInput({
+          propName: 'username',
+          validationType: validationTypes.USERNAME,
+          value: 'tkmhousenew'
+        })
       ).toStrictEqual({
-        type: actionTypes.USERNAME_CONSTRAINT_NOT_VALID,
+        type: actionTypes.INPUT_BLURRED,
+        propName: 'username',
         payload: {
+          validationState: validationStates.VALID,
+          message: ``
+        }
+      });
+    });
+
+    it('validationState INVALID', () => {
+      expect(
+        actions.validateInput({
+          propName: 'username',
+          validationType: validationTypes.USERNAME,
+          value: '12334'
+        })
+      ).toStrictEqual({
+        type: actionTypes.INPUT_BLURRED,
+        propName: 'username',
+        payload: {
+          validationState: validationStates.INVALID,
           message: `Only Letters a-z or A-Z and the Symbols - and _ are allowed`
         }
       });

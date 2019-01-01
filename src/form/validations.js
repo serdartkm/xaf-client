@@ -1,23 +1,22 @@
-import * as actionTypes from './actionTypes';
+import validationState from './validationStates';
 export function validateEmailConstraint({ email, propName }) {
   const emailRegex = new RegExp(
     /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g
   );
   if (emailRegex.test(email)) {
     return {
-      type: actionTypes.VALID_CONSTRAINT,
+      propName,
       payload: {
-        isValid: true,
-        propName
+        validationState: validationState.VALID,
+        message: ''
       }
     };
   } else {
     return {
-      type: actionTypes.NOT_VALID_CONSTRAINT,
+      propName,
       payload: {
-        isValid: false,
-        message: 'email is not valid',
-        propName
+        validationState: validationState.INVALID,
+        message: 'email is not valid'
       }
     };
   }
@@ -31,19 +30,18 @@ export function validatePasswordConstraint({ password, propName }) {
 
   if (passwordRegex.test(password)) {
     return {
-      type: actionTypes.VALID_CONSTRAINT,
+      propName,
       payload: {
-        isValid: true,
-        propName
+        validationState: validationState.VALID,
+        message: ''
       }
     };
   }
   if (!passwordRegex.test(password)) {
     return {
-      type: actionTypes.NOT_VALID_CONSTRAINT,
+      propName,
       payload: {
-        propName,
-        isValid: false,
+        validationState: validationState.INVALID,
         message: `at least 8 characters, must contain at least 1 uppercase letter,  1 lowercase letter, Can contain special characters`
       }
     };
@@ -55,15 +53,14 @@ export function validateUserNameConstraint({ username, propName }) {
 
   if (usernameRegex.test(username)) {
     return {
-      type: actionTypes.VALID_CONSTRAINT,
-      payload: { isValid: true, propName }
+      propName,
+      payload: { validationState: validationState.VALID, message:'' }
     };
   } else {
     return {
-      type: actionTypes.NOT_VALID_CONSTRAINT,
+      propName,
       payload: {
-        propName,
-        isValid: false,
+        validationState: validationState.INVALID,
         message: `Only Letters a-z or A-Z and the Symbols - and _ are allowed`
       }
     };
@@ -73,17 +70,16 @@ export function validateUserNameConstraint({ username, propName }) {
 export function validateEmptyString({ value, propName }) {
   if (value.length === 0) {
     return {
-      type: actionTypes.NOT_VALID_CONSTRAINT,
+      propName,
       payload: {
-        propName,
-        isValid: false,
+        validationState: validationState.INVALID,
         message: 'empty string not allowed'
       }
     };
   } else {
     return {
-      type: actionTypes.VALID_CONSTRAINT,
-      payload: { isValid: true, propName }
+      propName,
+      payload: { validationState: validationState.VALID, message:'' }
     };
   }
 }

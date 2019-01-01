@@ -1,129 +1,205 @@
-import reducer, { initState } from '../reducer';
+import reducer from '../reducer';
 import actionTypes from '../actionTypes';
-describe('validatePasswordConstraint', () => {
-  it(`${actionTypes.PASSWORD_CONSTRAINT_VALID}`, () => {
+import * as validations from '../validations';
+import validationStates from '../validationStates';
+import * as actions from '../actions';
+describe('Reducer', () => {
+  it('handles INPUT_FOCUSED', () => {
     const currentState = {
-      ...initState,
       validation: {
-        ...initState.validation,
-        password: { isValid: true, message: '' }
-      }
-    };
-    expect(
-      reducer(currentState, { type: actionTypes.PASSWORD_CONSTRAINT_VALID })
-    ).toStrictEqual(currentState);
-  });
-  it(`${actionTypes.PASSWORD_CONSTRAINT_NOT_VALID}`, () => {
-    const currentState = {
-      ...initState,
-      validation: {
-        ...initState.validation,
-        password: { isValid: false, message: '' }
+        email: { validationState: validationStates.INVALID, message: 'SDSD' }
       }
     };
     expect(
       reducer(currentState, {
-        type: actionTypes.PASSWORD_CONSTRAINT_NOT_VALID,
-        payload: { message: 'invalid password' }
+        ...actions.inputFocused({ propName: 'email' })
       })
     ).toStrictEqual({
-      ...currentState,
       validation: {
-        ...currentState.validation,
-        password: { isValid: false, message: 'invalid password' }
+        email: { validationState: validationStates.INACTIVE, message: '' }
       }
     });
   });
 });
 describe('validateEmailConstraint', () => {
-  it(`${actionTypes.EMAIL_CONSTRAINT_VALID}`, () => {
-    const currentState = { ...initState };
-    expect(
-      reducer(currentState, { type: actionTypes.EMAIL_CONSTRAINT_VALID })
-    ).toStrictEqual({
-      ...currentState,
+  it(`VALID EMAIL`, () => {
+    const currentState = {
       validation: {
-        ...currentState.validation,
-        email: { isValid: true, message: '' }
+        email: { validationState: validationStates.INACTIVE, message: '' }
+      }
+    };
+    expect(
+      reducer(currentState, {
+        type: actionTypes.INPUT_BLURRED,
+        ...validations.validateEmailConstraint({
+          email: 'test@gmail.com',
+          propName: 'email'
+        })
+      })
+    ).toStrictEqual({
+      validation: {
+        email: { validationState: validationStates.VALID, message: '' }
       }
     });
   });
-  it(`${actionTypes.EMAIL_CONSTRAINT_NOT_VALID}`, () => {
-    const currentState = { ...initState };
+  it(`VALID EMAIL`, () => {
+    const currentState = {
+      validation: {
+        email: { validationState: validationStates.INACTIVE, message: '' }
+      }
+    };
     expect(
       reducer(currentState, {
-        type: actionTypes.EMAIL_CONSTRAINT_NOT_VALID,
-        payload: { message: 'invalid email' }
+        type: actionTypes.INPUT_BLURRED,
+        ...validations.validateEmailConstraint({
+          email: 'testgmail.com',
+          propName: 'email'
+        })
       })
     ).toStrictEqual({
-      ...currentState,
       validation: {
-        ...currentState.validation,
-        email: { isValid: false, message: 'invalid email' }
+        email: {
+          validationState: validationStates.INVALID,
+          message: 'email is not valid'
+        }
       }
     });
   });
 });
-describe('validateEmptyString', () => {
-  it(`${actionTypes.STRING_CONSTRAINT_VALID}`, () => {
-    const currentState = { ...initState };
+describe('validatePasswordConstraint', () => {
+  it(`VALID PASSWORD`, () => {
+    const currentState = {
+      validation: {
+        password: { validationState: validationStates.INACTIVE, message: '' }
+      }
+    };
     expect(
       reducer(currentState, {
-        type: actionTypes.STRING_CONSTRAINT_VALID,
-        payload: { propName: 'password' }
-      })
-    ).toStrictEqual({
-      ...currentState,
-      validation: {
-        ...currentState.validation,
-        password: { isValid: true, message: '' }
-      }
-    });
-  });
-  it(`${actionTypes.STRING_CONSTRAINT_NOT_VALID}`, () => {
-    const currentState = { ...initState };
-    expect(
-      reducer(currentState, {
-        type: actionTypes.STRING_CONSTRAINT_NOT_VALID,
-        payload: { propName: 'password', message: 'invalid password' }
-      })
-    ).toStrictEqual({
-      ...currentState,
-      validation: {
-        ...currentState.validation,
-        password: { isValid: false, message: 'invalid password' }
-      }
-    });
-  });
-
-  describe('validateUserName', () => {
-    it(`${actionTypes.USERNAME_CONSTRAINT_VALID}`, () => {
-      const currentState = { ...initState };
-      expect(
-        reducer(currentState, { type: actionTypes.USERNAME_CONSTRAINT_VALID })
-      ).toStrictEqual({
-        ...currentState,
-        validation: {
-          ...currentState.validation,
-          username: { isValid: true, message: '' }
-        }
-      });
-    });
-
-    it(`${actionTypes.USERNAME_CONSTRAINT_NOT_VALID}`, () => {
-      const currentState = { ...initState };
-      expect(
-        reducer(currentState, {
-          type: actionTypes.USERNAME_CONSTRAINT_NOT_VALID,
-          payload: { message: 'username is not valid' }
+        type: actionTypes.INPUT_BLURRED,
+        ...validations.validatePasswordConstraint({
+          password: 'Test1234!',
+          propName: 'password'
         })
-      ).toStrictEqual({
-        ...currentState,
-        validation: {
-          ...currentState.validation,
-          username: { isValid: false, message: 'username is not valid' }
+      })
+    ).toStrictEqual({
+      validation: {
+        password: { validationState: validationStates.VALID, message: '' }
+      }
+    });
+  });
+  it(`INVALID PASSWORD`, () => {
+    const currentState = {
+      validation: {
+        password: { validationState: validationStates.INACTIVE, message: '' }
+      }
+    };
+    expect(
+      reducer(currentState, {
+        type: actionTypes.INPUT_BLURRED,
+        ...validations.validatePasswordConstraint({
+          password: 'Tes',
+          propName: 'password'
+        })
+      })
+    ).toStrictEqual({
+      validation: {
+        password: {
+          validationState: validationStates.INVALID,
+          message: `at least 8 characters, must contain at least 1 uppercase letter,  1 lowercase letter, Can contain special characters`
         }
-      });
+      }
+    });
+  });
+});
+
+describe('validateUsernameConstraint', () => {
+  it(`VALID USERNAME`, () => {
+    const currentState = {
+      validation: {
+        username: { validationState: validationStates.INACTIVE, message: '' }
+      }
+    };
+    expect(
+      reducer(currentState, {
+        type: actionTypes.INPUT_BLURRED,
+        ...validations.validateUserNameConstraint({
+          username: 'tkmhouse',
+          propName: 'username'
+        })
+      })
+    ).toStrictEqual({
+      validation: {
+        username: { validationState: validationStates.VALID, message: '' }
+      }
+    });
+  });
+  it(`INVALID USERNAME`, () => {
+    const currentState = {
+      validation: {
+        username: { validationState: validationStates.INACTIVE, message: '' }
+      }
+    };
+    expect(
+      reducer(currentState, {
+        type: actionTypes.INPUT_BLURRED,
+        ...validations.validateUserNameConstraint({
+          username: '12122',
+          propName: 'username'
+        })
+      })
+    ).toStrictEqual({
+      validation: {
+        username: {
+          validationState: validationStates.INVALID,
+          message: `Only Letters a-z or A-Z and the Symbols - and _ are allowed`
+        }
+      }
+    });
+  });
+});
+
+describe('validateUsernameConstraint', () => {
+  it(`VALID EMPTYSTRING`, () => {
+    const currentState = {
+      validation: {
+        password: { validationState: validationStates.INACTIVE, message: '' }
+      }
+    };
+    expect(
+      reducer(currentState, {
+        type: actionTypes.INPUT_BLURRED,
+        ...validations.validateEmptyString({
+          value: '123',
+          propName: 'password'
+        })
+      })
+    ).toStrictEqual({
+      validation: {
+        password: { validationState: validationStates.VALID, message: '' }
+      }
+    });
+  });
+  it(`INVALID EMPTYSTRING`, () => {
+    const currentState = {
+      validation: {
+        password: { validationState: validationStates.INACTIVE, message: '' }
+      }
+    };
+    expect(
+      reducer(currentState, {
+        type: actionTypes.INPUT_BLURRED,
+        ...validations.validateEmptyString({
+          value: '',
+          propName: 'password'
+        })
+      })
+    ).toStrictEqual({
+      validation: {
+        password: {
+          validationState: validationStates.INVALID,
+          message: `empty string not allowed`
+        }
+      }
     });
   });
 });

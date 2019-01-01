@@ -1,15 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './css/style.css';
-import Input from './Input';
-import Form from './Form';
-export default function Login({
-  validateEmptyString,
-  validateEmailConstraint,
-  state,
-  handleLogin,
-  handleChange
-}) {
+import Input from '../form/Input';
+import Form from '../form/Form';
+import validationTypes from '../form/validationTypes';
+export default function Login({ state, handleLogin, handleChange }) {
   return (
     <div data-testid="loginform" className="auth-form">
       <Form formTitle="Login">
@@ -20,9 +15,7 @@ export default function Login({
           type="email"
           placeholder="Enter email"
           data-testid="email"
-          handleInputValidation={validateEmailConstraint}
-          isValid={state.validation.email.isValid}
-          errorMessage={state.validation.email.message}
+          validationType={validationTypes.EMAIL}
         />
 
         <Input
@@ -32,9 +25,7 @@ export default function Login({
           type="password"
           placeholder="enter password"
           data-testid="password"
-          handleInputValidation={validateEmptyString}
-          isValid={state.validation.password.isValid}
-          errorMessage={state.validation.password.message}
+          validationType={validationTypes.EMPTY_STRING}
         />
 
         <button

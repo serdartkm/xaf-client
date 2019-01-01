@@ -1,11 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import useValidation from './useValidation';
+import { useSelector, useDispatch } from 'react-redux';
+import * as actions from './actions';
+import validationStates from './validationStates';
 function ValidityIcon({ valid }) {
+  let stateColor = '#4fc3f7';
+  switch (valid) {
+    case validationStates.VALID:
+      stateColor = 'green';
+      break;
+    case validationStates.INVALID:
+      stateColor = 'red';
+      break;
+    case validationStates.INACTIVE:
+      stateColor = '#4fc3f7';
+      break;
+    default:
+      stateColor = '#4fc3f7';
+  }
+  debugger;
   return (
     <div
       style={{
         flex: 1,
-        color: valid ? 'green' : 'red',
+        color: stateColor,
         lineHeight: 2,
         width: 20,
         textAlign: 'center'
@@ -50,32 +67,32 @@ export default function Input({
   value,
   validationType
 }) {
-  const [validationActive, setValidationActive] = useState(false);
+  useEffect(() => {
+    dispatch(actions.initValidationState({ propName: name }));
+  }, []);
+  const state = useSelector(state => state);
+  const validationState =
+    state.form.validation && state.form.validation[name].validationState;
+  const message = state.form.validation && state.form.validation[name].message;
+  debugger;
+  const dispatch = useDispatch();
   const [borderColor, setBorderColor] = useState('');
-  const { validationState, validateInput, resetConstraint } = useValidation({});
-  const { isValid, errorMessage } = validationState[name];
   useEffect(() => {
-    if (!validationActive) {
-      resetConstraint(name);
-    }
-  }, [validationActive]);
-  useEffect(() => {
-    if (validationActive && isValid) {
+    if (validationState && validationState === validationStates.VALID) {
       setBorderColor('green');
     }
-    if (validationActive && !isValid && errorMessage.length > 0) {
+    if (validationState && validationState === validationStates.INVALID) {
       setBorderColor('red');
     }
-    if (!validationActive) {
+    if (validationState && validationState === validationStates.INACTIVE) {
       setBorderColor('#4fc3f7');
     }
-  }, [validationState, validationActive]);
+  }, [validationState]);
   function handleFocus() {
-    setValidationActive(false);
+    dispatch(actions.inputFocused({ propName: name }));
   }
   function handleBlur() {
-    setValidationActive(true);
-    validateInput({ propName: name, value, validationType });
+    dispatch(actions.validateInput({ propName: name, validationType, value }));
   }
   return (
     <div style={style.root}>
@@ -90,10 +107,13 @@ export default function Input({
           placeholder={placeholder}
           onFocus={handleFocus}
         />
-        {validationActive && <ValidityIcon valid={isValid} />}
+        {validationState && ((validationState===validationStates.INVALID)||(validationState===validationStates.VALID))
+          && (
+            <ValidityIcon valid={validationState} />
+          )}
       </div>
-      {!isValid && errorMessage.length > 0 && (
-        <div style={style.message}>*{errorMessage}</div>
+      {validationState && validationState === validationStates.INVALID && (
+        <div style={style.message}>*{message}</div>
       )}
     </div>
   );

@@ -1,54 +1,44 @@
 import React from 'react';
 import './css/style.css';
-import Form from './Form';
-import Input from './Input';
+import Form from '../form/Form';
+import Input from '../form/Input';
 export default function Signup({
   state,
   handleChange,
-  handleSignup,
-  validateEmailConstraint,
-  validateUserNameConstraint,
-  validatePasswordConstraint,
-  resetConstraint
+  handleSignup
 }) {
   return (
     <div data-testid="signupform" className="auth-form">
       <Form formTitle="Sign up">
         <Input
-          resetConstraint={resetConstraint}
+       
           onChange={handleChange}
           value={state.username}
           type="text"
           data-testid="username"
           name="username"
           placeholder="username"
-          handleInputValidation={validateUserNameConstraint}
-          isValid={state.validation.username.isValid}
-          errorMessage={state.validation.username.message}
+  
         />
         <Input
-          resetConstraint={resetConstraint}
+        
           onChange={handleChange}
           placeholder="email"
           type="email"
           data-testid="email"
           name="email"
           value={state.email}
-          handleInputValidation={validateEmailConstraint}
-          isValid={state.validation.email.isValid}
-          errorMessage={state.validation.email.message}
+         
         />
         <Input
-          resetConstraint={resetConstraint}
+        
           onChange={handleChange}
           placeholder="password"
           type="password"
           data-testid="password"
           name="password"
           value={state.password}
-          handleInputValidation={validatePasswordConstraint}
-          isValid={state.validation.password.isValid}
-          errorMessage={state.validation.password.message}
+        
         />
         <button
           className="btn"
