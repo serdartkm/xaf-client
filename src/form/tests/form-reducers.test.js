@@ -2,7 +2,9 @@ import reducer from '../reducer';
 import actionTypes from '../actionTypes';
 import * as validations from '../validations';
 import validationStates from '../validationStates';
+import validationMessage from '../validationMessages';
 import * as actions from '../actions';
+import  { serverValidationType } from '../validationTypes';
 describe('Reducer', () => {
   it('handles INPUT_FOCUSED', () => {
     const currentState = {
@@ -63,7 +65,7 @@ describe('validateEmailConstraint', () => {
         formState: validationStates.INVALID,
         email: {
           validationState: validationStates.INVALID,
-          message: 'email is not valid'
+          message: validationMessage.INVALID_EMAIL
         }
       }
     });
@@ -110,7 +112,7 @@ describe('validatePasswordConstraint', () => {
         formState: validationStates.INVALID,
         password: {
           validationState: validationStates.INVALID,
-          message: `at least 8 characters, must contain at least 1 uppercase letter,  1 lowercase letter, Can contain special characters`
+          message: validationMessage.INVALID_PASSWORD
         }
       }
     });
@@ -158,7 +160,7 @@ describe('validateUsernameConstraint', () => {
         formState: validationStates.INVALID,
         username: {
           validationState: validationStates.INVALID,
-          message: `Only Letters a-z or A-Z and the Symbols - and _ are allowed`
+          message: validationMessage.INVALID_USERNAME
         }
       }
     });
@@ -206,7 +208,7 @@ describe('validateUsernameConstraint', () => {
         formState: validationStates.INVALID,
         password: {
           validationState: validationStates.INVALID,
-          message: `empty string not allowed`
+          message: validationMessage.INVALID_EMPTY_STRING
         }
       }
     });
@@ -214,7 +216,6 @@ describe('validateUsernameConstraint', () => {
 });
 
 describe('FORM VALIDATION STATE', () => {
-
   it('formState VALID', () => {
     const currentState = {
       validation: {
@@ -258,9 +259,121 @@ describe('FORM VALIDATION STATE', () => {
         formState: validationStates.INVALID,
         password: {
           validationState: validationStates.INVALID,
-          message: `empty string not allowed`
+          message: validationMessage.INVALID_EMPTY_STRING
         }
       }
     });
+  });
+
+  describe('Server validation', () => {
+    it(`${serverValidationType.INVALID_CREDENTIAL}`, () => {
+ 
+      const currentState = {};
+      expect(
+        reducer(currentState, actions.serverValidation({ status: 401 }))
+      ).toStrictEqual({
+        serverValidation: {
+          INVALID_CREDENTIALS: {
+            validationState: validationStates.INVALID,
+            message: validationMessage.INVALID_CREDENTIALS
+          }
+        }
+      });
+    });
+    it(`${serverValidationType.USERNAME_TAKEN}`, () => {
+      const currentState = {};
+      expect(
+        reducer(currentState, actions.serverValidation({ status: 402 }))
+      ).toStrictEqual({
+        serverValidation: {
+          USERNAME_TAKEN: {
+            validationState: validationStates.INVALID,
+            message: validationMessage.USERNAME_TAKEN
+          }
+        }
+      });
+    });
+    it(`${serverValidationType.REGISTERED_EMAIL}`, () => {
+      const currentState = {};
+      expect(
+        reducer(currentState, actions.serverValidation({ status: 403 }))
+      ).toStrictEqual({
+        serverValidation: {
+          REGISTERED_EMAIL: {
+            validationState: validationStates.INVALID,
+            message: validationMessage.REGISTERED_EMAIL
+          }
+        }
+      });
+    });
+    it(`${serverValidationType.INVALID_USERNAME}`, () => {
+      const currentState = {};
+      expect(
+        reducer(currentState, actions.serverValidation({ status: 405 }))
+      ).toStrictEqual({
+        serverValidation: {
+          INVALID_USERNAME: {
+            validationState: validationStates.INVALID,
+            message: validationMessage.INVALID_USERNAME
+          }
+        }
+      });
+    });
+    it(`${serverValidationType.INVALID_PASSWORD}`, () => {
+      const currentState = {};
+      expect(
+        reducer(currentState, actions.serverValidation({ status: 406 }))
+      ).toStrictEqual({
+        serverValidation: {
+          INVALID_PASSWORD: {
+            validationState: validationStates.INVALID,
+            message: validationMessage.INVALID_PASSWORD
+          }
+        }
+      });
+    });
+    it(`${serverValidationType.INVALID_EMAIL}`, () => {
+      const currentState = {};
+      expect(
+        reducer(currentState, actions.serverValidation({ status: 407 }))
+      ).toStrictEqual({
+        serverValidation: {
+          INVALID_EMAIL: {
+            validationState: validationStates.INVALID,
+            message: validationMessage.INVALID_EMAIL
+          }
+        }
+      });
+
+    });
+    it(`${serverValidationType.EMAIL_NOT_REGISTERED}`, () => {
+      const currentState = {};
+      expect(
+        reducer(currentState, actions.serverValidation({ status: 408 }))
+      ).toStrictEqual({
+        serverValidation: {
+          EMAIL_NOT_REGISTERED: {
+            validationState: validationStates.INVALID,
+            message: validationMessage.EMAIL_NOT_REGISTERED
+          }
+        }
+      });
+
+    });
+    it(`${serverValidationType.INVALID_EMPTY_STRING}`, () => {
+      const currentState = {};
+      expect(
+        reducer(currentState, actions.serverValidation({ status: 409 }))
+      ).toStrictEqual({
+        serverValidation: {
+          INVALID_EMPTY_STRING: {
+            validationState: validationStates.INVALID,
+            message: validationMessage.INVALID_EMPTY_STRING
+          }
+        }
+      });
+
+    });
+  
   });
 });

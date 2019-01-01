@@ -3,17 +3,12 @@ import './css/style.css';
 import Form from '../form/Form';
 import Input from '../form/Input';
 import Button from '../form/Button';
-import validationTypes from '../form/validationTypes'
-export default function Signup({
-  state,
-  handleChange,
-  handleSignup
-}) {
+import validationTypes, { serverValidationType } from '../form/validationTypes';
+export default function Signup({ state, handleChange, handleSignup }) {
   return (
     <div data-testid="signupform" className="auth-form">
       <Form formTitle="Sign up">
         <Input
-       
           onChange={handleChange}
           value={state.username}
           type="text"
@@ -21,9 +16,9 @@ export default function Signup({
           name="username"
           placeholder="username"
           validationType={validationTypes.USERNAME}
+          serverValidationType={serverValidationType.USERNAME_TAKEN}
         />
         <Input
-        
           onChange={handleChange}
           placeholder="email"
           type="email"
@@ -31,9 +26,9 @@ export default function Signup({
           name="email"
           value={state.email}
           validationType={validationTypes.EMAIL}
+          serverValidationType={serverValidationType.REGISTERED_EMAIL}
         />
         <Input
-        
           onChange={handleChange}
           placeholder="password"
           type="password"
@@ -49,7 +44,6 @@ export default function Signup({
           data-testid="signup-btn"
           title="Signup"
         />
-       
       </Form>
     </div>
   );

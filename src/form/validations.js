@@ -1,8 +1,7 @@
 import validationState from './validationStates';
+import validationMessages from './validationMessages';
+import { emailRegex, usernameRegex, passwordRegex } from './validationRegex';
 export function validateEmailConstraint({ email, propName }) {
-  const emailRegex = new RegExp(
-    /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g
-  );
   if (emailRegex.test(email)) {
     return {
       propName,
@@ -16,18 +15,13 @@ export function validateEmailConstraint({ email, propName }) {
       propName,
       payload: {
         validationState: validationState.INVALID,
-        message: 'email is not valid'
+        message: validationMessages.INVALID_EMAIL
       }
     };
   }
 }
 
 export function validatePasswordConstraint({ password, propName }) {
-  const passwordRegex = new RegExp(
-    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
-    'g'
-  );
-
   if (passwordRegex.test(password)) {
     return {
       propName,
@@ -42,15 +36,13 @@ export function validatePasswordConstraint({ password, propName }) {
       propName,
       payload: {
         validationState: validationState.INVALID,
-        message: `at least 8 characters, must contain at least 1 uppercase letter,  1 lowercase letter, Can contain special characters`
+        message: validationMessages.INVALID_PASSWORD
       }
     };
   }
 }
 
 export function validateUserNameConstraint({ username, propName }) {
-  const usernameRegex = new RegExp(/[a-zA-Z]+[-_]*[a-zA-Z]+/g);
-
   if (usernameRegex.test(username)) {
     return {
       propName,
@@ -61,7 +53,27 @@ export function validateUserNameConstraint({ username, propName }) {
       propName,
       payload: {
         validationState: validationState.INVALID,
-        message: `Only Letters a-z or A-Z and the Symbols - and _ are allowed`
+        message: validationMessages.INVALID_USERNAME
+      }
+    };
+  }
+}
+
+export function validateEmailOrUsername({ value, propName }) {
+  if (emailRegex.test(value) || usernameRegex.test(value)) {
+    return {
+      propName,
+      payload: {
+        validationState: validationState.VALID,
+        message: ''
+      }
+    };
+  } else {
+    return {
+      propName,
+      payload: {
+        validationState: validationState.INVALID,
+        message: validationMessages.INVALID_USERNAME_OR_PASSWORD
       }
     };
   }
@@ -73,7 +85,7 @@ export function validateEmptyString({ value, propName }) {
       propName,
       payload: {
         validationState: validationState.INVALID,
-        message: 'empty string not allowed'
+        message: validationMessages.INVALID_EMPTY_STRING
       }
     };
   } else {
@@ -83,5 +95,3 @@ export function validateEmptyString({ value, propName }) {
     };
   }
 }
-
-

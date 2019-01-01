@@ -67,7 +67,8 @@ export default function Input({
   onChange,
   value,
   validationType,
-  calculatedValidation
+  calculatedValidation,
+  serverValidationTypes = []
 }) {
   const dispatch = useDispatch();
   const state = useSelector(state => state);
@@ -75,24 +76,49 @@ export default function Input({
     validationState: validationStates.INACTIVE,
     message: ''
   });
+
+  function setServerInputValidation() {
+    if (serverValidationTypes.length > 0) {
+      serverValidationTypes.forEach(validationName => {
+        if (state.form.serverValidation[validationName]) {
+          const { validationState, message } = state.form.serverValidation[
+            validationName
+          ];
+          setInputValidation({ validationState: validationState, message });
+        }
+      });
+    }
+  }
   useEffect(() => {
     if (state.form.validation && name && state.form.validation[name]) {
       const { validationState, message } = state.form.validation[name];
       setInputValidation({ validationState: validationState, message });
     }
-  }, [state, name]);
-
-
+    if (serverValidationTypes.length > 0 && state.form.serverValidation) {
+      {
+        setServerInputValidation();
+      }
+    }
+  }, [state, name, serverValidationTypes]);
 
   const [borderColor, setBorderColor] = useState('');
   useEffect(() => {
-    if (inputValidation && inputValidation.validationState === validationStates.VALID) {
+    if (
+      inputValidation &&
+      inputValidation.validationState === validationStates.VALID
+    ) {
       setBorderColor('green');
     }
-    if (inputValidation && inputValidation.validationState === validationStates.INVALID) {
+    if (
+      inputValidation &&
+      inputValidation.validationState === validationStates.INVALID
+    ) {
       setBorderColor('red');
     }
-    if (inputValidation && inputValidation.validationState === validationStates.INACTIVE) {
+    if (
+      inputValidation &&
+      inputValidation.validationState === validationStates.INACTIVE
+    ) {
       setBorderColor('#4fc3f7');
     }
   }, [inputValidation]);
@@ -130,7 +156,7 @@ export default function Input({
             <ValidityIcon valid={inputValidation.validationState} />
           )}
       </div>
-      { inputValidation.validationState === validationStates.INVALID && (
+      {inputValidation.validationState === validationStates.INVALID && (
         <div style={style.message}>*{inputValidation.message}</div>
       )}
     </div>

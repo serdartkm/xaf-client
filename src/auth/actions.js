@@ -1,4 +1,6 @@
 import actionTypes from './actionType';
+import { serverValidation } from '../form/actions';
+import httpStatus from '../form/http-status';
 export function valueChanged({ propName, value }) {
   return {
     type: actionTypes.VALUE_CHANGED,
@@ -18,14 +20,20 @@ export function login() {
       body: JSON.stringify({ password, email })
     })
       .then(response => {
-        return response.json();
-      })
-      .then(() => {
-        const action = {
-          type: actionTypes.LOGIN_SUCCESS
-        };
-
-        dispatch(action);
+        if (httpStatus.serverValidationRange(status)) {
+          dispatch(
+            serverValidation({
+              status: response.status
+            })
+          );
+        } else if (status === 200) {
+          dispatch({
+            type: actionTypes.LOGIN_SUCCESS,
+            payload: response.json().token
+          });
+        } else {
+          throw new Error('Login failed');
+        }
       })
       .catch(err => {
         dispatch({ type: actionTypes.LOGIN_FAILED, payload: { error: err } });
@@ -41,9 +49,21 @@ export function signup() {
       headers: { ContentType: 'application/json' },
       body: JSON.stringify({ email, password, username })
     })
-      .then(response => response.json())
-      .then(() => {
-        dispatch({ type: actionTypes.SIGNUP_SUCCESS });
+      .then(response => {
+        if (httpStatus.serverValidationRange(status)) {
+          dispatch(
+            serverValidation({
+              status: response.status
+            })
+          );
+        } else if (status === 200) {
+          dispatch({
+            type: actionTypes.SIGNUP_SUCCESS,
+            payload: response.json().token
+          });
+        } else {
+          throw new Error('SIGNUP failed');
+        }
       })
       .catch(err =>
         dispatch({ type: actionTypes.SIGNUP_FAILED, payload: { error: err } })
@@ -60,10 +80,23 @@ export function changePassword() {
       method: 'put',
       body: JSON.stringify({ email, password })
     })
-      .then(response => response.json())
-      .then(() => {
-        dispatch({ type: actionTypes.CHANGE_PASSWORD_SUCCESS });
+      .then(response => {
+        if (httpStatus.serverValidationRange(status)) {
+          dispatch(
+            serverValidation({
+              status: response.status
+            })
+          );
+        } else if (status === 200) {
+          dispatch({
+            type: actionTypes.CHANGE_PASSWORD_SUCCESS,
+            payload: response.json().token
+          });
+        } else {
+          throw new Error('Changing password failed');
+        }
       })
+
       .catch(err =>
         dispatch({
           type: actionTypes.CHANGE_PASSWORD_FAILED,
@@ -81,7 +114,21 @@ export function requestPassChange() {
       method: 'post',
       body: JSON.stringify({ email })
     })
-      .then(response => response.json())
+      .then(response => {
+        if (httpStatus.serverValidationRange(status)) {
+          dispatch(
+            serverValidation({
+              status: response.status
+            })
+          );
+        } else if (status === 200) {
+          dispatch({
+            type: actionTypes.REQUEST_PASS_CHANGE_SUCCESS
+          });
+        } else {
+          throw new Error('RequestChange password failed');
+        }
+      })
       .then(() => dispatch({ type: actionTypes.REQUEST_PASS_CHANGE_SUCCESS }))
       .catch(err =>
         dispatch({
@@ -91,5 +138,3 @@ export function requestPassChange() {
       );
   };
 }
-
-
