@@ -4,9 +4,8 @@ import './css/style.css';
 import Input from '../form/Input';
 import Button from '../form/Button';
 import Form from '../form/Form';
-import validationTypes, {
-  serverValidationType as svt
-} from '../form/validationTypes';
+import validationTypes from '../form/validationTypes';
+
 export default function Login({ state, handleLogin, handleChange }) {
   return (
     <div data-testid="loginform" className="auth-form">
@@ -18,10 +17,9 @@ export default function Login({ state, handleLogin, handleChange }) {
           type="text"
           placeholder="Enter email or username"
           data-testid="emailOrUsername"
-          validationType={validationTypes.EMAIL_OR_USERNAME}
-          serverValidationTypes={[
-            svt.WRONG_CREDENTIAL,
-            svt.INVALID_USERNAME_OR_PASSWORD
+          validationTypes={[
+            validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION,
+            validationTypes.INVALID_CREDENTIALS
           ]}
         />
         <Input
@@ -31,10 +29,10 @@ export default function Login({ state, handleLogin, handleChange }) {
           type="password"
           placeholder="enter password"
           data-testid="password"
-          serverValidationTypes={
-            (svt.WRONG_CREDENTIAL, svt.INVALID_EMPTY_STRING)
-          }
-          validationType={validationTypes.EMPTY_STRING}
+          validationTypes={[
+            validationTypes.EMPTY_STRING_VALIDATION,
+            validationTypes.INVALID_CREDENTIALS
+          ]}
         />
 
         <Button

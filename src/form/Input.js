@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from './actions';
 import validationStates from './validationStates';
-
+import { isClientValidationType } from '../form/constraintValidators';
 function ValidityIcon({ valid }) {
   let stateColor = '#4fc3f7';
   switch (valid) {
@@ -65,10 +65,8 @@ export default function Input({
   type,
   name,
   onChange,
-  value,
-  validationType,
-  calculatedValidation,
-  serverValidationTypes = []
+  value = '',
+  validationTypes = []
 }) {
   const dispatch = useDispatch();
   const state = useSelector(state => state);
@@ -76,30 +74,28 @@ export default function Input({
     validationState: validationStates.INACTIVE,
     message: ''
   });
-
-  function setServerInputValidation() {
-    if (serverValidationTypes.length > 0) {
-      serverValidationTypes.forEach(validationName => {
-        if (state.form.serverValidation[validationName]) {
-          const { validationState, message } = state.form.serverValidation[
+  
+  function registerValidation() {
+    if (validationTypes.length > 0) {
+      validationTypes.forEach(validationName => {
+        if (state.form.validation && state.form.validation[validationName]) {
+          const { validationState, message } = state.form.validation[
             validationName
           ];
-          setInputValidation({ validationState: validationState, message });
+          if (validationState) {
+            setInputValidation({ validationState, message });
+          }
         }
       });
     }
   }
   useEffect(() => {
-    if (state.form.validation && name && state.form.validation[name]) {
-      const { validationState, message } = state.form.validation[name];
-      setInputValidation({ validationState: validationState, message });
-    }
-    if (serverValidationTypes.length > 0 && state.form.serverValidation) {
+    if (validationTypes.length > 0) {
       {
-        setServerInputValidation();
+        registerValidation();
       }
     }
-  }, [state, name, serverValidationTypes]);
+  }, [state, validationTypes]);
 
   const [borderColor, setBorderColor] = useState('');
   useEffect(() => {
@@ -123,17 +119,30 @@ export default function Input({
     }
   }, [inputValidation]);
   function handleFocus() {
-    dispatch(actions.inputFocused({ propName: name }));
+    setInputValidation({
+      validationState: validationStates.INACTIVE,
+      message: ''
+    });
+    validationTypes.forEach(validationType => {
+      if (
+        state.form &&
+        state.form.validation &&
+        state.form.validation[validationType]
+      ) {
+        dispatch(actions.resetInputValidationState({ validationType }));
+      }
+    });
   }
   function handleBlur() {
-    if (validationType) {
-      dispatch(
-        actions.validateInput({ propName: name, validationType, value })
-      );
-    }
-
-    if (calculatedValidation) {
-      calculatedValidation();
+    if (validationTypes.length > 0) {
+      validationTypes.forEach(validationType => {
+      
+        if (
+          isClientValidationType({ validationType })
+        ) {
+          dispatch(actions.clientValidation({ validationType, value, state }));
+        }
+      });
     }
   }
 

@@ -19,7 +19,10 @@ export default function RequestPassChange({
           onChange={handleChange}
           type="email"
           data-testid="email"
-          validationType={validationTypes.EMAIL}
+          validationTypes={[
+            validationTypes.EMAIL_FORMAT_VALIDATION,
+            validationTypes.EMAIL_NOT_REGISTERED
+          ]}
         />
         <Button
           className="btn"
@@ -27,8 +30,7 @@ export default function RequestPassChange({
           onClick={handleRequestPassChange}
           data-testid="requestpasschange-btn"
           title="Send"
-       />
-        
+        />
       </Form>
     </div>
   );

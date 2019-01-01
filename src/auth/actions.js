@@ -20,13 +20,13 @@ export function login() {
       body: JSON.stringify({ password, email })
     })
       .then(response => {
-        if (httpStatus.serverValidationRange(status)) {
+        if (httpStatus.serverValidationRange({status:response.status})) {
           dispatch(
             serverValidation({
               status: response.status
             })
           );
-        } else if (status === 200) {
+        } else if (response.status === 200) {
           dispatch({
             type: actionTypes.LOGIN_SUCCESS,
             payload: response.json().token
@@ -50,13 +50,13 @@ export function signup() {
       body: JSON.stringify({ email, password, username })
     })
       .then(response => {
-        if (httpStatus.serverValidationRange(status)) {
+        if (httpStatus.serverValidationRange({status:response.status})) {
           dispatch(
             serverValidation({
               status: response.status
             })
           );
-        } else if (status === 200) {
+        } else if (response.status === 200) {
           dispatch({
             type: actionTypes.SIGNUP_SUCCESS,
             payload: response.json().token
@@ -81,13 +81,13 @@ export function changePassword() {
       body: JSON.stringify({ email, password })
     })
       .then(response => {
-        if (httpStatus.serverValidationRange(status)) {
+        if (httpStatus.serverValidationRange({status:response.status})) {
           dispatch(
             serverValidation({
               status: response.status
             })
           );
-        } else if (status === 200) {
+        } else if (response.status === 200) {
           dispatch({
             type: actionTypes.CHANGE_PASSWORD_SUCCESS,
             payload: response.json().token
@@ -115,13 +115,13 @@ export function requestPassChange() {
       body: JSON.stringify({ email })
     })
       .then(response => {
-        if (httpStatus.serverValidationRange(status)) {
+        if (httpStatus.serverValidationRange({status:response.status})) {
           dispatch(
             serverValidation({
               status: response.status
             })
           );
-        } else if (status === 200) {
+        } else if (response.status === 200) {
           dispatch({
             type: actionTypes.REQUEST_PASS_CHANGE_SUCCESS
           });

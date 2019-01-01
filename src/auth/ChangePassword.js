@@ -4,26 +4,13 @@ import './css/style.css';
 import Input from '../form/Input';
 import Form from '../form/Form';
 import Button from '../form/Button';
-import validationTypes from '../form/validationTypes';
 import * as validationActions from '../form/actions';
+import validationTypes from '../form/validationTypes';
 export default function ChangePassword({
   state,
   handleChange,
   handleChangePass
 }) {
-  const dispatch = useDispatch();
-  const authState = useSelector(state => state);
-  const { confirm, password } = authState.auth;
-
-  function validatePasswordMatch() {
-    dispatch(
-      validationActions.validatePasswordMatch({
-        passwordValue: password,
-        confirmValue: confirm,
-        propName: 'confirm'
-      })
-    );
-  }
   return (
     <div data-testid="signupform" className="auth-form">
       <Form formTitle="Change Passport">
@@ -33,7 +20,7 @@ export default function ChangePassword({
           data-testid="password"
           name="password"
           onChange={handleChange}
-          validationType={validationTypes.PASSWORD}
+          validationTypes={[validationTypes.PASSWORD_FORMAT_VALIDATION]}
         />
         <Input
           value={state.confirm}
@@ -41,7 +28,7 @@ export default function ChangePassword({
           data-testid="confirm"
           name="confirm"
           onChange={handleChange}
-          calculatedValidation={validatePasswordMatch}
+          validationTypes={[validationTypes.PASSWORDS_MATCH_VALIDATION]}
         />
         <Button
           type="button"
@@ -49,7 +36,6 @@ export default function ChangePassword({
           onClick={handleChangePass}
           title="Change"
         />
-       
       </Form>
     </div>
   );

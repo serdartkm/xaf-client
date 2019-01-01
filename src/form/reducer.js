@@ -1,22 +1,37 @@
 import actionTypes from './actionTypes';
 import validationState from './validationStates';
 
-export default function reducer(state = {}, action) {
+export default function reducer(state = { validation: {} }, action) {
   let nextState = null;
   switch (action.type) {
-    case actionTypes.INPUT_BLURRED:
+    case actionTypes.SERVER_VALIDATION:
+    case actionTypes.CLIENT_VALIDATION:
       nextState = {
         ...state,
         validation: {
           ...state.validation,
-          formState: action.payload.validationState,
-          [action.propName]: action.payload
+
+          [action.validationType]: {
+            validationState: action.validationState,
+            message: action.message
+          }
         }
       };
 
       return nextState;
 
     case actionTypes.RESET_VALIDATION_STATE:
+      return {
+        ...state,
+        validation: {
+          ...state.validation,
+          [action.validationType]: {
+            validationState: validationState.INACTIVE,
+            message: ''
+          }
+        }
+      };
+
     case actionTypes.INPUT_FOCUSED:
       return {
         ...state,
@@ -37,18 +52,7 @@ export default function reducer(state = {}, action) {
           formState: validationState.INACTIVE
         }
       };
-    case actionTypes.SERVER_VALIDATION:
-      debugger
-      return {
-        ...state,
-        serverValidation: {
-          ...state.serverValidation,
-          [action.serverValidationType]: {
-            validationState: action.validationState,
-            message: action.message
-          }
-        }
-      };
+
     default:
       return state;
   }
