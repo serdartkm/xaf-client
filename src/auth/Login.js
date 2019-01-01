@@ -1,13 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './css/style.css';
-import useAuth from './useAuth';
-import useValidation from './useValidation';
 import Input from './Input';
 import Form from './Form';
-export default function Login() {
-  const { handleChange, state, handleLogin } = useAuth();
-  const { validateEmailConstraint, validateEmptyString } = useValidation();
+export default function Login({
+  validateEmptyString,
+  validateEmailConstraint,
+  state,
+  handleLogin,
+  handleChange
+}) {
   return (
     <div data-testid="loginform" className="auth-form">
       <Form formTitle="Login">
@@ -35,7 +37,12 @@ export default function Login() {
           errorMessage={state.validation.password.message}
         />
 
-        <button type="submit" data-testid="login-btn" onClick={handleLogin}>
+        <button
+          className="btn"
+          type="button"
+          data-testid="login-btn"
+          onClick={handleLogin}
+        >
           Login
         </button>
 

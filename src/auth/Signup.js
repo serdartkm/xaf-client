@@ -1,35 +1,56 @@
 import React from 'react';
 import './css/style.css';
-export default function Signup({ state, handleChange, handleSignup }) {
+import Form from './Form';
+import Input from './Input';
+export default function Signup({
+  state,
+  handleChange,
+  handleSignup,
+  validateEmailConstraint,
+  validateUserNameConstraint,
+  validatePasswordConstraint
+}) {
   return (
-    <div data-testid='signupform' className='auth-form'>
-      <fieldset>
-        <legend>Sign up:</legend>
-
-        <input
+    <div data-testid="signupform" className="auth-form">
+      <Form formTitle="Sign up">
+        <Input
           onChange={handleChange}
           value={state.username}
-          type='text'
-          data-testid='username'
-          name='username'
-          placeholder='username'
+          type="text"
+          data-testid="username"
+          name="username"
+          placeholder="username"
+          handleInputValidation={validateUserNameConstraint}
+          isValid={state.validation.username.isValid}
+          errorMessage={state.validation.username.message}
         />
-        <input
-          placeholder='email'
-          type='email'
-          data-testid='email'
-          name='email'
+        <Input
+          placeholder="email"
+          type="email"
+          data-testid="email"
+          name="email"
+          handleInputValidation={validateEmailConstraint}
+          isValid={state.validation.email.isValid}
+          errorMessage={state.validation.email.message}
         />
-        <input
-          placeholder='password'
-          type='password'
-          data-testid='password'
-          name='password'
+        <Input
+          placeholder="password"
+          type="password"
+          data-testid="password"
+          name="password"
+          handleInputValidation={validatePasswordConstraint}
+          isValid={state.validation.password.isValid}
+          errorMessage={state.validation.password.message}
         />
-        <button type='button' data-testid='signup-btn'>
+        <button
+          className="btn"
+          type="button"
+          onClick={handleSignup}
+          data-testid="signup-btn"
+        >
           Signup
         </button>
-      </fieldset>
+      </Form>
     </div>
   );
 }

@@ -214,5 +214,36 @@ describe('Reducer', () => {
         }
       });
     });
+
+    describe('validateUserName', () => {
+      it(`${actionTypes.USERNAME_CONSTRAINT_VALID}`, () => {
+        const currentState = { ...initState };
+        expect(
+          reducer(currentState, { type: actionTypes.USERNAME_CONSTRAINT_VALID })
+        ).toStrictEqual({
+          ...currentState,
+          validation: {
+            ...currentState.validation,
+            username: { isValid: true, message: '' }
+          }
+        });
+      });
+
+      it(`${actionTypes.USERNAME_CONSTRAINT_NOT_VALID}`, () => {
+        const currentState = { ...initState };
+        expect(
+          reducer(currentState, {
+            type: actionTypes.USERNAME_CONSTRAINT_NOT_VALID,
+            payload: { message: 'username is not valid' }
+          })
+        ).toStrictEqual({
+          ...currentState,
+          validation: {
+            ...currentState.validation,
+            username: { isValid: false, message: 'username is not valid' }
+          }
+        });
+      });
+    });
   });
 });

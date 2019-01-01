@@ -64,4 +64,9 @@ input:invalid {
           box-shadow: 0 0 5px 1px red;
   color: red;
 }
+
+.btn {
+  border-radius: 2px;
+  height: 33px;
+}
 /*# sourceMappingURL=style.css.map */

@@ -3,7 +3,7 @@ import * as actions from './actions';
 export default function useAuth() {
   const state = useSelector(state => state);
   const dispatch = useDispatch();
-
+debugger;
   function handleChange(e) {
     const { value, name } = e.target;
 

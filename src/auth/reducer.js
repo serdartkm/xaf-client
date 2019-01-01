@@ -74,6 +74,7 @@ export default function reducer(state = initState, action) {
         }
       };
     case actionTypes.USERNAME_CONSTRAINT_VALID:
+      debugger
       return {
         ...state,
         validation: {
@@ -82,6 +83,7 @@ export default function reducer(state = initState, action) {
         }
       };
     case actionTypes.USERNAME_CONSTRAINT_NOT_VALID:
+      debugger;
       return {
         ...state,
         validation: {

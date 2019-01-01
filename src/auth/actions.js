@@ -134,10 +134,12 @@ export function validateUserNameConstraint({ username }) {
   const usernameRegex = new RegExp(/[a-zA-Z]+[-_]*[a-zA-Z]+/g);
 
   if (usernameRegex.test(username)) {
-    return { type: actionTypes.USERNAME_VALID };
+    debugger;
+    return { type: actionTypes.USERNAME_CONSTRAINT_VALID };
   } else {
+    debugger;
     return {
-      type: actionTypes.USERNAME_NOT_VALID,
+      type: actionTypes.USERNAME_CONSTRAINT_NOT_VALID,
       payload: {
         message: `Only Letters a-z or A-Z and the Symbols - and _ are allowed`
       }
