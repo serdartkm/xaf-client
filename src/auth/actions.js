@@ -103,12 +103,27 @@ export function signout({ token }) {
 export function changePassword() {
   return async function(dispatch, getState) {
     dispatch({ type: actionTypes.CHANGE_PASSWORD_STARTED });
-    const { confirm, password } = getState().auth;
+    const {
+      confirm,
+      password,
+      token,
+      emailorusername,
+      current
+    } = getState().auth;
     try {
-      const response = await fetch('/changepass', {
-        method: 'put',
-        body: JSON.stringify({ confirm, password })
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_XAF_SERVER_URL}/auth/changepass`,
+        {
+          method: 'put',
+          body: JSON.stringify({
+            confirm,
+            password,
+            current,
+            token,
+            emailorusername
+          })
+        }
+      );
       const result = await response.json();
       if (response.status === 200) {
         dispatch({
@@ -169,9 +184,9 @@ export function requestPassChange() {
   };
 }
 
-export function getEmailFromUrl({ email }) {
+export function getTokenFromUrl({ token }) {
   return {
-    type: actionTypes.GOT_EMAIL_FROM_URL,
-    email
+    type: actionTypes.GOT_TOKEN_FROM_URL,
+    token
   };
 }

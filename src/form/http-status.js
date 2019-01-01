@@ -14,7 +14,7 @@ export default {
   usernameIsNotRegistered:'411',
 //change password
   passwordDoNotMatch:'412',
-  
+  tokenExpired:'413',
   serverValidationRange: status => {
     if (status >= 400 && status <= 410) {
       return true;

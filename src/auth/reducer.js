@@ -7,6 +7,7 @@ export const initState = {
   username: '',
   loading: false,
   confirm: '',
+  current:'',
   emailorusername: '',
   token: null,
   isLoggedIn: false
@@ -51,7 +52,8 @@ export default function reducer(state = initState, action) {
       return { ...state, loading: false, success: true };
     case actionTypes.REQUEST_PASS_CHANGE_FAILED:
       return { ...state, loading: false, error: action.payload.error };
-
+    case actionTypes.GOT_TOKEN_FROM_URL:
+      return { ...state, token: action.token };
     default:
       return state;
   }

@@ -6,7 +6,7 @@ import Form from '../form/Form';
 import Button from '../form/Button';
 import validationTypes from '../form/validationTypes';
 import useAuth from './useAuth';
-import { getEmailFromUrl } from './actions';
+import { getTokenFromUrl } from './actions';
 export default function ChangePassword() {
   const dispatch = useDispatch();
   const { handleChange, handleChangePass } = useAuth();
@@ -15,7 +15,10 @@ export default function ChangePassword() {
 
   useEffect(() => {
     let url = new URL(window.location.href);
-    var searchParams = url.searchParams.get('token');
+    var token = url.searchParams.get('token');
+    if (token) {
+      dispatch(getTokenFromUrl({ token }));
+    }
     debugger;
   }, []);
   return (
@@ -73,6 +76,7 @@ export default function ChangePassword() {
         <Button
           type="button"
           id="change-pass-btn"
+          data-testid="change-pass-btn"
           onClick={handleChangePass}
           title="Change"
         />
