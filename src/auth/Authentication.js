@@ -30,7 +30,7 @@ export default function Authentication({ children, sidebar }) {
       <Switch>
         <Route path="/auth/login">
           <Login
-          resetConstraint={resetConstraint}
+            resetConstraint={resetConstraint}
             validateEmptyString={validateEmptyString}
             validateEmailConstraint={validateEmailConstraint}
             handleLogin={handleLogin}
@@ -40,7 +40,7 @@ export default function Authentication({ children, sidebar }) {
         </Route>
         <Route path="/auth/signup">
           <Signup
-          resetConstraint={resetConstraint}
+            resetConstraint={resetConstraint}
             validateEmailConstraint={validateEmailConstraint}
             validatePasswordConstraint={validatePasswordConstraint}
             validateUserNameConstraint={validateUserNameConstraint}

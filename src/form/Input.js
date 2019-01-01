@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import useValidation from './useValidation';
 function ValidityIcon({ valid }) {
   return (
     <div
@@ -48,19 +48,17 @@ export default function Input({
   name,
   onChange,
   value,
-  handleInputValidation,
-  isValid,
-  errorMessage,
-  resetConstraint
+  validationType
 }) {
   const [validationActive, setValidationActive] = useState(false);
   const [borderColor, setBorderColor] = useState('');
-
-useEffect(()=>{
-if(!validationActive){
-  resetConstraint(name)
-}
-},[validationActive])
+  const { validationState, validateInput, resetConstraint } = useValidation({});
+  const { isValid, errorMessage } = validationState[name];
+  useEffect(() => {
+    if (!validationActive) {
+      resetConstraint(name);
+    }
+  }, [validationActive]);
   useEffect(() => {
     if (validationActive && isValid) {
       setBorderColor('green');
@@ -71,15 +69,13 @@ if(!validationActive){
     if (!validationActive) {
       setBorderColor('#4fc3f7');
     }
-  }, [isValid, errorMessage, validationActive]);
+  }, [validationState, validationActive]);
   function handleFocus() {
-   
     setValidationActive(false);
-  
   }
-  function handleBlur(e) {
+  function handleBlur() {
     setValidationActive(true);
-    handleInputValidation(e);
+    validateInput({ propName: name, value, validationType });
   }
   return (
     <div style={style.root}>

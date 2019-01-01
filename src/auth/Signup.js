@@ -15,7 +15,7 @@ export default function Signup({
     <div data-testid="signupform" className="auth-form">
       <Form formTitle="Sign up">
         <Input
-        resetConstraint={resetConstraint}
+          resetConstraint={resetConstraint}
           onChange={handleChange}
           value={state.username}
           type="text"
@@ -27,21 +27,25 @@ export default function Signup({
           errorMessage={state.validation.username.message}
         />
         <Input
-         resetConstraint={resetConstraint}
+          resetConstraint={resetConstraint}
+          onChange={handleChange}
           placeholder="email"
           type="email"
           data-testid="email"
           name="email"
+          value={state.email}
           handleInputValidation={validateEmailConstraint}
           isValid={state.validation.email.isValid}
           errorMessage={state.validation.email.message}
         />
         <Input
-        resetConstraint={resetConstraint}
+          resetConstraint={resetConstraint}
+          onChange={handleChange}
           placeholder="password"
           type="password"
           data-testid="password"
           name="password"
+          value={state.password}
           handleInputValidation={validatePasswordConstraint}
           isValid={state.validation.password.isValid}
           errorMessage={state.validation.password.message}
