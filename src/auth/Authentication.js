@@ -21,10 +21,10 @@ export default function Authentication({ children, sidebar }) {
   } = useAuth();
   const history = useHistory();
   useEffect(() => {
-    if (state.isLoggedIn) {
+    if (state.isLoggedIn || state.isPasswordChanged) {
       history.push('/auth/authsuccess');
     }
-  }, [state.isLoggedIn]);
+  }, [state.isLoggedIn, state.isPasswordChanged]);
 
   return (
     <Suspense fallback={<div className="loading">Loading...</div>}>

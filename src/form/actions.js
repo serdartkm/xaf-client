@@ -33,6 +33,7 @@ export function clientValidation({ validationType, value, state }) {
       validation = validations.validateEmptyString({ value });
       break;
     case constValTypes.PASSWORDS_MATCH_VALIDATION:
+      debugger;
       validation = validations.validatePasswordMatch({ state });
       break;
     default:
@@ -128,6 +129,13 @@ export function serverValidation({ status = 0 }) {
         type: actionTypes.SERVER_VALIDATION,
         validationType: validationTypes.USERNAME_NOT_REGISTERED,
         message: validationMessages.USERNAME_NOT_REGISTERED,
+        validationState: validationStates.INVALID,
+      };
+      case httpStatus.passwordDoNotMatch:
+      return {
+        type: actionTypes.SERVER_VALIDATION,
+        validationType: validationTypes.PASSWORDS_MATCH_VALIDATION,
+        message: validationMessages.PASSWORDS_DO_NOT_MATCH,
         validationState: validationStates.INVALID,
       };
     default:

@@ -9,13 +9,13 @@ export function validateEmailConstraint({ email }) {
     return {
       validationType: validationTypes.EMAIL_FORMAT_VALIDATION,
       validationState: validationState.VALID,
-      message: ''
+      message: '',
     };
   } else {
     return {
       validationType: validationTypes.EMAIL_FORMAT_VALIDATION,
       validationState: validationState.INVALID,
-      message: validationMessages.INVALID_EMAIL
+      message: validationMessages.INVALID_EMAIL,
     };
   }
 }
@@ -44,14 +44,14 @@ export function validatePasswordConstraint({ password }) {
     return {
       validationType: validationTypes.PASSWORD_FORMAT_VALIDATION,
       validationState: validationState.VALID,
-      message: ''
+      message: '',
     };
   }
   if (!passwordConstraint.test(password)) {
     return {
       validationType: validationTypes.PASSWORD_FORMAT_VALIDATION,
       validationState: validationState.INVALID,
-      message: validationMessages.INVALID_PASSWORD
+      message: validationMessages.INVALID_PASSWORD,
     };
   }
 }
@@ -63,13 +63,13 @@ export function validateUserNameConstraint({ username }) {
     return {
       validationType: validationTypes.USERNAME_FORMAT_VALIDATION,
       validationState: validationState.VALID,
-      message: ''
+      message: '',
     };
   } else {
     return {
       validationType: validationTypes.USERNAME_FORMAT_VALIDATION,
       validationState: validationState.INVALID,
-      message: validationMessages.INVALID_USERNAME
+      message: validationMessages.INVALID_USERNAME,
     };
   }
 }
@@ -82,19 +82,19 @@ export function validateEmailOrUsername({ value }) {
     return {
       validationType: validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION,
       validationState: validationState.VALID,
-      message: ''
+      message: '',
     };
   } else if (usernameConstraint.test(value)) {
     return {
       validationType: validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION,
       validationState: validationState.VALID,
-      message: ''
+      message: '',
     };
   } else {
     return {
       validationType: validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION,
       validationState: validationState.INVALID,
-      message: validationMessages.INVALID_USERNAME_OR_EMAIL
+      message: validationMessages.INVALID_USERNAME_OR_EMAIL,
     };
   }
 }
@@ -104,13 +104,13 @@ export function validateEmptyString({ value }) {
     return {
       validationType: validationTypes.EMPTY_STRING_VALIDATION,
       validationState: validationState.INVALID,
-      message: validationMessages.INVALID_EMPTY_STRING
+      message: validationMessages.INVALID_EMPTY_STRING,
     };
   } else {
     return {
       validationType: validationTypes.EMPTY_STRING_VALIDATION,
       validationState: validationState.VALID,
-      message: ''
+      message: '',
     };
   }
 }
@@ -118,17 +118,17 @@ export function validateEmptyString({ value }) {
 export function validatePasswordMatch({ state }) {
   const { password, confirm } = state.auth;
 
-  if (password !== '' && password !== confirm) {
+  if (password === '' || password !== confirm) {
     return {
       validationState: validationState.INVALID,
       message: validationMessages.PASSWORDS_DO_NOT_MATCH,
-      validationType: validationTypes.PASSWORDS_MATCH_VALIDATION
+      validationType: validationTypes.PASSWORDS_MATCH_VALIDATION,
     };
   } else {
     return {
       validationState: validationState.VALID,
       message: '',
-      validationType: validationTypes.PASSWORDS_MATCH_VALIDATION
+      validationType: validationTypes.PASSWORDS_MATCH_VALIDATION,
     };
   }
 }

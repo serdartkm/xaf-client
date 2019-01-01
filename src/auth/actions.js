@@ -23,8 +23,7 @@ export function login() {
           headers: {
             'Conten-Type': 'application/json',
             'Access-Control-Allow-Headers': '*',
-            Authorization: 'Basic ' + btoa(`${emailorusername}:${password}`)
-
+            Authorization: 'Basic ' + btoa(`${emailorusername}:${password}`),
           },
           method: 'GET',
         }
@@ -62,10 +61,9 @@ export function signup() {
           body: JSON.stringify({ password, email, username }),
           headers: {
             ContentType: 'application/json',
-            Accept: 'application/json'
+            Accept: 'application/json',
           },
-          method: 'POST'
-
+          method: 'POST',
         }
       );
       const result = await response.json();
@@ -104,6 +102,7 @@ export function signout({ token }) {
   };
 }
 export function changePassword() {
+  debugger;
   return async function (dispatch, getState) {
     dispatch({ type: actionTypes.CHANGE_PASSWORD_STARTED });
     const {
@@ -111,10 +110,9 @@ export function changePassword() {
       password,
       token,
       emailorusername,
-      current
+      current,
     } = getState().auth;
     try {
-
       const response = await fetch(
         `${process.env.REACT_APP_XAF_SERVER_URL}/auth/changepass`,
         {
@@ -124,8 +122,8 @@ export function changePassword() {
             password,
             current,
             token,
-            emailorusername
-          })
+            emailorusername,
+          }),
         }
       );
 
@@ -143,6 +141,13 @@ export function changePassword() {
               status: error,
             })
           );
+        });
+      } else if (response.status === 500) {
+        const { error } = result;
+
+        dispatch({
+          type: actionTypes.CHANGE_PASSWORD_FAILED,
+          error: error,
         });
       } else {
         throw new Error('Changing password failed');
@@ -192,7 +197,6 @@ export function requestPassChange() {
 export function getTokenFromUrl({ token }) {
   return {
     type: actionTypes.GOT_TOKEN_FROM_URL,
-    token
-
+    token,
   };
 }

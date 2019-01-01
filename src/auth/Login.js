@@ -11,11 +11,11 @@ import useAuth from './useAuth';
 export default function Login() {
   const { handleChange, handleLogin } = useAuth();
   const state = useSelector(state => state);
-  const { emailorusername, password } = state.auth;
+  const { emailorusername, password, error } = state.auth;
 
   return (
     <div data-testid="loginform" className="auth-form">
-      <Form formTitle="Login">
+      <Form formTitle="Login" error={error}>
         <Input
           value={emailorusername}
           onChange={handleChange}

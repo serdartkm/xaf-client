@@ -7,10 +7,11 @@ export const initState = {
   username: '',
   loading: false,
   confirm: '',
-  current:'',
+  current: '',
   emailorusername: '',
   token: null,
-  isLoggedIn: false
+  isLoggedIn: false,
+  isPasswordChanged: false,
 };
 export default function reducer(state = initState, action) {
   switch (action.type) {
@@ -24,7 +25,9 @@ export default function reducer(state = initState, action) {
         success: true,
         loading: false,
         token: action.token,
-        isLoggedIn: true
+        isLoggedIn: true,
+        password: '',
+        successMessage: 'Welcome, ',
       };
     case actionTypes.LOGIN_FAILED:
       return { ...state, loading: false, error: action.payload.error };
@@ -36,16 +39,24 @@ export default function reducer(state = initState, action) {
         loading: false,
         success: true,
         isLoggedIn: true,
-        token: action.token
+        token: action.token,
+        password: '',
+        successMessage: 'Welcome',
       };
     case actionTypes.SIGNUP_FAILED:
       return { ...state, loading: false, error: action.payload.error };
     case actionTypes.CHANGE_PASSWORD_STARTED:
       return { ...state, loading: true };
     case actionTypes.CHANGE_PASSWORD_SUCCESS:
-      return { ...state, success: true, loading: false, isLoggedIn: true };
+      return {
+        ...state,
+        success: true,
+        loading: false,
+        isPasswordChanged: true,
+        successMessage: 'Password changed successfully',
+      };
     case actionTypes.CHANGE_PASSWORD_FAILED:
-      return { ...state, loading: false, error: action.payload.error };
+      return { ...state, loading: false, error: action.error };
     case actionTypes.REQUEST_PASS_CHANGE_STARTED:
       return { ...state, loading: true };
     case actionTypes.REQUEST_PASS_CHANGE_SUCCESS:

@@ -10,8 +10,15 @@ import { getTokenFromUrl } from './actions';
 export default function ChangePassword() {
   const dispatch = useDispatch();
   const { handleChange, handleChangePass } = useAuth();
-  const state = useSelector(state => state);
-  const { password, confirm, current, emailorusername, token } = state.auth;
+  const state = useSelector((state) => state);
+  const {
+    password,
+    confirm,
+    current,
+    emailorusername,
+    token,
+    error,
+  } = state.auth;
 
   useEffect(() => {
     let url = new URL(window.location.href);
@@ -19,11 +26,11 @@ export default function ChangePassword() {
     if (token) {
       dispatch(getTokenFromUrl({ token }));
     }
-    debugger;
+    
   }, []);
   return (
     <div data-testid="signupform" className="auth-form">
-      <Form formTitle="Change Password">
+      <Form formTitle="Change Password" error={error}>
         {!token && (
           <Input
             value={emailorusername}
@@ -48,7 +55,7 @@ export default function ChangePassword() {
             placeholder="Enter current password"
             validationTypes={[
               validationTypes.EMPTY_STRING_VALIDATION,
-              validationTypes.INVALID_CREDENTIALS
+              validationTypes.INVALID_CREDENTIALS,
             ]}
           />
         )}
