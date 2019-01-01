@@ -1,9 +1,11 @@
 import validationState from './validationStates';
 import validationTypes from './validationTypes';
 import validationMessages from './validationMessages';
-import { emailRegex, usernameRegex, passwordRegex } from './validationRegex';
+import { emailRegex, passwordRegex, usernameRegex } from './validationRegex';
 export function validateEmailConstraint({ email }) {
-  if (emailRegex.test(email)) {
+  const emailConstraint = new RegExp(emailRegex);
+
+  if (emailConstraint.test(email)) {
     return {
       validationType: validationTypes.EMAIL_FORMAT_VALIDATION,
       validationState: validationState.VALID,
@@ -36,16 +38,17 @@ export function isClientValidationType({ validationType }) {
   }
 }
 export function validatePasswordConstraint({ password }) {
-  if (passwordRegex.test(password)) {
-    debugger;
+  const passwordConstraint = new RegExp(passwordRegex);
+  if (passwordConstraint.test(password)) {
+  
     return {
       validationType: validationTypes.PASSWORD_FORMAT_VALIDATION,
       validationState: validationState.VALID,
       message: ''
     };
   }
-  if (!passwordRegex.test(password)) {
-    debugger;
+  if (!passwordConstraint.test(password)) {
+  
     return {
       validationType: validationTypes.PASSWORD_FORMAT_VALIDATION,
       validationState: validationState.INVALID,
@@ -55,7 +58,9 @@ export function validatePasswordConstraint({ password }) {
 }
 
 export function validateUserNameConstraint({ username }) {
-  if (usernameRegex.test(username)) {
+  const usernameConstraint = new RegExp(usernameRegex);
+
+  if (usernameConstraint.test(username)) {
     return {
       validationType: validationTypes.USERNAME_FORMAT_VALIDATION,
       validationState: validationState.VALID,
@@ -71,22 +76,25 @@ export function validateUserNameConstraint({ username }) {
 }
 
 export function validateEmailOrUsername({ value }) {
-  if (emailRegex.test(value)) {
-    debugger;
+  const emailConstraint = new RegExp(emailRegex);
+  const usernameConstraint = new RegExp(usernameRegex);
+
+  if (emailConstraint.test(value)) {
+   
     return {
       validationType: validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION,
       validationState: validationState.VALID,
       message: ''
     };
-  } else if (usernameRegex.test(value)) {
-    debugger;
+  } else if (usernameConstraint.test(value)) {
+  
     return {
       validationType: validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION,
       validationState: validationState.VALID,
       message: ''
     };
   } else {
-    debugger;
+
     return {
       validationType: validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION,
       validationState: validationState.INVALID,
@@ -96,15 +104,16 @@ export function validateEmailOrUsername({ value }) {
 }
 
 export function validateEmptyString({ value }) {
+
   if (value.length === 0) {
-    debugger;
+  
     return {
       validationType: validationTypes.EMPTY_STRING_VALIDATION,
       validationState: validationState.INVALID,
       message: validationMessages.INVALID_EMPTY_STRING
     };
   } else {
-    debugger;
+  
     return {
       validationType: validationTypes.EMPTY_STRING_VALIDATION,
       validationState: validationState.VALID,
@@ -115,7 +124,7 @@ export function validateEmptyString({ value }) {
 
 export function validatePasswordMatch({ state }) {
   const { password, confirm } = state.auth;
-  debugger;
+
   if (password !== '' && password !== confirm) {
     return {
       validationState: validationState.INVALID,

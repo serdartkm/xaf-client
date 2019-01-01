@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from './actions';
 import validationStates from './validationStates';
-import { isClientValidationType } from '../form/constraintValidators';
 import EyeIcon from './EyeIcon';
 function ValidityIcon({ valid }) {
   let stateColor = '#4fc3f7';
@@ -73,32 +72,13 @@ export default function Input({
   const state = useSelector(state => state);
   const [inputValidation, setInputValidation] = useState({
     validationState: validationStates.INACTIVE,
-    message: ''
+    message: '',
+    validationType: undefined
   });
   const [inputType, setInputType] = useState(type);
-  function registerValidation() {
-    if (validationTypes.length > 0) {
-      validationTypes.forEach(validationName => {
-        if (state.form.validation && state.form.validation[validationName]) {
-          const { validationState, message } = state.form.validation[
-            validationName
-          ];
-          if (validationState) {
-            setInputValidation({ validationState, message });
-          }
-        }
-      });
-    }
-  }
-  useEffect(() => {
-    if (validationTypes.length > 0) {
-      {
-        registerValidation();
-      }
-    }
-  }, [state, validationTypes]);
 
   const [borderColor, setBorderColor] = useState('');
+
   useEffect(() => {
     if (
       inputValidation &&
@@ -120,29 +100,24 @@ export default function Input({
     }
   }, [inputValidation]);
   function handleFocus() {
-    setInputValidation({
-      validationState: validationStates.INACTIVE,
-      message: ''
-    });
-    validationTypes.forEach(validationType => {
-      if (
-        state.form &&
-        state.form.validation &&
-        state.form.validation[validationType]
-      ) {
-        dispatch(actions.resetInputValidationState({ validationType }));
-      }
+    validationTypes.forEach(validationName => {
+      dispatch(
+        actions.resetInputValidationState({ validationType: validationName })
+      );
     });
   }
   function handleBlur() {
-    if (validationTypes.length > 0) {
-      validationTypes.forEach(validationType => {
-        if (isClientValidationType({ validationType })) {
-          dispatch(actions.clientValidation({ validationType, value, state }));
-        }
-      });
-    }
+    validationTypes.forEach(validationName => {
+      dispatch(
+        actions.clientValidation({
+          validationType: validationName,
+          value,
+          state
+        })
+      );
+    });
   }
+
   function toggleEye() {
     if (inputType === 'password') {
       setInputType('text');
@@ -163,16 +138,30 @@ export default function Input({
           placeholder={placeholder}
           onFocus={handleFocus}
         />
-        {inputValidation &&
-          (inputValidation.validationState === validationStates.INVALID ||
-            inputValidation.validationState === validationStates.VALID) && (
-            <ValidityIcon valid={inputValidation.validationState} />
-          )}
+        {validationTypes.map(validationName => {
+          if (state.form.validation[validationName]) {
+            const { validationState } = state.form.validation[validationName];
+            if (
+              validationState === validationStates.VALID ||
+              validationState === validationStates.INVALID
+            ) {
+              return <ValidityIcon key={validationName} valid={validationState} />;
+            }
+            return null;
+          }
+        })}
         {type === 'password' && <EyeIcon onClick={toggleEye} />}
       </div>
-      {inputValidation.validationState === validationStates.INVALID && (
-        <div style={style.message}>*{inputValidation.message}</div>
-      )}
+      {validationTypes.map(validationName => {
+        if (state.form.validation[validationName]) {
+          const { message } = state.form.validation[validationName];
+          return (
+            <div key={validationName} style={style.message}>
+              {message !== '' && <div>*{message}</div>}
+            </div>
+          );
+        }
+      })}
     </div>
   );
 }

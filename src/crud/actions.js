@@ -22,7 +22,7 @@ export function selectObject({ obj }) {
 }
 
 export function find({ objectName, metaData }) {
-  debugger;
+
   const propNames = getPropNames({ objectName, metaData });
   return function(dispatch) {
     dispatch({

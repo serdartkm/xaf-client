@@ -15,47 +15,32 @@ export default function Authentication({ children, sidebar }) {
     handleChangePass,
     handleLogin,
     handleRequestPassChange,
-    handleSignup,
-    state
+    handleSignup
   } = useAuth();
-  
+  debugger;
   return (
     <Suspense fallback={<div className="loading">Loading...</div>}>
       <Switch>
         <Route path="/auth/login">
-          <Login
- 
-            handleLogin={handleLogin}
-            handleChange={handleChange}
-            state={state}
-          />
+          <Login handleLogin={handleLogin} handleChange={handleChange} />
         </Route>
         <Route path="/auth/signup">
-          <Signup
-
-            signup={handleSignup}
-            handleChange={handleChange}
-            state={state}
-          />
+          <Signup signup={handleSignup} handleChange={handleChange} />
         </Route>
         <Route path="/auth/changepassword">
           <ChangePassword
-      
             changePass={handleChangePass}
             handleChange={handleChange}
-            state={state}
           />
         </Route>
         <Route path="/auth/requestpasschange">
           <ForgotPassword
-         
             requestPassChange={handleRequestPassChange}
             handleChange={handleChange}
-            state={state}
           />
         </Route>
         <Route path="/auth/profile">
-          <Profile state={state} />
+          <Profile />
         </Route>
       </Switch>
     </Suspense>

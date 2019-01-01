@@ -5,20 +5,16 @@ import Input from '../form/Input';
 import Button from '../form/Button';
 import Form from '../form/Form';
 import validationTypes from '../form/validationTypes';
-import useForm from '../form/useFormState'
-export default function Login({ state, handleLogin, handleChange }) {
-  const {formState}=useForm()
+import useForm from '../form/useFormState';
+export default function Login({ handleLogin, handleChange }) {
+  const { formState } = useForm();
 
   return (
     <div data-testid="loginform" className="auth-form">
       <Form formTitle="Login">
- 
-
-      
         <Input
           onChange={handleChange}
           name="emailorusername"
-          value={state.emailorusername}
           type="text"
           placeholder="Enter email or username"
           data-testid="emailOrUsername"
@@ -26,27 +22,22 @@ export default function Login({ state, handleLogin, handleChange }) {
             validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION,
             validationTypes.INVALID_CREDENTIALS
           ]}
-          
         />
-      
- 
-          <Input
-            onChange={handleChange}
-            name="password"
-            value={state.password}
-            type="password"
-            placeholder="enter password"
-            data-testid="password"
-            validationTypes={[
-              validationTypes.EMPTY_STRING_VALIDATION,
-              validationTypes.INVALID_CREDENTIALS
-            ]}
-          />
-        
+
+        <Input
+          onChange={handleChange}
+          name="password"
+          type="password"
+          placeholder="enter password"
+          data-testid="password"
+          validationTypes={[
+            validationTypes.EMPTY_STRING_VALIDATION,
+            validationTypes.INVALID_CREDENTIALS
+          ]}
+        />
 
         <Button
-          disabled={formState !=='VALID'}
-          className="btn"
+          disabled={formState !== 'VALID'}
           type="button"
           data-testid="login-btn"
           onClick={handleLogin}

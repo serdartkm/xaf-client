@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { screen, fireEvent, wait, cleanup } from '@testing-library/react';
+import { screen, fireEvent, cleanup } from '@testing-library/react';
 import Login from '../Login';
 import renderWithRedux from './renderWithRedux';
 import { initState } from '../reducer';
@@ -9,7 +9,8 @@ describe('Login', () => {
   beforeEach(() => {
     cleanup();
   });
-  it('ui controls are visible', () => {
+  it.only('ui controls are visible', () => {
+    debugger;
     renderWithRedux(
       <BrowserRouter>
         <Login />

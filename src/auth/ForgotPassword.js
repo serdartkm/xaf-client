@@ -6,7 +6,6 @@ import validationTypes from '../form/validationTypes';
 import './css/style.css';
 export default function RequestPassChange({
   handleChange,
-  state,
   handleRequestPassChange
 }) {
   return (
@@ -15,7 +14,6 @@ export default function RequestPassChange({
         <Input
           placeholder="email"
           name="email"
-          value={state.email}
           onChange={handleChange}
           type="email"
           data-testid="email"
