@@ -5,6 +5,17 @@ export default function reducer(state = { validation: { count: 0 } }, action) {
   let nextState = null;
   switch (action.type) {
     case actionTypes.SERVER_VALIDATION:
+      nextState = {
+        ...state,
+        validation: {
+          [action.validationType]: {
+            validationState: action.validationState,
+            message: action.message
+          }
+        }
+      };
+
+      return nextState;
     case actionTypes.CLIENT_VALIDATION:
       nextState = {
         ...state,
@@ -53,7 +64,7 @@ export default function reducer(state = { validation: { count: 0 } }, action) {
         }
       };
     case actionTypes.INC_INPUT_COUTN:
-      return { ...state, count: state.count +1 };
+      return { ...state, count: state.count + 1 };
     default:
       return state;
   }

@@ -94,7 +94,7 @@ export function validateEmailOrUsername({ value }) {
     return {
       validationType: validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION,
       validationState: validationState.INVALID,
-      message: validationMessages.INVALID_USERNAME_OR_PASSWORD
+      message: validationMessages.INVALID_USERNAME_OR_EMAIL
     };
   }
 }

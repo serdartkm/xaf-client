@@ -32,8 +32,9 @@ export function login() {
       if (response.status === 200) {
         dispatch({ type: actionTypes.LOGIN_SUCCESS, token: result.token });
       } else if (response.status === 400) {
-        debugger;
-        result.forEach(error => {
+        const { errors } = result;
+    
+        errors.forEach(error => {
           dispatch(
             serverValidation({
               status: error
@@ -50,43 +51,56 @@ export function login() {
 }
 
 export function signup() {
-  return function(dispatch, getState) {
+  return async function(dispatch, getState) {
     dispatch({ type: actionTypes.SIGNUP_STARTED });
     const { email, password, username } = getState().auth;
-    return fetch('/signup', {
-      headers: { ContentType: 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({ email, password, username })
-    })
-      .then(response => {
-        if (response.status === 400 || response.status === 200) {
-          return { data: response.json(), status: response.status };
-        } else {
-          throw new Error('SIGNUP failed');
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_XAF_SERVER_URL}/auth/signup?` +
+          new URLSearchParams({ password, email, username }),
+        {
+          headers: {
+            ContentType: 'application/json',
+            Accept: 'application/json'
+          }
         }
+      );
+      const result = await response.json();
+      if (response.status === 200) {
+        dispatch({ type: actionTypes.SIGNUP_SUCCESS, token: result.token });
+      } else if (response.status === 400) {
+       
+        const { errors } = result;
+        errors.forEach(error => {
+          dispatch(
+            serverValidation({
+              status: error
+            })
+          );
+        });
+      } else {
+        throw new Error('Signup failed');
+      }
+    } catch (error) {
+      dispatch({ type: actionTypes.SIGNUP_FAILED, payload: { error } });
+    }
+  };
+}
+export function signout({ token }) {
+  return function(dispatch) {
+    dispatch({ type: actionTypes.LOGOUT_STARTED });
+    return fetch(
+      `${process.env.REACT_APP_XAF_SERVER_URL}/auth/logout?` +
+        new URLSearchParams({ token })
+    )
+      .then(() => {
+        dispatch({ type: actionTypes.LOGOUT_SUCCESS });
       })
-      .then(result => {
-        if (result.status === 400) {
-          const errors = result.data;
-          errors.forEach(error => {
-            dispatch(
-              serverValidation({
-                status: error
-              })
-            );
-          });
-        } else {
-          dispatch({
-            type: actionTypes.SIGNUP_SUCCESS,
-            payload: result.data.token
-          });
-        }
-      })
-      .catch(err => {
-        dispatch({ type: actionTypes.SIGNUP_FAILED, payload: { error: err } });
+      .catch(error => {
+        dispatch({ type: actionTypes.LOGOUT_FAILED, error });
       });
   };
 }
-
 export function changePassword() {
   return function(dispatch, getState) {
     dispatch({ type: actionTypes.CHANGE_PASSWORD_STARTED });
@@ -98,11 +112,9 @@ export function changePassword() {
     })
       .then(response => {
         if (httpStatus.serverValidationRange({ status: response.status })) {
-          dispatch(
-            serverValidation({
-              status: response.status
-            })
-          );
+          serverValidation({
+            status: response.status
+          });
         } else if (response.status === 200) {
           dispatch({
             type: actionTypes.CHANGE_PASSWORD_SUCCESS,

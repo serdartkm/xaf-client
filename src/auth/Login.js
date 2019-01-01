@@ -26,7 +26,9 @@ export default function Login() {
           data-testid="emailOrUsername"
           validationTypes={[
             validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION,
-            validationTypes.INVALID_CREDENTIALS
+            validationTypes.INVALID_CREDENTIALS,
+            validationTypes.EMAIL_NOT_REGISTERED,
+            validationTypes.USERNAME_NOT_REGISTERED
           ]}
         />
 

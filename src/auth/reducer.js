@@ -8,7 +8,8 @@ export const initState = {
   loading: false,
   confirm: '',
   emailorusername: '',
-  token: ''
+  token: null,
+  isLoggedIn: false
 };
 export default function reducer(state = initState, action) {
   switch (action.type) {
@@ -21,20 +22,27 @@ export default function reducer(state = initState, action) {
         ...state,
         success: true,
         loading: false,
-        token: action.token
+        token: action.token,
+        isLoggedIn: true
       };
     case actionTypes.LOGIN_FAILED:
       return { ...state, loading: false, error: action.payload.error };
     case actionTypes.SIGNUP_STARTED:
       return { ...state, loading: true };
     case actionTypes.SIGNUP_SUCCESS:
-      return { ...state, loading: false, success: true };
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        isLoggedIn: true,
+        token: action.token
+      };
     case actionTypes.SIGNUP_FAILED:
       return { ...state, loading: false, error: action.payload.error };
     case actionTypes.CHANGE_PASSWORD_STARTED:
       return { ...state, loading: true };
     case actionTypes.CHANGE_PASSWORD_SUCCESS:
-      return { ...state, success: true, loading: false };
+      return { ...state, success: true, loading: false, isLoggedIn: true };
     case actionTypes.CHANGE_PASSWORD_FAILED:
       return { ...state, loading: false, error: action.payload.error };
     case actionTypes.REQUEST_PASS_CHANGE_STARTED:

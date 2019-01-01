@@ -50,13 +50,14 @@ export function resetInputValidationState({ validationType }) {
   return { type: actionTypes.RESET_VALIDATION_STATE, validationType };
 }
 
-export function incInputCount (){
-  return {type:actionTypes.INC_INPUT_COUTN}
+export function incInputCount() {
+  return { type: actionTypes.INC_INPUT_COUTN };
 }
 export function serverValidation({ status = 0 }) {
   debugger;
   switch (status) {
     case httpStatus.credentialInvalid:
+      debugger;
       return {
         type: actionTypes.SERVER_VALIDATION,
         validationType: validationTypes.INVALID_CREDENTIALS,
@@ -92,6 +93,7 @@ export function serverValidation({ status = 0 }) {
         validationState: validationStates.INVALID
       };
     case httpStatus.emailIsNotRegistered:
+      debugger;
       return {
         type: actionTypes.SERVER_VALIDATION,
         validationType: validationTypes.EMAIL_NOT_REGISTERED,
@@ -110,6 +112,20 @@ export function serverValidation({ status = 0 }) {
         type: actionTypes.SERVER_VALIDATION,
         validationType: validationTypes.EMPTY_STRING_VALIDATION,
         message: validationMessages.INVALID_EMPTY_STRING,
+        validationState: validationStates.INVALID
+      };
+    case httpStatus.emailorusernameNotValid:
+      return {
+        type: actionTypes.SERVER_VALIDATION,
+        validationType: validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION,
+        message: validationMessages.INVALID_USERNAME_OR_EMAIL,
+        validationState: validationStates.INVALID
+      };
+    case httpStatus.usernameIsNotRegistered:
+      return {
+        type: actionTypes.SERVER_VALIDATION,
+        validationType: validationTypes.USERNAME_NOT_REGISTERED,
+        message: validationMessages.USERNAME_NOT_REGISTERED,
         validationState: validationStates.INVALID
       };
     default:
