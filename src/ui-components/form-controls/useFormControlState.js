@@ -1,55 +1,47 @@
-import {useReducer, useEffect} from 'react'
+import { useReducer, useEffect } from 'react';
 
-function reducer (state,action){
-debugger;
-switch(action.type){
+function reducer(state, action) {
+  switch (action.type) {
     case 'change':
-    return {...state, [action.payload.name]:action.payload.value}
+      return { ...state, [action.payload.name]: action.payload.value };
     case 'update':
-    return state
+      return state;
     case 'delete':
-        return state
+      return state;
     case 'insert':
-        return state
-        case 'select':
-        return state
+      return state;
+    case 'select':
+      return state;
     case 'find':
-        return state;
+      return state;
     default:
-        throw new Error();
+      throw new Error();
+  }
 }
 
-}
+export default function useFormControlState({
+  path,
+  documentName,
+  initialState
+}) {
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-export default function useFormControlState ({path,documentName, initialState}){
-const [state,dispatch] =useReducer(reducer,initialState)
+  useEffect(() => {
+    const tempstatus = state;
+  }, [state]);
+  function onChange(e) {
+    const { name, value } = e.target;
 
-useEffect(()=>{
-    const tempstatus =state
-    debugger;
-},[state])
-function onChange (e){
-    const {name,value} =e.target
-    debugger;
-dispatch({type:'change', payload:{name,value}})
+    dispatch({ type: 'change', payload: { name, value } });
+  }
 
-}
+  function update({ id, data }) {
+    //fetch
+  }
 
-function update ({id,data}){
-//fetch
+  function remove({ id }) {}
 
-}
+  function findById({ id }) {}
 
-function remove ({id}){
-
-
-}
-
-function findById ({id}){
-
-    
-}
-
-    return {state,onChange,update,remove,findById}
-
+  return { state, onChange, update, remove, findById };
 }

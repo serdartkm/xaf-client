@@ -1,6 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-export default function TextInput (){
-
-    return <div>textinput</div>
+export default function TextInput({ fieldName, onChange }) {
+  return (
+    <input type="text" value={fieldName} name={fieldName} onChange={onChange} />
+  );
 }
