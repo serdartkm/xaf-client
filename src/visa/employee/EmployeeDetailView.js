@@ -1,13 +1,10 @@
 import React from 'react';
-import DetailView from '../../library/DitailView';
-import employeeMeta from './employeeMeta';
-import PassportListView from '../passport/PassportListView';
+import DetailView from '../../library/DetailView';
 
-export default function EmployeeDetailView({ employee, passports }) {
+export default function EmployeeDetailView() {
   return (
     <div>
-      <DetailView meta={employeeMeta} object={employee} />
-      <PassportListView collection={passports} />
+      <DetailView  objectName='employee' />
     </div>
   );
 }

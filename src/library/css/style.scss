@@ -1,0 +1,19 @@
+.detail-view {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  padding: 3px;
+  margin-bottom: 2px;
+}
+
+.btn{
+  margin-right: 2px;
+  min-width: 80px;
+}
+.editor{
+  padding-top: 5px;
+  display: flex;
+  justify-content: flex-end;
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import DetailView from '../../library/DitailView';
+import DetailView from '../../library/DetailView';
 import passportMeta from './passportMeta';
 
 export default function PassportDetailView({ passport }) {

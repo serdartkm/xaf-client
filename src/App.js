@@ -1,13 +1,9 @@
 import React from 'react';
-import './App.css';
-import useFormControlState from './ui-components/form-controls/useFormControlState'
-import TextInput from './ui-components/text-input/text-input'
+import EmployeeDetailView from './visa/employee/EmployeeDetailView';
 function App() {
-  const {onChange,state}= useFormControlState({path:"/",initialState:{firstname:"",lastname:""}})
   return (
-    <div className="App">
-      <TextInput  onChange={onChange} fieldName={"firstname"}/>
-      <input onChange={onChange} value={state['lastname']} name="lastname"/>
+    <div className='App'>
+      <EmployeeDetailView />
     </div>
   );
 }

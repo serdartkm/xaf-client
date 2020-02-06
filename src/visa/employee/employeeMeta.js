@@ -1,6 +1,6 @@
 export default {
-  firstName: '',
-  lastName: '',
-  birthDate: '',
-  birthPlace: ''
+  firstName: 'text',
+  lastName: 'text',
+  birthDate: 'date',
+  birthPlace: 'text'
 };

@@ -1,0 +1,6 @@
+export default {
+    CREATE_DATA:'CREATE_DATA',
+    UPDATE_DATA:'UPDATE_DATA',
+    FIND_DATA:'FIND_DATA',
+    DELETE_DATA:'DELETE_DATA',
+}
