@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { createObject } from '../library/redux/actions';
 import Input from './Input';
 import './css/style.css';
 function Editor({ onSave, onDelete, onCancel }) {
@@ -58,4 +59,11 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, null)(DetailView);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const { objectName } = ownProps;
+  return {
+    createObject: dispatch(createObject(objectName))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DetailView);

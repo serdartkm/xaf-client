@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function ListView({ meta,collection }) {
+export default function ListView({ objectName, parentField }) {
   return <div>ListView</div>;
 }

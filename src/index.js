@@ -5,18 +5,13 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import store from './library/redux/store';
-
-const visaStore = store({
-  employee: {
-    firstName: { value: '', type: 'text', placeholder: 'Enter firstname' },
-    lastName: { value: '', type: 'text', placeholder: 'Enter lastname' },
-    birthDate: { value: '', type: 'date' },
-    birthPlace: { value: '', type: 'text', placeholder: 'Enter place of birth' }
-  }
-});
+import Navigation from './library/Navigation';
+import objectsMeta from './visa/objectsMeta';
+const visaStore = store(objectsMeta);
 ReactDOM.render(
   <Provider store={visaStore}>
     <App />
+    <Navigation objectsMeta={objectsMeta} />
   </Provider>,
   document.getElementById('root')
 );
