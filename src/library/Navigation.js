@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ListView from './ListView';
+import DetailView from './DetailView';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import './css/style.css';
 
@@ -24,13 +25,17 @@ export default function Navigation({ objectMeta }) {
             );
           })}
         </div>
-        <div className='nav-route'>
+        <div className='nav-route-container'>
           {obj.map(o => {
-    
             return (
-              <Route path={`/${o[0]}`}>
-                <ListView meta={o} />
-              </Route>
+              <div className='nav-route'>
+                <Route path={`/${o[0]}`}>
+                  <ListView meta={o} />
+                </Route>
+                <Route path={`/edit${o[0]}`}>
+                  <DetailView meta={o} />
+                </Route>
+              </div>
             );
           })}
         </div>

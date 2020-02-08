@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { findCollection, findByParent } from '../library/redux/actions';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 import './css/style.css';
 
 function ListView(props) {
@@ -28,6 +29,7 @@ function ListView(props) {
   }, [columnNames]);
   return (
     <div className='list-view'>
+     <Link to={`/edit${objectName}`}>Add new</Link>
       {objectName}
       <table>
         <tr>

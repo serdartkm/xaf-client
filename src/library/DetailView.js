@@ -21,12 +21,20 @@ function Editor({ onSave, onDelete, onCancel }) {
 
 function DetailView(props) {
   const [metaCollection, setMetaCollection] = useState([]);
-
+  const [objectName, setObjectName] = useState(null);
   useEffect(() => {
-    if (props && props.objectName) {
-      setMetaCollection(Object.entries(props[props.objectName]));
+    if (props && props.meta) {
+      debugger;
+      setObjectName(props.meta[0]);
     }
-  }, [props]);
+  }, [props.meta]);
+  useEffect(() => {
+    if (objectName && props && props.meta) {
+   
+      debugger;
+       setMetaCollection(Object.entries(props.meta[1]));
+    }
+  }, [objectName, props]);
   return (
     <div className='detail-view'>
       {metaCollection &&
@@ -53,9 +61,9 @@ function DetailView(props) {
 
 const mapStateToProps = (state, ownProps) => {
   debugger;
-  const { objectName } = ownProps;
+  const { meta } = ownProps;
   return {
-    [objectName]: state[objectName]
+    [meta[0]]: state[meta[0]]
   };
 };
 
