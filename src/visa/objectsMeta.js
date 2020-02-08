@@ -13,5 +13,8 @@ export default {
   passport: {
     passportNumber: { type: 'text', value: '0' },
     collections: ['visa']
+  },
+  visa: {
+    visaNumber: { type: 'text', value: '0' }
   }
 };

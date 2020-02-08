@@ -1,17 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import store from './library/redux/store';
 import Navigation from './library/Navigation';
-import objectsMeta from './visa/objectsMeta';
-const visaStore = store(objectsMeta);
+import objectMeta from './visa/objectsMeta';
+const visaStore = store(objectMeta);
 ReactDOM.render(
   <Provider store={visaStore}>
-    <App />
-    <Navigation objectsMeta={objectsMeta} />
+
+    <Navigation objectMeta={objectMeta} />
   </Provider>,
   document.getElementById('root')
 );
