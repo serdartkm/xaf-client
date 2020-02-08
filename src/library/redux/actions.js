@@ -22,3 +22,4 @@ export function deleteObject(dispach) {}
 
 export function findObject(dispach) {}
 export function findCollection(dispach) {}
+export function findByParent({ objectName, parentName }) {}
