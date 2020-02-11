@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { createObject } from '../library/redux/actions';
+import { createObject, changeValue } from '../library/redux/actions';
 import Input from './Input';
 import './css/style.css';
 function Editor({ onSave, onDelete, onCancel }) {
@@ -24,53 +24,60 @@ function DetailView(props) {
   const [objectName, setObjectName] = useState(null);
   useEffect(() => {
     if (props && props.meta) {
-      debugger;
       setObjectName(props.meta[0]);
     }
   }, [props.meta]);
   useEffect(() => {
     if (objectName && props && props.meta) {
-   
-      debugger;
-       setMetaCollection(Object.entries(props.meta[1]));
+      setMetaCollection(Object.entries(props.meta[1]));
     }
   }, [objectName, props]);
   return (
     <div className='detail-view'>
       {metaCollection &&
         metaCollection.map(m => {
-          debugger;
           const name = m[0];
           const value = m[1].value;
           const type = m[1].type;
           const placeholder = m[1].placeholder;
+
           return (
             <Input
               type={type}
-              value={value}
+              value={props.obj.value}
               name={name}
               placeholder={placeholder}
+              onChange={props.onChangeValue}
             />
           );
         })}
 
-      <Editor />
+      <Editor onSave={props.handleSave} />
     </div>
   );
 }
 
 const mapStateToProps = (state, ownProps) => {
-  debugger;
   const { meta } = ownProps;
+  const objName = meta[0];
+  const obj = state[objName];
+  debugger;
   return {
-    [meta[0]]: state[meta[0]]
+    obj
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const { objectName } = ownProps;
+  const { meta } = ownProps;
+  const objName = meta[0];
   return {
-    createObject: dispatch(createObject(objectName))
+    createObject: () => dispatch(createObject(objName)),
+    onChangeValue: e => {
+      const { value, name } = e.target;
+
+      dispatch(changeValue({ objectName: objName, propName: name, value }));
+    },
+    handleSave: () => dispatch(createObject(objName))
   };
 };
 
