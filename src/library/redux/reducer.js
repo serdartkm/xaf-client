@@ -1,6 +1,7 @@
 import actionTypes from './actionTypes';
 
 export default function reducer(initialState) {
+  debugger;
   return (state = initialState, action) => {
     switch (action.type) {
       case actionTypes.CREATE_DATA:

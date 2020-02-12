@@ -37,14 +37,13 @@ function DetailView(props) {
       {metaCollection &&
         metaCollection.map(m => {
           const name = m[0];
-          const value = m[1].value;
           const type = m[1].type;
           const placeholder = m[1].placeholder;
 
           return (
             <Input
               type={type}
-              value={props.obj.value}
+              value={props.obj[name]}
               name={name}
               placeholder={placeholder}
               onChange={props.onChangeValue}

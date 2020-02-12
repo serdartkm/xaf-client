@@ -4,19 +4,26 @@ export function createObject(objectName) {
   return (dispach, getState) => {
     const state = getState();
     const obj = state[objectName];
+
     dispach({ type: actionTypes.CREATING_DATA });
-    debugger;
-    return fetch(state.url, { method: 'post', body: JSON.stringify(obj) })
+
+    return fetch(`http://localhost:8000/createdata?document=${objectName}`, {
+      method: 'post',
+      body: JSON.stringify(obj)
+    })
       .then(response => {
-        response.json();
+        return response.json();
       })
       .then(json => {
+        console.log('json...', json);
+        debugger;
         dispach({
           type: actionTypes.CREATING_DATA_FULLFILLED,
           payload: json
         });
       })
       .catch(err => {
+        debugger;
         dispach({ type: actionTypes.CREATING_DATA_FAILED, payload: err });
       });
   };
