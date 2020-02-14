@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { createObject, changeValue } from '../library/redux/actions';
+import { insertOne, changeValue } from '../library/redux/actions';
 import Input from './Input';
 import './css/style.css';
 function Editor({ onSave, onDelete, onCancel }) {
@@ -68,15 +68,16 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   const { meta } = ownProps;
-  const objName = meta[0];
+  const objectName = meta[0];
   return {
-    createObject: () => dispatch(createObject(objName)),
     onChangeValue: e => {
       const { value, name } = e.target;
 
-      dispatch(changeValue({ objectName: objName, propName: name, value }));
+      dispatch(changeValue({ objectName, propName: name, value }));
     },
-    handleSave: () => dispatch(createObject(objName))
+    handleSave: () => {
+      debugger;
+      dispatch(insertOne({ objectName, options: {} }))}
   };
 };
 

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { findCollection, findByParent } from '../library/redux/actions';
+import { find } from '../library/redux/actions';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import './css/style.css';
 
 function ListView(props) {
   const [columnNames, setColumnNames] = useState([]);
   const [objectName, setObjectName] = useState(null);
+
   useEffect(() => {
     if (props && props.meta) {
       setObjectName(props.meta[0]);
@@ -24,43 +25,65 @@ function ListView(props) {
         props.findByParent({ objectName, parentField: props.parentField });
       }
     } else {
-      props.findCollection({ objectName });
+      props.find();
     }
   }, [columnNames]);
   return (
     <div className='list-view'>
-     <Link to={`/edit${objectName}`}>Add new</Link>
+      <Link to={`/edit${objectName}`}>Add new</Link>
       {objectName}
-      <table>
-        <tr>
+      <div className='table'>
+        <div className='table-row'>
           {columnNames &&
-            columnNames.map(c => {
-              debugger;
-              return <th>{c}</th>;
-            })}
-        </tr>
-        <tr>
-          <td>Jill</td>
-          <td>Smith</td>
-          <td>50</td>
-        </tr>
-      </table>
+            columnNames
+              .filter(f => f !== 'collections')
+              .map(c => {
+                return <div className='table-head'>{c}</div>;
+              })}
+        </div>
+
+        {props &&
+          props.object &&
+          props.object.collection &&
+          props.object.collection.map(c => {
+            const propNames = Object.keys(props.meta[1]).filter(
+              f => f !== 'collection'
+            );
+            return (
+              <div className='table-row'>
+                {propNames.map(p => {
+                  const value = c[p];
+                  debugger;
+                  if (value === '') {
+                    return <div className='table-data'>{''}</div>;
+                  }
+                  if (value) {
+                    return <div className='table-data'>{c[p]}</div>;
+                  }
+                })}
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
 }
 
 const mapStateToProps = (state, ownProps) => {
-  debugger;
   const { meta } = ownProps;
   return {
-    [meta[0]]: state[meta[0]]
+    object: state[meta[0]]
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   const { meta } = ownProps;
+  const objectName = meta[0];
+
   return {
-    findCollection: () => {},
+    find: () => {
+      dispatch(find({ objectName }));
+    },
     findByParent: () => {}
   };
 };

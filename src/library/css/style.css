@@ -42,12 +42,10 @@
 }
 
 .nav-route {
-  background-color: lightseagreen;
   width: 100%;
 }
 
 .list-view {
-  background-color: mediumorchid;
   height: 100%;
   width: 100%;
 }
@@ -64,18 +62,40 @@
   width: 100%;
 }
 
-table {
-  border-collapse: collapse;
-  background-color: lime;
+.table {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
-tr {
-  border-bottom: 1px solid #ccc;
-}
-
-th,
-td {
+.table-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   text-align: left;
-  padding: 4px;
+}
+
+.table-data,
+.table-head {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  background-color: green;
+  margin: 3px;
+}
+
+.table-data {
+  background-color: greenyellow;
+}
+
+.table-head {
+  background-color: khaki;
 }
 /*# sourceMappingURL=style.css.map */

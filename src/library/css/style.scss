@@ -31,11 +31,9 @@
   width: 100%;
 }
 .nav-route {
-  background-color: lightseagreen;
   width: 100%;
 }
 .list-view {
-  background-color: mediumorchid;
   height: 100%;
   width: 100%;
 }
@@ -45,15 +43,27 @@
   height: 100%;
   width: 100%;
 }
-table {
-  border-collapse: collapse;
-  background-color: lime;
+
+.table {
+  display: flex;
+  flex-direction: column;
 }
-tr {
-  border-bottom: 1px solid #ccc;
-}
-th,
-td {
+.table-row {
+  display: flex;
+  justify-content: flex-start;
   text-align: left;
-  padding: 4px;
+  ;
+}
+.table-data,
+.table-head {
+  flex: 1;
+  background-color: green;
+
+  margin: 3px;
+}
+.table-data{
+  background-color: greenyellow;
+}
+.table-head{
+  background-color: khaki;
 }
