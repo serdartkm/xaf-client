@@ -12,6 +12,7 @@ export default {
   },
   passport: {
     passportNumber: { type: 'text', value: '0' },
+    passportIssuedDate: { type: 'date' },
     collections: ['visa']
   },
   visa: {

@@ -9,6 +9,13 @@ export default function reducer(docState) {
   return (state = initState, action) => {
     let nextState = {};
     switch (action.type) {
+      case actionTypes.DOCUMENT_SELECTED:
+        nextState = {
+          ...state,
+          [action.payload.objectName]: action.payload.doc
+        };
+        debugger;
+        return { ...nextState };
       case actionTypes.VALUE_CHANGED:
         nextState = {
           ...state,

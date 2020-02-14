@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { insertOne, changeValue } from '../library/redux/actions';
+import { useLocation } from 'react-router-dom';
+import {
+  insertOne,
+  changeValue,
+  documentSelected,
+  updateOne
+} from '../library/redux/actions';
 import Input from './Input';
 import './css/style.css';
 function Editor({ onSave, onDelete, onCancel }) {
+  debugger;
   return (
     <div className='editor'>
       <button className='btn' type='button' onClick={onSave}>
@@ -22,6 +29,25 @@ function Editor({ onSave, onDelete, onCancel }) {
 function DetailView(props) {
   const [metaCollection, setMetaCollection] = useState([]);
   const [objectName, setObjectName] = useState(null);
+  const location = useLocation();
+
+  function handleSave() {
+    debugger;
+    if (props.obj && props.obj._id) {
+      debugger;
+      props.dispatch(updateOne({ objectName }));
+    } else {
+      debugger;
+      props.dispatch(insertOne({ objectName, options: {} }));
+    }
+  }
+
+  useEffect(() => {
+    if (location.state && objectName) {
+      debugger;
+      props.handleDocumentSelected({ objectName, doc: location.state });
+    }
+  }, [location.state, objectName]);
   useEffect(() => {
     if (props && props.meta) {
       setObjectName(props.meta[0]);
@@ -51,7 +77,7 @@ function DetailView(props) {
           );
         })}
 
-      <Editor onSave={props.handleSave} />
+      <Editor onSave={handleSave} />
     </div>
   );
 }
@@ -67,17 +93,19 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const { meta } = ownProps;
+  const { meta, obj } = ownProps;
   const objectName = meta[0];
+  debugger;
   return {
+    dispatch,
     onChangeValue: e => {
       const { value, name } = e.target;
 
       dispatch(changeValue({ objectName, propName: name, value }));
     },
-    handleSave: () => {
-      debugger;
-      dispatch(insertOne({ objectName, options: {} }))}
+
+    handleDocumentSelected: ({ objectName, doc }) =>
+      dispatch(documentSelected({ objectName, doc }))
   };
 };
 

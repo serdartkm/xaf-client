@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { find } from '../library/redux/actions';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { find, deleteOne } from '../library/redux/actions';
+import { Link } from 'react-router-dom';
 import './css/style.css';
 
 function ListView(props) {
   const [columnNames, setColumnNames] = useState([]);
   const [objectName, setObjectName] = useState(null);
+
+  function handleDelete(_id) {
+    const filter = { _id };
+    props.dispatch(deleteOne({ objectName, filter }));
+  }
 
   useEffect(() => {
     if (props && props.meta) {
@@ -30,7 +35,7 @@ function ListView(props) {
   }, [columnNames]);
   return (
     <div className='list-view'>
-      <Link to={`/edit${objectName}`}>Add new</Link>
+      <Link to={`/edit/${objectName}`}>Add new</Link>
       {objectName}
       <div className='table'>
         <div className='table-row'>
@@ -40,6 +45,8 @@ function ListView(props) {
               .map(c => {
                 return <div className='table-head'>{c}</div>;
               })}
+          <div className='table-head'>Edit</div>
+          <div className='table-head'>Delete</div>
         </div>
 
         {props &&
@@ -49,18 +56,29 @@ function ListView(props) {
             const propNames = Object.keys(props.meta[1]).filter(
               f => f !== 'collection'
             );
+            const obj = c;
+            delete obj.collection;
             return (
               <div className='table-row'>
                 {propNames.map(p => {
                   const value = c[p];
+
                   debugger;
                   if (value === '') {
-                    return <div className='table-data'>{''}</div>;
+                    return <div className='table-data'>{''} </div>;
                   }
                   if (value) {
                     return <div className='table-data'>{c[p]}</div>;
                   }
                 })}
+                <div className='table-data'>
+                  <Link to={{ pathname: `/edit/${objectName}`, state: obj }}>
+                    Edit
+                  </Link>
+                </div>
+                <div className='table-data'>
+                  <button onClick={() => handleDelete(c._id)}>Delete</button>
+                </div>
               </div>
             );
           })}
@@ -81,10 +99,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const objectName = meta[0];
 
   return {
+    dispatch,
     find: () => {
       dispatch(find({ objectName }));
-    },
-    findByParent: () => {}
+    }
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ListView);

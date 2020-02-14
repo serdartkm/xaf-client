@@ -32,7 +32,7 @@ export default function Navigation({ objectMeta }) {
                 <Route path={`/${o[0]}`}>
                   <ListView meta={o} />
                 </Route>
-                <Route path={`/edit${o[0]}`}>
+                <Route path={`/edit/${o[0]}`}>
                   <DetailView meta={o} />
                 </Route>
               </div>

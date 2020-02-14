@@ -4,7 +4,7 @@ export function insertOne({ objectName }) {
   return (dispatch, getState) => {
     const state = getState();
     const doc = state[objectName];
-  
+
     dispatch({ type: actionTypes.INSERTING_ONE, payload: { objectName } });
     debugger;
     return fetch(`http://localhost:8000/insertOne?document=${objectName}`, {
@@ -72,13 +72,13 @@ export function findOne({ objectName, query, options }) {
 export function find({ objectName, selector = {} }) {
   return dispatch => {
     const action = { type: actionTypes.FINDING, payload: { objectName } };
- 
+
     dispatch(action);
 
     return fetch(`http://localhost:8000/find?document=${objectName}`)
       .then(response => {
         const json = response.json();
-     
+
         return json;
       })
       .then(collection => {
@@ -86,7 +86,7 @@ export function find({ objectName, selector = {} }) {
           type: actionTypes.FINDING_FULFILLED,
           payload: { objectName, result: collection }
         };
-     
+
         dispatch(action);
       })
       .catch(err => {
@@ -94,7 +94,7 @@ export function find({ objectName, selector = {} }) {
           type: actionTypes.FINDING_FAILED,
           payload: { objectName, error: err }
         };
-     
+
         dispatch(action);
       });
   };
@@ -131,8 +131,8 @@ export function updateOne({ objectName, filter, update, options }) {
   };
 }
 
-export function deleteOne({ objectName, filter, options }) {
-  const body = { filter, options };
+export function deleteOne({ objectName, filter }) {
+  const body = { filter };
   return dispatch => {
     const action = { type: actionTypes.DELETING_ONE, payload: { objectName } };
     debugger;
@@ -170,5 +170,16 @@ export function changeValue({ objectName, propName, value }) {
       type: actionTypes.VALUE_CHANGED,
       payload: { objectName, propName, value }
     });
+  };
+}
+
+export function documentSelected({ objectName, doc }) {
+  return dispach => {
+    const action = {
+      type: actionTypes.DOCUMENT_SELECTED,
+      payload: { objectName, doc }
+    };
+    debugger;
+    dispach(action);
   };
 }
