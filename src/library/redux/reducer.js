@@ -5,22 +5,20 @@ export default function reducer(docState) {
     ...docState,
     saving: false,
     finding: false,
-    deleting: false
+    deleting: false,
+    collections: {}
   };
   return (state = initState, action) => {
-  
     let objectName = null;
     let prevCollection = null;
     let _id = null;
     if (action && action.payload && action.payload.objectName) {
       objectName = action.payload.objectName;
-      prevCollection = state[objectName].collection;
+      prevCollection = state.collections[objectName];
       debugger;
       if (action.payload.result && action.payload.result._id) {
         _id = action.payload.result._id;
       }
-
-    
     }
 
     let nextState = {};
@@ -50,10 +48,7 @@ export default function reducer(docState) {
         nextState = {
           ...state,
           finding: false,
-          [action.payload.objectName]: {
-            ...state[action.payload.objectName],
-            collection: foundCollection
-          }
+          collections: { ...state.collections, [objectName]: foundCollection }
         };
 
         debugger;
@@ -111,8 +106,9 @@ export default function reducer(docState) {
         nextState = {
           ...state,
           deleting: false,
-          [objectName]: {
-            collection: [...prevCollection.filter(f => f._id !== _id)]
+          collections: {
+            ...state.collections,
+            [objectName]: [...prevCollection.filter(f => f._id !== _id)]
           }
         };
         debugger;

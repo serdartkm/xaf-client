@@ -56,14 +56,14 @@ function ListView(props) {
         </div>
 
         {props &&
-          props.object &&
-          props.object.collection &&
-          props.object.collection.map(c => {
+          props.collections &&
+          props.collections &&
+          props.collections.map(c => {
             const propNames = Object.keys(props.meta[1]).filter(
               f => f !== 'collection'
             );
             const obj = c;
-            //  delete obj.collection;
+
             return (
               <div className='table-row'>
                 {propNames.map(p => {
@@ -95,8 +95,10 @@ function ListView(props) {
 
 const mapStateToProps = (state, ownProps) => {
   const { meta } = ownProps;
+  debugger;
   return {
-    object: state[meta[0]]
+    object: state[meta[0]],
+    collections: state.collections[meta[0]]
   };
 };
 

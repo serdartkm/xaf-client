@@ -41,7 +41,6 @@ function DetailView(props) {
 
   function handleSave() {
     const body = { ...props.obj };
-    delete body.collection;
     debugger;
     if (props.obj && props.obj._id) {
       debugger;
