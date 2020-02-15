@@ -7,6 +7,12 @@ export default function reducer(docState) {
     finding: false
   };
   return (state = initState, action) => {
+    debugger;
+    let objectName = null;
+    if (action && action.payload && action.payload.objectName) {
+      objectName = action.payload.objectName;
+    }
+
     let nextState = {};
     switch (action.type) {
       case actionTypes.DOCUMENT_SELECTED:
@@ -47,11 +53,49 @@ export default function reducer(docState) {
       case actionTypes.INSERTING_ONE:
         return { ...state, saving: true };
       case actionTypes.INSERTING_ONE_FULFILLED:
-        //   const insertedObject = action.payload.rusult.opt
-        //  const collection = state[action.objectName].co
-        return { ...state, saving: false };
+        const prevCollection = state[objectName].collection;
+        const insertedObject = { ...action.payload.result.ops[0] };
+        const insertedId = action.payload.result.insertedId;
+        debugger;
+        nextState = {
+          ...state,
+          saving: false,
+          [objectName]: {
+            ...state[objectName],
+            collection: [
+              ...prevCollection,
+              { _id: insertedId, ...insertedObject }
+            ]
+          }
+        };
+        debugger;
+        return { ...nextState };
       case actionTypes.INSERTING_ONE_FAILED:
         return { ...state, saving: false };
+      case actionTypes.ADD_NEW_DOCUMENT:
+        const newObj = Object.keys(state[objectName]).filter(
+          f => f !== 'collection'
+        );
+        debugger;
+        nextState = {
+          ...state,
+          [objectName]: {
+            ...newObj.reduce((o, key, i) => {
+              if (i === 1) {
+                let obj = { [o]: '', [key]: '' };
+
+                return obj;
+              } else {
+                let obj = { ...o, [key]: '' };
+
+                return obj;
+              }
+            }),
+            collection: state[objectName].collection
+          }
+        };
+        debugger;
+        return { ...nextState };
       default:
         return state;
     }

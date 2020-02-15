@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import {
   insertOne,
   changeValue,
@@ -9,12 +9,15 @@ import {
 } from '../library/redux/actions';
 import Input from './Input';
 import './css/style.css';
-function Editor({ onSave, onDelete, onCancel }) {
+function Editor({ onSave, onSaveAndClose, onDelete, onCancel }) {
   debugger;
   return (
     <div className='editor'>
       <button className='btn' type='button' onClick={onSave}>
         Save
+      </button>
+      <button className='btn' type='button' onClick={onSaveAndClose}>
+        Save And Close
       </button>
       <button className='btn' type='button' onClick={onDelete}>
         Delete
@@ -30,16 +33,28 @@ function DetailView(props) {
   const [metaCollection, setMetaCollection] = useState([]);
   const [objectName, setObjectName] = useState(null);
   const location = useLocation();
+  const history = useHistory();
+
+  function handleGoBack() {
+    history.goBack();
+  }
 
   function handleSave() {
+    const body = { ...props.obj };
+    delete body.collection;
     debugger;
     if (props.obj && props.obj._id) {
       debugger;
-      props.dispatch(updateOne({ objectName }));
+      props.dispatch(updateOne({ objectName, body }));
     } else {
       debugger;
-      props.dispatch(insertOne({ objectName, options: {} }));
+      props.dispatch(insertOne({ objectName, body }));
     }
+  }
+
+  function handleSaveAndClose() {
+    handleSave();
+    handleGoBack();
   }
 
   useEffect(() => {
@@ -77,7 +92,7 @@ function DetailView(props) {
           );
         })}
 
-      <Editor onSave={handleSave} />
+      <Editor onSave={handleSave} onSaveAndClose={handleSaveAndClose} />
     </div>
   );
 }

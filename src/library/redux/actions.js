@@ -1,166 +1,73 @@
 import actionTypes from './actionTypes';
+import asyncAction from './asyncAction';
 
-export function insertOne({ objectName }) {
-  return (dispatch, getState) => {
-    const state = getState();
-    const doc = state[objectName];
-
-    dispatch({ type: actionTypes.INSERTING_ONE, payload: { objectName } });
-    debugger;
-    return fetch(`http://localhost:8000/insertOne?document=${objectName}`, {
-      method: 'post',
-      body: JSON.stringify(doc)
-    })
-      .then(response => {
-        const json = response.json();
-        debugger;
-        return json;
-      })
-      .then(json => {
-        const action = {
-          type: actionTypes.INSERTING_ONE_FULFILLED,
-          payload: { objectName, result: json }
-        };
-        debugger;
-        dispatch(action);
-      })
-      .catch(err => {
-        const action = {
-          type: actionTypes.INSERTING_ONE_FAILED,
-          payload: err,
-          objectName
-        };
-
-        debugger;
-        dispatch(action);
-      });
-  };
-}
-
-export function findOne({ objectName, query, options }) {
+export function insertOne({ objectName, body }) {
   return dispatch => {
-    const action = { type: actionTypes.FINDING_ONE, payload: { objectName } };
-    dispatch(action);
-    debugger;
-
-    return fetch(`http://localhost:8000/findOne?document=${objectName}`, {
-      body: JSON.stringify({ query, options })
-    })
-      .then(response => {
-        const json = response.json();
-        debugger;
-        return json;
-      })
-      .then(json => {
-        const action = {
-          type: actionTypes.FINDING_FULFILLED,
-          payload: { objectName, result: json }
-        };
-        debugger;
-        dispatch(action);
-      })
-      .catch(err => {
-        const action = {
-          type: actionTypes.FINDING_ONE_FAILED,
-          payload: { objectName, error: err }
-        };
-        debugger;
-        dispatch(action);
-      });
+    return asyncAction({
+      objectName,
+      dispatch,
+      operation: 'insertOne',
+      body,
+      pending: actionTypes.INSERTING_ONE,
+      fulfilled: actionTypes.INSERTING_ONE_FULFILLED,
+      failed: actionTypes.INSERTING_ONE_FAILED
+    });
   };
 }
-export function find({ objectName, selector = {} }) {
+
+export function find({ objectName, body }) {
   return dispatch => {
-    const action = { type: actionTypes.FINDING, payload: { objectName } };
-
-    dispatch(action);
-
-    return fetch(`http://localhost:8000/find?document=${objectName}`)
-      .then(response => {
-        const json = response.json();
-
-        return json;
-      })
-      .then(collection => {
-        const action = {
-          type: actionTypes.FINDING_FULFILLED,
-          payload: { objectName, result: collection }
-        };
-
-        dispatch(action);
-      })
-      .catch(err => {
-        const action = {
-          type: actionTypes.FINDING_FAILED,
-          payload: { objectName, error: err }
-        };
-
-        dispatch(action);
-      });
+    return asyncAction({
+      objectName,
+      dispatch,
+      operation: 'find',
+      body,
+      pending: actionTypes.FINDING,
+      fulfilled: actionTypes.FINDING_FULFILLED,
+      failed: actionTypes.FINDING_FAILED
+    });
   };
 }
 
-export function updateOne({ objectName, filter, update, options }) {
-  const body = { objectName, filter, update, options };
-  return dispach => {
-    dispach({ type: actionTypes.UPDATING_ONE, payload: { objectName } });
-    return fetch(`http://localhost:8000/updateOne?document=${objectName}`, {
-      body: JSON.stringify(body)
-    })
-      .then(response => {
-        const json = response.json();
-        debugger;
-        return json;
-      })
-      .then(json => {
-        const action = {
-          type: actionTypes.UPDATING_ONE_FULFILLED,
-          payload: { objectName, result: json }
-        };
-        debugger;
-        dispach(action);
-      })
-      .catch(err => {
-        const action = {
-          type: actionTypes.UPDATING_ONE_FAILED,
-          payload: { objectName, error: err }
-        };
-        debugger;
-        dispach(action);
-      });
-  };
-}
-
-export function deleteOne({ objectName, filter }) {
-  const body = { filter };
+export function findOne({ objectName, body }) {
   return dispatch => {
-    const action = { type: actionTypes.DELETING_ONE, payload: { objectName } };
-    debugger;
-    dispatch(action);
-    return fetch(`http://localhost:8000/deleteOne?document=${objectName}`, {
-      body: JSON.stringify(body)
-    })
-      .then(response => {
-        const json = response.json();
-        debugger;
-        return json;
-      })
-      .then(json => {
-        const action = {
-          type: actionTypes.DELETING_ONE_FULFILLED,
-          payload: { objectName, result: json }
-        };
-        debugger;
-        dispatch(action);
-      })
-      .catch(err => {
-        const action = {
-          type: actionTypes.DELETING_ONE_FAILED,
-          payload: { objectName, error: err }
-        };
-        debugger;
-        dispatch(action);
-      });
+    return asyncAction({
+      objectName,
+      dispatch,
+      operation: 'findOne',
+      body,
+      pending: actionTypes.FINDING_ONE,
+      fulfilled: actionTypes.FINDING_ONE_FULFILLED,
+      failed: actionTypes.FINDING_ONE_FAILED
+    });
+  };
+}
+
+export function updateOne({ objectName, body }) {
+  return dispatch => {
+    return asyncAction({
+      objectName,
+      dispatch,
+      operation: 'updateOne',
+      body,
+      pending: actionTypes.UPDATING_ONE,
+      fulfilled: actionTypes.UPDATING_ONE_FULFILLED,
+      failed: actionTypes.UPDATING_ONE_FAILED
+    });
+  };
+}
+
+export function deleteOne({ objectName, body }) {
+  return dispatch => {
+    return asyncAction({
+      objectName,
+      dispatch,
+      operation: 'deleteOne',
+      body,
+      pending: actionTypes.DELETING_ONE,
+      fulfilled: actionTypes.DELETING_ONE_FULFILLED,
+      failed: actionTypes.DELETING_ONE_FAILED
+    });
   };
 }
 
@@ -181,5 +88,15 @@ export function documentSelected({ objectName, doc }) {
     };
     debugger;
     dispach(action);
+  };
+}
+
+export function addNewDocument({ objectName }) {
+  return dispatch => {
+    const action = {
+      type: actionTypes.ADD_NEW_DOCUMENT,
+      payload: { objectName }
+    };
+    dispatch(action);
   };
 }

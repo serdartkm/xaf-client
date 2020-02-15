@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { find, deleteOne } from '../library/redux/actions';
+import { find, deleteOne, addNewDocument } from '../library/redux/actions';
 import { Link } from 'react-router-dom';
 import './css/style.css';
 
@@ -11,6 +11,10 @@ function ListView(props) {
   function handleDelete(_id) {
     const filter = { _id };
     props.dispatch(deleteOne({ objectName, filter }));
+  }
+
+  function addNewDoc() {
+    props.dispatch(addNewDocument({ objectName }));
   }
 
   useEffect(() => {
@@ -35,7 +39,9 @@ function ListView(props) {
   }, [columnNames]);
   return (
     <div className='list-view'>
-      <Link to={`/edit/${objectName}`}>Add new</Link>
+      <Link to={`/edit/${objectName}`} onClick={addNewDoc}>
+        Add new
+      </Link>
       {objectName}
       <div className='table'>
         <div className='table-row'>
@@ -57,7 +63,7 @@ function ListView(props) {
               f => f !== 'collection'
             );
             const obj = c;
-            delete obj.collection;
+            //  delete obj.collection;
             return (
               <div className='table-row'>
                 {propNames.map(p => {
@@ -101,6 +107,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     dispatch,
     find: () => {
+      debugger;
       dispatch(find({ objectName }));
     }
   };
