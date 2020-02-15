@@ -9,8 +9,8 @@ function ListView(props) {
   const [objectName, setObjectName] = useState(null);
 
   function handleDelete(_id) {
-    const filter = { _id };
-    props.dispatch(deleteOne({ objectName, filter }));
+    const body = { _id };
+    props.dispatch(deleteOne({ objectName, body }));
   }
 
   function addNewDoc() {
