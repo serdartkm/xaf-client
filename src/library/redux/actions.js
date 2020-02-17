@@ -1,22 +1,10 @@
 import actionTypes from './actionTypes';
 import asyncAction from './asyncAction';
 
-export function insertOne({ objectName, body }) {
-  return dispatch => {
-    return asyncAction({
-      objectName,
-      dispatch,
-      operation: 'insertOne',
-      body,
-      pending: actionTypes.INSERTING_ONE,
-      fulfilled: actionTypes.INSERTING_ONE_FULFILLED,
-      failed: actionTypes.INSERTING_ONE_FAILED
-    });
-  };
-}
-
-export function find({ objectName, body }) {
-  return dispatch => {
+export function find({ body }) {
+  return (dispatch, getState) => {
+    const objectName = getState.objectName;
+    debugger;
     return asyncAction({
       objectName,
       dispatch,
@@ -29,8 +17,10 @@ export function find({ objectName, body }) {
   };
 }
 
-export function findOne({ objectName, body }) {
-  return dispatch => {
+export function findOne({ body }) {
+  return (dispatch, getState) => {
+    const objectName = getState.objectName;
+    debugger;
     return asyncAction({
       objectName,
       dispatch,
@@ -43,22 +33,10 @@ export function findOne({ objectName, body }) {
   };
 }
 
-export function updateOne({ objectName, body }) {
-  return dispatch => {
-    return asyncAction({
-      objectName,
-      dispatch,
-      operation: 'updateOne',
-      body,
-      pending: actionTypes.UPDATING_ONE,
-      fulfilled: actionTypes.UPDATING_ONE_FULFILLED,
-      failed: actionTypes.UPDATING_ONE_FAILED
-    });
-  };
-}
-
-export function deleteOne({ objectName, body }) {
-  return dispatch => {
+export function deleteOne({ body }) {
+  return (dispatch, getState) => {
+    const objectName = getState.objectName;
+    debugger;
     return asyncAction({
       objectName,
       dispatch,
@@ -71,31 +49,31 @@ export function deleteOne({ objectName, body }) {
   };
 }
 
-export function changeValue({ objectName, propName, value }) {
-  return dispach => {
-    dispach({
-      type: actionTypes.VALUE_CHANGED,
-      payload: { objectName, propName, value }
-    });
-  };
-}
-
-export function documentSelected({ objectName, doc }) {
+export function documentSelected({ doc }) {
   return dispach => {
     const action = {
       type: actionTypes.DOCUMENT_SELECTED,
-      payload: { objectName, doc }
+      payload: { doc }
     };
     debugger;
     dispach(action);
   };
 }
 
-export function addNewDocument({ objectName }) {
+export function addNewDocument() {
   return dispatch => {
     const action = {
-      type: actionTypes.ADD_NEW_DOCUMENT,
-      payload: { objectName }
+      type: actionTypes.ADD_NEW_DOCUMENT
+    };
+    dispatch(action);
+  };
+}
+
+export function selectedObjectName({ objectName, propNames,propMetas }) {
+  return dispatch => {
+    const action = {
+      type: actionTypes.SELECTED_OBJECT_NAME,
+      payload: { objectName, propNames,propMetas }
     };
     dispatch(action);
   };

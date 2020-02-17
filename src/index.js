@@ -4,7 +4,7 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import store from './library/redux/store';
-import Navigation from './library/Navigation';
+import Navigation from './library/navigation/Navigation';
 import objectMeta from './visa/objectsMeta';
 const visaStore = store(objectMeta);
 ReactDOM.render(
