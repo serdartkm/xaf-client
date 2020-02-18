@@ -1,19 +1,32 @@
 import actionTypes from './actionTypes';
 import asyncAction from './asyncAction';
 
-export function find({ body }) {
+export function addTodo(text) {
+  return {
+    type: 'ADD_TODO',
+    text
+  };
+}
+
+// included into test
+export function find() {
   return (dispatch, getState) => {
-    const objectName = getState.objectName;
-    debugger;
-    return asyncAction({
-      objectName,
-      dispatch,
-      operation: 'find',
-      body,
-      pending: actionTypes.FINDING,
-      fulfilled: actionTypes.FINDING_FULFILLED,
-      failed: actionTypes.FINDING_FAILED
-    });
+    const objectName = getState().objectName;
+    dispatch({ type: actionTypes.FINDING });
+    return fetch(`http://localhost:8000/find?document=${objectName}`)
+      .then(response => response.json())
+      .then(body => {
+        const action = {
+          type: actionTypes.FINDING_FULFILLED,
+          payload: { result: body }
+        };
+
+        dispatch(action);
+      })
+      .catch(err => {
+        const action = { type: actionTypes.FINDING_FAILED, error: err };
+        dispatch(action);
+      });
   };
 }
 
@@ -69,12 +82,10 @@ export function addNewDocument() {
   };
 }
 
-export function selectedObjectName({ objectName, propNames,propMetas }) {
-  return dispatch => {
-    const action = {
-      type: actionTypes.SELECTED_OBJECT_NAME,
-      payload: { objectName, propNames,propMetas }
-    };
-    dispatch(action);
+//tested
+export function selectedObjectName({ objectName, propNames, propMetas }) {
+  return {
+    type: actionTypes.SELECTED_OBJECT_NAME,
+    payload: { objectName, propNames, propMetas }
   };
 }

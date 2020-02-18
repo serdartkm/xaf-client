@@ -4,12 +4,15 @@ export default function reducer(docState) {
   const initState = {
     ...docState,
     list: [],
+    finding: false,
     currentObject: null,
     objectName: null,
     propNames: [],
-    propMetas: []
+    propMetas: [],
+    error: null
   };
   return (state = initState, action) => {
+    debugger;
     let objectName = null;
     let prevCollection = null;
     let _id = null;
@@ -17,16 +20,28 @@ export default function reducer(docState) {
 
     let nextState = {};
     switch (action.type) {
-      case actionTypes.FINDING_FULFILLED:
+      case actionTypes.FINDING: //tested
+        nextState = {
+          ...state,
+          finding: true
+        };
+        return nextState;
+      case actionTypes.FINDING_FULFILLED: //tested
         nextState = {
           ...state,
           list: action.payload.result
         };
-        debugger;
-        return nextState;
 
+        return nextState;
+      case actionTypes.FINDING_FAILED: //tested
+        nextState = {
+          ...state,
+          finding: false,
+          error: action.error
+        };
+
+        return nextState;
       case actionTypes.UPDATING_ONE_FULFILLED:
-        debugger;
         const updatedCollection = prevCollection.map(p => {
           if (p._id === _id) {
             return state[objectName];
@@ -42,7 +57,7 @@ export default function reducer(docState) {
             collection: updatedCollection
           }
         };
-        debugger;
+
         return { ...nextState };
 
       case actionTypes.DOCUMENT_SELECTED:
@@ -75,7 +90,7 @@ export default function reducer(docState) {
           ...state,
           objectName: action.payload.objectName,
           propNames: action.payload.propNames,
-          propMetas:action.payload.propMetas
+          propMetas: action.payload.propMetas
         };
         debugger;
         return nextState;
