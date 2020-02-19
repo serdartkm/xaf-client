@@ -1,6 +1,6 @@
 import actionTypes from './actionTypes';
 import asyncAction from './asyncAction';
-
+import getAppInitState from './app-init-state-reducer/getAppInitState';
 export function addTodo(text) {
   return {
     type: 'ADD_TODO',
@@ -62,14 +62,22 @@ export function deleteOne({ body }) {
   };
 }
 
-export function documentSelected({ doc }) {
-  return dispach => {
-    const action = {
-      type: actionTypes.DOCUMENT_SELECTED,
-      payload: { doc }
-    };
-    debugger;
-    dispach(action);
+export function objectSelected({ objectName }) {
+  return (dispatch, getState) => {
+    const { objects } = getState().metaReducer;
+    const object = objects[objectName];
+    dispatch({
+      type: actionTypes.OBJECT_SELECTED,
+      payload: object
+    });
+  };
+}
+
+export function createAppInitialState({ metaData }) {
+  const appInitState = getAppInitState({ metaData });
+  return {
+    type: actionTypes.CREATE_APP_INIT_STATE,
+    payload: appInitState
   };
 }
 
