@@ -10,7 +10,7 @@ const visaStore = store(objectMeta);
 ReactDOM.render(
   <Provider store={visaStore}>
 
-    <Navigation objectMeta={{...objectMeta}} />
+    <Navigation/>
   </Provider>,
   document.getElementById('root')
 );

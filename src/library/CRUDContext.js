@@ -5,11 +5,14 @@ export default function CRUDContextProvider({
   children,
   columnNames,
   list,
-  objectName
+  objectName,
+  objectNames
 }) {
   debugger;
   return (
-    <CRUDContext.Provider value={{ list, columnNames, objectName }}>
+    <CRUDContext.Provider
+      value={{ list, columnNames, objectName, objectNames }}
+    >
       {children}
     </CRUDContext.Provider>
   );
