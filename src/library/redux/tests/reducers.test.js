@@ -63,7 +63,6 @@ describe('list reducer', () => {
     });
   });
   it('should handle FINDING_FAILED', () => {
-    debugger;
     expect(
       reducer()(
         {

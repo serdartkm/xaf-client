@@ -12,7 +12,7 @@ export default function reducer(docState) {
     error: null
   };
   return (state = initState, action) => {
-    debugger;
+  
     let objectName = null;
     let prevCollection = null;
     let _id = null;
@@ -66,12 +66,12 @@ export default function reducer(docState) {
           currentObject: { ...action.payload.doc },
           objectName: action.payload.objectName
         };
-        debugger;
+   
         return nextState;
       case actionTypes.INSERTING_ONE_FULFILLED:
         const insertedObject = { ...action.payload.result.ops[0] };
         const insertedId = action.payload.result.insertedId;
-        debugger;
+     
         nextState = {
           ...state,
           saving: false,
@@ -83,7 +83,7 @@ export default function reducer(docState) {
             ]
           }
         };
-        debugger;
+     
         return { ...nextState };
       case actionTypes.SELECTED_OBJECT_NAME:
         nextState = {
@@ -92,7 +92,7 @@ export default function reducer(docState) {
           propNames: action.payload.propNames,
           propMetas: action.payload.propMetas
         };
-        debugger;
+    
         return nextState;
       default:
         return state;
