@@ -1,16 +1,17 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { CRUDContext } from '../CRUDContext';
+
 export default function TableBody(props) {
+
+
   const {
+    list,
+    objectName,
+    columnNames,
     handleDocSelected,
-    handleDelete,
-
+    handleDelete
   } = props;
-  const crudContext = useContext(CRUDContext);
-
-  const { list, objectName,columnNames } = crudContext;
-  
+debugger;
   return (
     <div>
       {list &&
@@ -23,7 +24,7 @@ export default function TableBody(props) {
                 columnNames.map((p, a) => {
                   const value = c[p];
 
-                  debugger;
+               
                   if (value === '') {
                     return (
                       <div key={a} className='table-data'>

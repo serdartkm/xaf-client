@@ -6,18 +6,13 @@ import { BrowserRouter } from 'react-router-dom';
 import CRUDContextProvider from '../../CRUDContext';
 describe('TableBody component', () => {
   it('Generates  all required data', () => {
-    debugger;
     const { getByText } = render(
       <BrowserRouter>
-        <CRUDContextProvider
+        <TableBody
           columnNames={['firstName', 'lastName']}
           list={[{ firstName: 'Gurban', lastName: 'Jumyev' }]}
           objectName='employee'
-        >
-          <TableBody
-         
-          />
-        </CRUDContextProvider>
+        />
       </BrowserRouter>
     );
     expect(getByText(/Gurban/i)).toBeVisible();

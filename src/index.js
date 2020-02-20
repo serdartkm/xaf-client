@@ -2,18 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import { Provider } from 'react-redux';
-import store from './library/redux/store';
-import Navigation from './library/navigation/Navigation';
-import objectMeta from './visa/objectsMeta';
-const visaStore = store(objectMeta);
-ReactDOM.render(
-  <Provider store={visaStore}>
+import App from './library/app/App';
 
-    <Navigation/>
-  </Provider>,
-  document.getElementById('root')
-);
+ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

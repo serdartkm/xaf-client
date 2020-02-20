@@ -1,10 +1,6 @@
 import React, { useContext } from 'react';
 import { CRUDContext } from '../CRUDContext';
-export default function TableHeader() {
-  const crudContext = useContext(CRUDContext);
-
-  const { columnNames } = crudContext;
-
+export default function TableHeader({ columnNames }) {
   return (
     <div className='table-row'>
       {columnNames &&

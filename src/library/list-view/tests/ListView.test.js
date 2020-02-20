@@ -5,7 +5,7 @@ import ListView from '../ListView';
 import { BrowserRouter } from 'react-router-dom';
 import CRUDContextProvider from '../../CRUDContext';
 describe('ListView component', () => {
-  it('Generates ListView with required fields', () => {
+  it.skip('Generates ListView with required fields', () => {
     const { getByText } = render(
       <BrowserRouter>
         <CRUDContextProvider

@@ -1,19 +1,28 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ListView from '../list-view/ListView';
 import DetailView from '../detail-view/DetailView';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
-import { CRUDContext } from '../CRUDContext';
+import getObjectNames from '../redux/ui-reducer/getObjectNames';
+import mockMetaData from '../redux/ui-reducer/test/mockMetaData';
 import './css/style.css';
 
-export default function Navigation() {
-  const crudContext = useContext(CRUDContext);
-  const { objectNames } = crudContext;
+export default function Navigation({ metaData }) {
+  const [objectNames, setObjectNames] = useState([]);
+
+  useEffect(() => {
+    if (metaData !== null && metaData !== undefined) {
+      setObjectNames(getObjectNames({ metaData }));
+    } else {
+      setObjectNames(getObjectNames({ metaData: mockMetaData }));
+    }
+  }, [metaData, mockMetaData]);
+
   return (
     <BrowserRouter>
       <div className='nav'>
         <div className='nav-link'>
           {objectNames.map(objectName => {
-            debugger;
+         
             return (
               <div className='link' key={objectName}>
                 <Link to={`/${objectName}`}>{objectName}</Link>

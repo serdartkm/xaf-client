@@ -1,11 +1,15 @@
-export default [
+export default  [
   {
     objectName: 'employee',
     propNames: [
       { name: 'firstName', type: 'text', placeholder: 'Enter firstname' },
       { name: 'lastName', type: 'text', placeholder: 'Enter lastname' },
       { name: 'birthDate', type: 'date' },
-      { name: 'birthPlace', type: 'text', placeholder: 'Enter place of birth' }
+      {
+        name: 'birthPlace',
+        type: 'text',
+        placeholder: 'Enter place of birth'
+      }
     ]
   },
   {
@@ -26,16 +30,6 @@ export default [
         name: 'passportNumber',
         type: 'text',
         placeholder: 'Enter Passport Number'
-      }
-    ]
-  },
-  {
-    objectName: 'application',
-    propNames: [
-      {
-        name: 'number',
-        type: 'text',
-        placeholder: 'App Number'
       }
     ]
   }
