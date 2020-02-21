@@ -5,7 +5,7 @@ import { CRUDContext } from '../CRUDContext';
 export default function Table() {
   const crudContext = useContext(CRUDContext);
   const { objectName, propNames, list } = crudContext;
-  debugger;
+
   return (
     <div>
       <TableHeader objectName={objectName} columnNames={propNames} />

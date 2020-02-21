@@ -1,5 +1,5 @@
 import getPropNames from '../getPropNames';
-import mockMetaData from './mockMetaData'
+import mockMetaData from '../../../mock-data/mockMetaData';
 describe('getPropNames', () => {
   it('returns corrent objec prop names', () => {
 

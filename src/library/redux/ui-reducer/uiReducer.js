@@ -11,8 +11,9 @@ export default function uiReducer(state = initState, action) {
         objectName: action.objectName,
         propNames: action.propNames
       };
-
+     
     default:
+  
       return state;
   }
 }

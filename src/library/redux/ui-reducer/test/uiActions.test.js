@@ -2,7 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { navigationChanges } from '../uiActions';
 import uiActionTypes from '../uiActionTypes';
-import mockMetaData from './mockMetaData';
+import mockMetaData from '../../../mock-data/mockMetaData';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 

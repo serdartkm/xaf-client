@@ -2,8 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export default function TableBody(props) {
-
-
   const {
     list,
     objectName,
@@ -11,7 +9,7 @@ export default function TableBody(props) {
     handleDocSelected,
     handleDelete
   } = props;
-debugger;
+
   return (
     <div>
       {list &&
@@ -23,8 +21,6 @@ debugger;
               {columnNames &&
                 columnNames.map((p, a) => {
                   const value = c[p];
-
-               
                   if (value === '') {
                     return (
                       <div key={a} className='table-data'>
@@ -33,9 +29,11 @@ debugger;
                     );
                   }
                   if (value) {
+                    const fieldData = c[p];
+
                     return (
                       <div key={a} className='table-data'>
-                        {c[p]}
+                        {fieldData}
                       </div>
                     );
                   }

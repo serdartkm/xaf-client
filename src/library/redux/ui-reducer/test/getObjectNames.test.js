@@ -1,5 +1,5 @@
 import getObjectNames from '../getObjectNames';
-import mockMetaData from './mockMetaData';
+import mockMetaData from '../../../mock-data/mockMetaData';
 describe('getObjectNames', () => {
   it('return all object names as an array', () => {
     expect(getObjectNames({ metaData: mockMetaData })).toEqual([

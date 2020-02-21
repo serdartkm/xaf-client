@@ -13,13 +13,14 @@ export default function(state = initState, action) {
         ...state,
         finding: true
       };
+
       return nextState;
     case actionTypes.FINDING_LIST_FULFILLED:
       nextState = {
         ...state,
         list: action.payload.result
       };
-debugger
+  
       return nextState;
     case actionTypes.FINDING_LIST_FAILED:
       nextState = {

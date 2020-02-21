@@ -1,6 +1,7 @@
 import {findAction} from '../actions/crudActions';
 import actionTypes from './listActionTypes';
 export function findList({ objectName }) {
+
   return dispatch => {
     return findAction({
       dispatch,
