@@ -1,18 +1,22 @@
-import React from 'react';
-import './css/style.css'
+import React, { useContext } from 'react';
+import { CRUDContext } from '../CRUDContext';
+import './css/style.css';
 export default function Input({
   type,
-  onClick,
   onChange,
-  value,
+  value = '',
   placeholder,
-  name
+  name,
+  items
 }) {
+
   switch (type) {
     case 'text':
+      debugger;
       return (
         <input
-        className="input"
+          data-testid='input'
+          className='input'
           type='text'
           placeholder={placeholder}
           onChange={onChange}
@@ -23,7 +27,8 @@ export default function Input({
     case 'email':
       return (
         <input
-        className="input"
+          data-testid='input'
+          className='input'
           type='email'
           placeholder={placeholder}
           onChange={onChange}
@@ -34,7 +39,8 @@ export default function Input({
     case 'password':
       return (
         <input
-        className="input"
+          data-testid='input'
+          className='input'
           type='password'
           placeholder={placeholder}
           onChange={onChange}
@@ -44,27 +50,75 @@ export default function Input({
       );
     case 'file':
       return (
-        <input     className="input" type='file' onChange={onChange} value={value} name={name} />
+        <input
+          data-testid='input'
+          className='input'
+          type='file'
+          onChange={onChange}
+          value={value}
+          name={name}
+        />
       );
 
     case 'date':
       return (
-        <input     className="input" type='date' onChange={onChange} value={value} name={name} />
+        <input
+          data-testid='input'
+          className='input'
+          type='date'
+          onChange={onChange}
+          value={value}
+          name={name}
+        />
       );
     case 'checkbox':
       return (
-        <input     className="input" type='checkbox' onChange={onChange} value={value} name={name} />
+        <input
+          data-testid='input'
+          className='input'
+          type='checkbox'
+          onChange={onChange}
+          checked={value}
+          name={name}
+        />
       );
 
     case 'radio':
-      return (
-        <input     className="input" type='radio' onChange={onChange} value={value} name={name} />
-      );
+      return items.map(i => (
+        <div key={i.id}>
+          <input
+            data-testid={`inputId-${i.label}`}
+            type='radio'
+            name={name}
+            value={i.id}
+            checked={value === i.id}
+            onChange={onChange}
+          ></input>
+          <label> {i.label}</label>
+        </div>
+      ));
 
+    case 'select':
+      return (
+        <select
+          value={value}
+          onChange={onChange}
+          data-testid='input'
+          type='select'
+          name={name}
+        >
+          {items.map(v => (
+            <option key={v.id} value={v.id}>
+              {v.lable}
+            </option>
+          ))}
+        </select>
+      );
     case 'search':
       return (
         <input
-         className="input"
+          data-testid='input'
+          className='input'
           type='search'
           onChange={onChange}
           value={value}

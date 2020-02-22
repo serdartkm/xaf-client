@@ -5,11 +5,11 @@ import { CRUDContext } from '../CRUDContext';
 import { Link } from 'react-router-dom';
 import './css/style.css';
 import { findList } from '../redux/list-reducer/listActions';
-export default function ListView(props) {
+export default function ListView() {
   const crudContext = useContext(CRUDContext);
   const dispatch = useDispatch();
-  const { objectName } = crudContext;
-
+  const { objectName, handleCreateObject } = crudContext;
+debugger;
   useEffect(() => {
     if (objectName) {
       dispatch(findList({ objectName }));
@@ -18,7 +18,9 @@ export default function ListView(props) {
 
   return (
     <div className='list-view'>
-      <Link to={`/edit/${objectName}`}>Add new</Link>
+      <Link to={`/edit/${objectName}`} onClick={handleCreateObject}>
+        New
+      </Link>
       {objectName}
       <div className='table'>
         <Table />

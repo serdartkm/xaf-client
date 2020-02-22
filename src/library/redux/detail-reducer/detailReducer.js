@@ -1,8 +1,9 @@
 import actionTypes from './detailActionTypes';
+import detailUiActionTypes from '../detail-ui-reducer/detail-ui-actionTypes';
 export default function ObjectReducer(state = {}, action) {
   switch (action.type) {
-    case actionTypes.CREATED_NEW_OBJECT:
-      return { ...action.payload };
+    case detailUiActionTypes.CREATE_OBJECT_CLICKED:
+      return { ...action.payload.object };
     case actionTypes.VALUE_CHANGED:
       return { ...state, [action.payload.propName]: action.payload.value };
     default:

@@ -29,12 +29,7 @@ export default function Navigation({ metaData }) {
           {objectNames.map(objectName => {
             return (
               <div className='link' key={objectName}>
-                <Link
-                  to={`/${objectName}`}
-                  onClick={() =>
-                    handleNavChange({ objectName, metaData: meta })
-                  }
-                >
+                <Link to={`/${objectName}`} onClick={handleNavChange}>
                   {objectName}
                 </Link>
               </div>

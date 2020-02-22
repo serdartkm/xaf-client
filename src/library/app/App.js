@@ -7,7 +7,7 @@ import CrudContextProvider from '../CRUDContext';
 export default function App({ metaData }) {
   return (
     <Provider store={store}>
-      <CrudContextProvider>
+      <CrudContextProvider  metaData={metaData}>
         <Navigation metaData={metaData} />
       </CrudContextProvider>
     </Provider>
