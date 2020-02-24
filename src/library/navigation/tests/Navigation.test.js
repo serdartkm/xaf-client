@@ -3,17 +3,25 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import Navigation from '../Navigation';
 import { BrowserRouter } from 'react-router-dom';
-import CRUDContextProvider from '../../CRUDContext';
+import { applicationStarted } from '../../redux/ui-reducer/uiActions';
 import { Provider } from 'react-redux';
 import store from '../../redux/store';
+import mockMetaData from '../../mock-data/mockMetaData';
+debugger;
+
 describe('Navigation component', () => {
   it.only('All Links are displayed', () => {
+    store.dispatch(
+      applicationStarted({
+        objectName: 'employee',
+        metaData: mockMetaData
+      })
+    );
+
     const { getByText } = render(
       <Provider store={store}>
         <BrowserRouter>
-          <CRUDContextProvider>
-            <Navigation />
-          </CRUDContextProvider>
+          <Navigation />
         </BrowserRouter>
       </Provider>
     );

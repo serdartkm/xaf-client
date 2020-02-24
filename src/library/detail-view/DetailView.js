@@ -25,38 +25,39 @@ function Editor({ onSave, onSaveAndClose, onDelete, onCancel }) {
 }
 
 export default function DetailView(props) {
-  const reduxState = useSelector(state => state);
-  const { valueChanged, state, handleSave } = useDetailState();
-  const { propNames, propMetas } = reduxState;
+  const appState = useSelector(state => state);
+  //  const { valueChanged, state, handleSave } = useDetailState();
+  const { fieldMetaData } = appState.detailUi;
+  const { detail } = appState;
   const history = useHistory();
   function handleGoBack() {
     history.goBack();
   }
 
   function handleSaveAndClose() {
-    handleSave();
+    //  handleSave();
     handleGoBack();
   }
 
   function handleValueChange(e) {
     const { value, name } = e.target;
     debugger;
-    valueChanged({ propName: name, value });
+    //   valueChanged({ propName: name, value });
   }
 
   return (
     <div className='detail-view'>
-      {propMetas &&
-        propMetas.map(m => {
+      {fieldMetaData &&
+        fieldMetaData.map(m => {
           debugger;
-          const name = m[0];
-          const type = m[1].type;
-          const placeholder = m[1].placeholder;
+          const name = m.name;
+          const type = m.type;
+          const placeholder = m.placeholder;
 
           return (
             <Input
               type={type}
-              value={state[name]}
+              value={detail[name]}
               name={name}
               placeholder={placeholder}
               onChange={handleValueChange}
@@ -64,7 +65,7 @@ export default function DetailView(props) {
           );
         })}
 
-      <Editor onSave={handleSave} onSaveAndClose={handleSaveAndClose} />
+      <Editor onSave={null} onSaveAndClose={handleSaveAndClose} />
     </div>
   );
 }

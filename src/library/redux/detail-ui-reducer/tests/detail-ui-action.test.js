@@ -1,8 +1,9 @@
 import { createObjectClicked } from '../detail-ui-action';
 import detailUiActionTypes from '../detail-ui-actionTypes';
-import mockMetaData from '../../../mock-data/mockMetaData';
 
-describe('uiActions', () => {
+jest.mock('../../store')
+
+describe('detail uiActions', () => {
   it.only('handles NAVIGATION_CHANGED action', () => {
     const expectedActions = {
       type: detailUiActionTypes.CREATE_OBJECT_CLICKED,
@@ -21,7 +22,7 @@ describe('uiActions', () => {
       }
     };
     expect(
-      createObjectClicked({ objectName: 'employee', metaData: mockMetaData })
+      createObjectClicked({ objectName: 'employee' })
     ).toEqual(expectedActions);
   });
 });

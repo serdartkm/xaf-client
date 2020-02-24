@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import TableHeader from './TableHeader';
 import TableBody from './TableBody';
-import { CRUDContext } from '../CRUDContext';
+import { useSelector } from 'react-redux';
 export default function Table() {
-  const crudContext = useContext(CRUDContext);
-  const { objectName, propNames, list } = crudContext;
-
+  const appState = useSelector(state => state);
+  const { list } = appState;
+  const { propNames, objectName } = appState.ui;
+debugger;
   return (
     <div>
       <TableHeader objectName={objectName} columnNames={propNames} />

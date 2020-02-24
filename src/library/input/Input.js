@@ -12,7 +12,7 @@ export default function Input({
 
   switch (type) {
     case 'text':
-      debugger;
+   
       return (
         <input
           data-testid='input'

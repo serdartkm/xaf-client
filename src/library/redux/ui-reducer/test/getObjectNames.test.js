@@ -1,8 +1,9 @@
+import mockData from '../../../mock-data/mockMetaData';
 import getObjectNames from '../getObjectNames';
-import mockMetaData from '../../../mock-data/mockMetaData';
+
 describe('getObjectNames', () => {
   it('return all object names as an array', () => {
-    expect(getObjectNames({ metaData: mockMetaData })).toEqual([
+    expect(getObjectNames({ metaData: mockData })).toEqual([
       'employee',
       'passport',
       'visa'

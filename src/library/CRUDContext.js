@@ -9,16 +9,16 @@ export default function CRUDContextProvider({
   children,
   metaData = mockMetaData
 }) {
-  const reduxState = useSelector(state => state);
+ // const reduxState = useSelector(state => state);
   const dispatch = useDispatch();
-  const { objectName, propNames } = reduxState.ui;
-  const { list } = reduxState.list;
+  //const { objectName, propNames } = reduxState.ui;
+  // const { list } = reduxState.list;
 
-  function handleNavChange() {
-    dispatch(navigationChanges({ objectName, metaData }));
+  function handleNavChange({objectName}) {
+    dispatch(navigationChanges({ objectName }));
   }
 
-  function handleCreateObject() {
+  function handleCreateObject({objectName}) {
     dispatch(createObjectClicked({ objectName, metaData }));
   }
 
@@ -29,9 +29,9 @@ export default function CRUDContextProvider({
   return (
     <CRUDContext.Provider
       value={{
-        list,
-        propNames,
-        objectName,
+        // list,
+        // propNames,
+        // objectName,
         handleNavChange,
         handleCreateObject,
         handleValueChange

@@ -1,4 +1,4 @@
-export default  [
+export default [
   {
     objectName: 'employee',
     propNames: [
@@ -27,9 +27,9 @@ export default  [
     objectName: 'visa',
     propNames: [
       {
-        name: 'passportNumber',
+        name: 'visaNumber',
         type: 'text',
-        placeholder: 'Enter Passport Number'
+        placeholder: 'Enter Visa Number'
       }
     ]
   }

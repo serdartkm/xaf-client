@@ -36,7 +36,7 @@ describe('Input', () => {
     const { getByTestId } = render(
       <InputContainer>
         {({ value, handleChange }) => {
-          debugger;
+  
           return (
             <Input
               name='birthDate'
@@ -58,7 +58,7 @@ describe('Input', () => {
     const { getByTestId } = render(
       <InputContainer>
         {({ value, handleCheck }) => {
-          debugger;
+      
           return (
             <Input
               name='male'
@@ -82,7 +82,7 @@ describe('Input', () => {
     const { getByTestId } = render(
       <InputContainer>
         {({ value, handleChange }) => {
-          debugger;
+    
           return (
             <Input
               name='numbers'
@@ -113,7 +113,7 @@ describe('Input', () => {
     const { getByTestId } = render(
       <InputContainer>
         {({ value, handleChange }) => {
-          debugger;
+      
           return (
             <Input
               name='numbers'

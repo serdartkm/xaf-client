@@ -1,8 +1,8 @@
 import createObject from '../createObject';
-import metaData from '../../../mock-data/mockMetaData';
+jest.mock('../../store');
 describe('createObject', () => {
   it('returns an object with all props and initial empty values', () => {
-    expect(createObject({ objectName: 'employee', metaData })).toEqual({
+    expect(createObject({ objectName: 'employee' })).toEqual({
       firstName: '',
       lastName: '',
       birthDate: '',

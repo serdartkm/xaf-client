@@ -3,9 +3,9 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import CRUDContextProvider from '../../CRUDContext';
-import EditorView from '../EditorView'
+import DetailView from '../DetailView'
 
-describe('EditorView',()=>{
+describe('DetailView',()=>{
     it('Renders corrent fields',()=>{
         
     })
