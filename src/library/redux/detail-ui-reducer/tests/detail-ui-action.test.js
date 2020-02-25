@@ -4,7 +4,7 @@ import detailUiActionTypes from '../detail-ui-actionTypes';
 jest.mock('../../store')
 
 describe('detail uiActions', () => {
-  it.only('handles NAVIGATION_CHANGED action', () => {
+  it('handles NAVIGATION_CHANGED action', () => {
     const expectedActions = {
       type: detailUiActionTypes.CREATE_OBJECT_CLICKED,
       payload: {

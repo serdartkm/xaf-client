@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useReducer } from 'react';
-import useDetailState from './useDetailState';
 import { useLocation, useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Input from '../input/Input';
+import { valueChanged } from '../redux/detail-reducer/detailActions';
 import './css/style.css';
 
 function Editor({ onSave, onSaveAndClose, onDelete, onCancel }) {
@@ -24,11 +24,13 @@ function Editor({ onSave, onSaveAndClose, onDelete, onCancel }) {
   );
 }
 
-export default function DetailView(props) {
+export default function DetailView() {
   const appState = useSelector(state => state);
+  const dispatch = useDispatch();
   //  const { valueChanged, state, handleSave } = useDetailState();
   const { fieldMetaData } = appState.detailUi;
   const { detail } = appState;
+  debugger;
   const history = useHistory();
   function handleGoBack() {
     history.goBack();
@@ -41,21 +43,21 @@ export default function DetailView(props) {
 
   function handleValueChange(e) {
     const { value, name } = e.target;
-    debugger;
-    //   valueChanged({ propName: name, value });
+
+    dispatch(valueChanged({ propName: name, value }));
   }
 
   return (
     <div className='detail-view'>
       {fieldMetaData &&
         fieldMetaData.map(m => {
-          debugger;
           const name = m.name;
           const type = m.type;
           const placeholder = m.placeholder;
 
           return (
             <Input
+              key={name}
               type={type}
               value={detail[name]}
               name={name}

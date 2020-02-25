@@ -7,10 +7,10 @@ import { applicationStarted } from '../../redux/ui-reducer/uiActions';
 import { Provider } from 'react-redux';
 import store from '../../redux/store';
 import mockMetaData from '../../mock-data/mockMetaData';
-debugger;
+
 
 describe('Navigation component', () => {
-  it.only('All Links are displayed', () => {
+  it('All Links are displayed', () => {
     store.dispatch(
       applicationStarted({
         objectName: 'employee',

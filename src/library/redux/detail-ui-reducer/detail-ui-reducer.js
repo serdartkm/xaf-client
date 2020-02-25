@@ -4,9 +4,12 @@ const initState = {
   fieldMetaData: []
 };
 export default function detailUiReducer(state = initState, action) {
+  let nextState=null
   switch (action.type) {
     case detailUiActionType.CREATE_OBJECT_CLICKED:
-      return { ...state, fieldMetaData: action.payload.fieldMetaData };
+      nextState ={ ...state, fieldMetaData: action.payload.fieldMetaData };
+      debugger;
+      return nextState
 
     default:
       return state;

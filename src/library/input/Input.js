@@ -15,7 +15,7 @@ export default function Input({
    
       return (
         <input
-          data-testid='input'
+          data-testid='text'
           className='input'
           type='text'
           placeholder={placeholder}
@@ -27,7 +27,7 @@ export default function Input({
     case 'email':
       return (
         <input
-          data-testid='input'
+          data-testid='email'
           className='input'
           type='email'
           placeholder={placeholder}
@@ -39,7 +39,7 @@ export default function Input({
     case 'password':
       return (
         <input
-          data-testid='input'
+          data-testid='password'
           className='input'
           type='password'
           placeholder={placeholder}
@@ -51,7 +51,7 @@ export default function Input({
     case 'file':
       return (
         <input
-          data-testid='input'
+          data-testid='file'
           className='input'
           type='file'
           onChange={onChange}
@@ -63,7 +63,7 @@ export default function Input({
     case 'date':
       return (
         <input
-          data-testid='input'
+          data-testid='date'
           className='input'
           type='date'
           onChange={onChange}
@@ -74,7 +74,7 @@ export default function Input({
     case 'checkbox':
       return (
         <input
-          data-testid='input'
+          data-testid='checkbox'
           className='input'
           type='checkbox'
           onChange={onChange}
@@ -87,7 +87,7 @@ export default function Input({
       return items.map(i => (
         <div key={i.id}>
           <input
-            data-testid={`inputId-${i.label}`}
+            data-testid={`radioId-${i.label}`}
             type='radio'
             name={name}
             value={i.id}
@@ -103,7 +103,7 @@ export default function Input({
         <select
           value={value}
           onChange={onChange}
-          data-testid='input'
+          data-testid='select'
           type='select'
           name={name}
         >
@@ -117,7 +117,7 @@ export default function Input({
     case 'search':
       return (
         <input
-          data-testid='input'
+          data-testid='search'
           className='input'
           type='search'
           onChange={onChange}

@@ -22,14 +22,14 @@ describe('Input', () => {
       </InputContainer>
     );
 
-    expect(getByTestId(/input/i)).toHaveAttribute('type', 'text');
-    expect(getByTestId(/input/i)).toHaveAttribute('name', 'firstName');
-    expect(getByTestId(/input/i)).toHaveAttribute(
+    expect(getByTestId(/text/i)).toHaveAttribute('type', 'text');
+    expect(getByTestId(/text/i)).toHaveAttribute('name', 'firstName');
+    expect(getByTestId(/text/i)).toHaveAttribute(
       'placeholder',
       'Enter Firstname'
     );
-    fireEvent.change(getByTestId('input'), { target: { value: 'dragos' } });
-    expect(getByTestId('input')).toHaveValue('dragos');
+    fireEvent.change(getByTestId('text'), { target: { value: 'dragos' } });
+    expect(getByTestId('text')).toHaveValue('dragos');
   });
 
   it('Testing Date input type', () => {
@@ -50,8 +50,8 @@ describe('Input', () => {
       </InputContainer>
     );
 
-    expect(getByTestId(/input/i)).toHaveAttribute('type', 'date');
-    expect(getByTestId(/input/i)).toHaveAttribute('name', 'birthDate');
+    expect(getByTestId(/date/i)).toHaveAttribute('type', 'date');
+    expect(getByTestId(/date/i)).toHaveAttribute('name', 'birthDate');
   });
 
   it('Testing Checkbox input type', () => {
@@ -72,10 +72,10 @@ describe('Input', () => {
       </InputContainer>
     );
 
-    expect(getByTestId(/input/i)).toHaveAttribute('type', 'checkbox');
-    expect(getByTestId(/input/i)).toHaveAttribute('name', 'male');
-    fireEvent.change(getByTestId('input'), { target: { checked: true } });
-    expect(getByTestId(/input/i)).toBeChecked();
+    expect(getByTestId(/checkbox/i)).toHaveAttribute('type', 'checkbox');
+    expect(getByTestId(/checkbox/i)).toHaveAttribute('name', 'male');
+    fireEvent.change(getByTestId('checkbox'), { target: { checked: true } });
+    expect(getByTestId(/checkbox/i)).toBeChecked();
   });
 
   it('Testing Select input type', () => {
@@ -102,10 +102,10 @@ describe('Input', () => {
       </InputContainer>
     );
 
-    expect(getByTestId(/input/i)).toHaveAttribute('type', 'select');
-    expect(getByTestId(/input/i)).toHaveAttribute('name', 'numbers');
-    fireEvent.change(getByTestId('input'), { target: { value: 3 } });
-    expect(getByTestId('input')).toHaveValue('3');
+    expect(getByTestId(/select/i)).toHaveAttribute('type', 'select');
+    expect(getByTestId(/select/i)).toHaveAttribute('name', 'numbers');
+    fireEvent.change(getByTestId('select'), { target: { value: 3 } });
+    expect(getByTestId('select')).toHaveValue('3');
   });
 
 
@@ -133,10 +133,10 @@ describe('Input', () => {
       </InputContainer>
     );
 
-     expect(getByTestId('inputId-one')).toHaveAttribute('type', 'radio');
-     expect(getByTestId('inputId-one')).toHaveAttribute('name', 'numbers');
+     expect(getByTestId('radioId-one')).toHaveAttribute('type', 'radio');
+     expect(getByTestId('radioId-one')).toHaveAttribute('name', 'numbers');
 
-     fireEvent.change(getByTestId('inputId-one'), { target: { checked: true } });
-     expect(getByTestId('inputId-one')).toBeChecked();
+     fireEvent.change(getByTestId('radioId-one'), { target: { checked: true } });
+     expect(getByTestId('radioId-one')).toBeChecked();
   });
 });
