@@ -29,3 +29,6 @@ describe('detailActions', () => {
     expect(createObject({ objectName: 'employee' })).toEqual(expectedAction);
   });
 });
+
+it.todo('insertDocument dispatches INSERTING_DOCUMENT action');
+it.todo('updateDocument dispatches UPDATING_DOCUMENT action');

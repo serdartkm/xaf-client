@@ -8,16 +8,36 @@ import './css/style.css';
 function Editor({ onSave, onSaveAndClose, onDelete, onCancel }) {
   return (
     <div className='editor'>
-      <button className='btn' type='button' onClick={onSave}>
+      <button
+        data-testid='save-btn'
+        className='btn'
+        type='button'
+        onClick={onSave}
+      >
         Save
       </button>
-      <button className='btn' type='button' onClick={onSaveAndClose}>
+      <button
+        data-testid='save-close-btn'
+        className='btn'
+        type='button'
+        onClick={onSaveAndClose}
+      >
         Save And Close
       </button>
-      <button className='btn' type='button' onClick={onDelete}>
+      <button
+        data-testid='delete-btn'
+        className='btn'
+        type='button'
+        onClick={onDelete}
+      >
         Delete
       </button>
-      <button className='btn' type='button' onClick={onCancel}>
+      <button
+        data-testid='cancel-btn'
+        className='btn'
+        type='button'
+        onClick={onCancel}
+      >
         Cancel
       </button>
     </div>
@@ -27,7 +47,7 @@ function Editor({ onSave, onSaveAndClose, onDelete, onCancel }) {
 export default function DetailView() {
   const appState = useSelector(state => state);
   const dispatch = useDispatch();
-  //  const { valueChanged, state, handleSave } = useDetailState();
+
   const { fieldMetaData } = appState.detailUi;
   const { detail } = appState;
   debugger;

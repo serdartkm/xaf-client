@@ -1,22 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ListView from '../list-view/ListView';
 import DetailView from '../detail-view/DetailView';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import { navigationChanges } from '../redux/ui-reducer/uiActions';
 import './css/style.css';
-
 export default function Navigation() {
   const appState = useSelector(state => state);
   const dispatch = useDispatch();
+
   const { objectNames } = appState.ui;
 
   function handleChangeNav({ objectName }) {
     dispatch(navigationChanges({ objectName }));
   }
 
+
   return (
-    <BrowserRouter>
+    <BrowserRouter >
       <div className='nav'>
         <div className='nav-link'>
           {objectNames &&
@@ -24,6 +25,7 @@ export default function Navigation() {
               return (
                 <div className='link' key={objectName}>
                   <Link
+                    data-testid={`nav-${objectName}`}
                     to={`/${objectName}`}
                     onClick={() => handleChangeNav({ objectName })}
                   >

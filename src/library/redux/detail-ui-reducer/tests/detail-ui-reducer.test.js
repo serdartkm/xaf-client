@@ -12,4 +12,6 @@ describe('DetailUiReducer', () => {
       })
     ).toEqual({ fieldMetaData });
   });
+
+  it.todo('DetailUiReducer  handles CLOSE_DETAIL_VIEW_CLICKED action ');
 });

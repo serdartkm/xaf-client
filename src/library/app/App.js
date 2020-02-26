@@ -3,7 +3,10 @@ import { Provider } from 'react-redux';
 import store from '../redux/store';
 import Navigation from '../navigation/Navigation';
 import CrudContextProvider from '../CRUDContext';
-import { applicationStarted } from '../redux/ui-reducer/uiActions';
+import {
+  applicationStarted,
+  navigationChanges
+} from '../redux/ui-reducer/uiActions';
 import mockMetaData from '../mock-data/mockMetaData';
 export default function App({ metaData, defaultObjectName }) {
   const appMetaData = metaData ? metaData : mockMetaData;
@@ -14,6 +17,8 @@ export default function App({ metaData, defaultObjectName }) {
       metaData: appMetaData
     })
   );
+
+  store.dispatch(navigationChanges({ objectName: defaultObjectName }));
   return (
     <Provider store={store}>
       <CrudContextProvider>

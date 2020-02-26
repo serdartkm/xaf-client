@@ -53,4 +53,5 @@ describe('actions', () => {
         expect(actions).toEqual(expectedActions);
       });
   });
+
 });

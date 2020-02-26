@@ -22,7 +22,11 @@ export default function ListView() {
 
   return (
     <div className='list-view'>
-      <Link to={`/edit/${objectName}`} onClick={handleCreateObject}>
+      <Link
+        data-testid={`new-${objectName}`}
+        to={`/edit/${objectName}`}
+        onClick={handleCreateObject}
+      >
         New
       </Link>
       {objectName}

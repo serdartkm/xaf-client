@@ -34,4 +34,8 @@ describe('listReducer', () => {
       })
     ).toEqual({ finding: false, list: [], error: 'Error happened' });
   });
+
+  it.todo('listReducer handled INSERTING_DOCUMENT_FULFILLED')
+  it.todo('listReducer handled UPDATING_DOCUMENT_FULFILLED')
+  
 });

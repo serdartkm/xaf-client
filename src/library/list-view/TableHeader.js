@@ -6,7 +6,7 @@ export default function TableHeader({ columnNames }) {
       {columnNames &&
         columnNames.map(c => {
           return (
-            <div className='table-head' key={c}>
+            <div data-testid={`col-${c}`} className='table-head' key={c}>
               {c}
             </div>
           );

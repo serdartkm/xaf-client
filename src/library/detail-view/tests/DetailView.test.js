@@ -10,10 +10,14 @@ import mockMetaData from '../../mock-data/mockMetaData';
 import DetailView from '../DetailView';
 
 describe('DetailView', () => {
-  it('Renders corrent fields', () => {
+  beforeEach(()=>{
     store.dispatch(
       applicationStarted({ objectName: 'employee', metaData: mockMetaData })
     );
+
+  })
+  it('New button on ListView clicked', () => {
+
     store.dispatch(createObjectClicked({ objectName: 'employee' }));
     const { getByTestId, getByPlaceholderText } = render(
       <Provider store={store}>
@@ -32,4 +36,21 @@ describe('DetailView', () => {
     });
     expect(getByPlaceholderText(/Enter firstname/i)).toHaveValue('dragos');
   });
+
+
+  it('Update button has been clicked',()=>{
+    //application started
+    //employee list selected by default
+    //listview fetches some data
+    //user clicked edit button on listnew for  for editing specific user
+    //user edites documents
+    //user clickes update btn (update adn close btn)
+    // when detailview closed and checkes whether data has been updated
+    
+
+
+  });
+
+
+  it.todo('DetailView save button clicked');
 });

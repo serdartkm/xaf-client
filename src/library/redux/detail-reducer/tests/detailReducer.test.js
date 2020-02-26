@@ -22,3 +22,5 @@ describe('DetailReducer', () => {
     ).toEqual({ firstName: 'dragos', lastName: '' });
   });
 });
+
+

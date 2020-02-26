@@ -25,4 +25,7 @@ describe('detail uiActions', () => {
       createObjectClicked({ objectName: 'employee' })
     ).toEqual(expectedActions);
   });
+
+  it.todo('closeDetaiView and creates CLOSE_DETAIL_VIEW_CLICKED action ')
+
 });
