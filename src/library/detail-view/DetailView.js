@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useReducer } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../input/Input';
 import { valueChanged } from '../redux/detail-reducer/detailActions';

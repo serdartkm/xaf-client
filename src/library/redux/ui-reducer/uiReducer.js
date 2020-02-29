@@ -1,5 +1,5 @@
 import uiActionTypes from './uiActionTypes';
-const initState = {
+const initState = (window.Cypress && window.initialState) || {
   propNames: [],
   objectName: null,
   objectNames: [],
@@ -8,25 +8,22 @@ const initState = {
 export default function uiReducer(state = initState, action) {
   let nextState = null;
   switch (action.type) {
-    case uiActionTypes.APPLICATION_STARTED:
+    case uiActionTypes.NAVIGATION_LOADED:
       nextState = {
         ...state,
-        objectName: action.payload.objectName,
-        propNames: action.payload.propNames,
-        objectNames: action.payload.objectNames,
-        metaData: action.payload.metaData
+        objectNames: action.payload.objectNames
       };
-      debugger;
+
       return nextState;
 
     case uiActionTypes.NAVIGATION_CHANGED:
-      nextState ={
+      nextState = {
         ...state,
         objectName: action.objectName,
         propNames: action.propNames
       };
-      debugger;
-      return nextState
+   
+      return nextState;
 
     default:
       return state;

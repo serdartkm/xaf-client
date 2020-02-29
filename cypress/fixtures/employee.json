@@ -1,0 +1,16 @@
+[
+  {
+    "_id": 1,
+    "firstName": "Diego",
+    "lastName": "Maradona",
+    "birthDate": "01.01.1952",
+    "birthPlace": "Brazil"
+  },
+  {
+    "_id": 1,
+    "firstName": "Cristiano",
+    "lastName": "Ronalsdo",
+    "birthDate": "01.01.1980",
+    "birthPlace": "Brazil"
+  }
+]

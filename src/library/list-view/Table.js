@@ -4,7 +4,7 @@ import TableBody from './TableBody';
 import { useSelector } from 'react-redux';
 export default function Table() {
   const appState = useSelector(state => state);
-  const { list } = appState;
+  const { list } = appState.list;
   const { propNames, objectName } = appState.ui;
 debugger;
   return (

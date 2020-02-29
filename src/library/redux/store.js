@@ -5,11 +5,13 @@ import reducers from './reducer';
 
 const loggerMiddleware = createLogger();
 
-export default createStore(
-  reducers,
-  // { ui: { objectName: 'employee' } },
-  applyMiddleware(
-    thunkMiddleware, // lets us dispatch() functions
-    loggerMiddleware // neat middleware that logs actions
-  )
-);
+export default function createAppStore({ metaData }) {
+  return createStore(
+    reducers,
+    { ui: { metaData } },
+    applyMiddleware(
+      thunkMiddleware, // lets us dispatch() functions
+      loggerMiddleware // neat middleware that logs actions
+    )
+  );
+}

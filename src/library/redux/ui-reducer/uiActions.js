@@ -1,23 +1,25 @@
 import actionTypes from './uiActionTypes';
 import getPropNames from './getPropNames';
 import getObjectNames from './getObjectNames';
-import store from '../store';
-export function applicationStarted({ objectName, metaData }) {
-  const propNames = getPropNames({ objectName, metaData });
-  const objectNames = getObjectNames({ objectName, metaData });
+
+export function navigationLoaded() {
+
+  const {metaData} = window.store.getState().ui
+  debugger;
+  const objectNames = getObjectNames({ metaData });
   return {
-    type: actionTypes.APPLICATION_STARTED,
+    type: actionTypes.NAVIGATION_LOADED,
     payload: {
-      objectName,
-      objectNames,
-      propNames,
-      metaData
+      objectNames
     }
   };
 }
 
 export function navigationChanges({ objectName }) {
-  const { metaData } = store.getState().ui;
+  // const { metaData } =
+  //   (window.Cypress && window.store.getState().ui) || store.getState().ui;
+  const {metaData} = window.store.getState().ui
+  debugger;
   const propNames = getPropNames({ objectName, metaData });
 
   return {

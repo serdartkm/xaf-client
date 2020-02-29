@@ -17,13 +17,13 @@ export default function TableBody(props) {
           const obj = c;
 
           return (
-            <div className='table-row' key={i}>
+            <div data-testid='row' className='table-row' key={i}>
               {columnNames &&
                 columnNames.map((p, a) => {
                   const value = c[p];
                   if (value === '') {
                     return (
-                      <div key={a} className='table-data'>
+                      <div  key={a} className='table-data'>
                         {''}{' '}
                       </div>
                     );
@@ -32,7 +32,7 @@ export default function TableBody(props) {
                     const fieldData = c[p];
 
                     return (
-                      <div key={a} className='table-data'>
+                      <div  key={a} className='table-data'>
                         {fieldData}
                       </div>
                     );

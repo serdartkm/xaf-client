@@ -1,9 +1,9 @@
 import detailUiActionTypes from './detail-ui-actionTypes';
-import store from '../store';
 import getFieldsMetaData from './getFieldsMetaData';
 import createObject from './createObjectHelper';
 export function createObjectClicked({ objectName }) {
-  const { metaData } = store.getState().ui;
+  const { metaData } =window.store.getState().ui;
+  debugger
   const object = createObject({ objectName, metaData });
   const fieldMetaData = getFieldsMetaData({ objectName, metaData });
   return {

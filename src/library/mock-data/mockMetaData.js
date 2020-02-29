@@ -30,6 +30,11 @@ export default [
         name: 'visaNumber',
         type: 'text',
         placeholder: 'Enter Visa Number'
+      },
+      {
+        name: 'visaIssuedDate',
+        type: 'date',
+       
       }
     ]
   }
