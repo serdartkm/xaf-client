@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { CRUDContext } from '../CRUDContext';
+import React from 'react';
 export default function TableHeader({ columnNames }) {
   return (
     <div className='table-row'>
@@ -11,8 +10,12 @@ export default function TableHeader({ columnNames }) {
             </div>
           );
         })}
-      <div className='table-head'>Edit</div>
-      <div className='table-head'>Delete</div>
+      <div data-testid={`col-edit`} className='table-head'>
+        Edit
+      </div>
+      <div data-testid={`col-delete`} className='table-head'>
+        Delete
+      </div>
     </div>
   );
 }

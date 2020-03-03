@@ -10,5 +10,4 @@ describe('Home Page', () => {
       cy.navigationClicked({ objectName });
     });
   });
-   
 });

@@ -17,22 +17,21 @@ export default function TableBody(props) {
           const obj = c;
 
           return (
-            <div data-testid='row' className='table-row' key={i}>
+            <div data-testid='row-data' className='table-row' key={i}>
               {columnNames &&
                 columnNames.map((p, a) => {
                   const value = c[p];
                   if (value === '') {
                     return (
-                      <div  key={a} className='table-data'>
+                      <div key={a} className='table-data'>
                         {''}{' '}
                       </div>
                     );
                   }
                   if (value) {
                     const fieldData = c[p];
-
                     return (
-                      <div  key={a} className='table-data'>
+                      <div data-testid='cell' key={a} className='table-data'>
                         {fieldData}
                       </div>
                     );

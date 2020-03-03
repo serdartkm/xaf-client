@@ -18,6 +18,7 @@ export default function(state = initState, action) {
     case actionTypes.FINDING_LIST_FULFILLED:
       nextState = {
         ...state,
+        finding: false,
         list: action.payload.result
       };
   
