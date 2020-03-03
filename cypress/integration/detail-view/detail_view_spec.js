@@ -41,10 +41,11 @@ describe('User Enters input data', () => {
     });
   });
 });
-describe('User clicked Save button', () => {
+describe('User Saves new data by clicking Save button', () => {
   objectNames.forEach(objectName => {
     it.only(`list and detail state for${objectName} updated`, () => {
       cy.userClickedNewBtn({ objectName });
+    //  cy.saveAPICall()
       const fields = getFieldsMetaData({ metaData, objectName });
       cy.userEntersInputData({ fields });
     });
