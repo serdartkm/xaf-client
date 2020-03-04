@@ -25,7 +25,9 @@ export default [
       {
         name: 'visaNumber',
         type: 'text',
-        placeholder: 'Enter Visa Number'
+        // placeholder: 'Enter Visa Number',
+        // validation:['NotEmpty','MaxLength','MinLength','ofType'],
+        // link:{type:'one-to-one',target:'passport'}
       }
     ]
   },

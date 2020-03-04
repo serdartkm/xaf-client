@@ -6,7 +6,7 @@ export default function Table() {
   const appState = useSelector(state => state);
   const { list } = appState.list;
   const { propNames, objectName } = appState.ui;
-debugger;
+
   return (
     <div>
       <TableHeader objectName={objectName} columnNames={propNames} />

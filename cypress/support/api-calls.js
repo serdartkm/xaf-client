@@ -8,7 +8,11 @@ Cypress.Commands.add('findAPICall', ({ objectName }) => {
   );
 });
 
-Cypress.Commands.add('saveAPICall', ({objectName,body}) => {
-  cy.server();
-  cy.route({});
+Cypress.Commands.add('saveAPICall', ({ objectName }) => {
+  cy.server({ method: 'POST' });
+  cy.route({
+    url: `http://localhost:8000/insertOne?document=${objectName}`,
+    response: { _id: '1234' },
+    status: 201
+  }).as(objectName);
 });

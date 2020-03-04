@@ -44,10 +44,23 @@ describe('User Enters input data', () => {
 describe('User Saves new data by clicking Save button', () => {
   objectNames.forEach(objectName => {
     it.only(`list and detail state for${objectName} updated`, () => {
+      cy.saveAPICall({ objectName });
       cy.userClickedNewBtn({ objectName });
-    //  cy.saveAPICall()
+
       const fields = getFieldsMetaData({ metaData, objectName });
       cy.userEntersInputData({ fields });
+
+      cy.get('[data-testid=save-close-btn]').click();
+      cy.wait(`@${objectName}`);
+      cy.fixture(`${objectName}.json`).then(data => {
+        cy.window()
+          .its('store')
+          .invoke('getState')
+          .its('list')
+          .should(list => {
+            //  expect(list.list).to.have.length(data.length + 1);
+          });
+      });
     });
   });
 });

@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../input/Input';
-import { valueChanged } from '../redux/detail-reducer/detailActions';
+import { valueChanged, insertOne } from '../redux/detail-reducer/detailActions';
 import './css/style.css';
 
 function Editor({ onSave, onSaveAndClose, onDelete, onCancel }) {
@@ -50,17 +50,20 @@ export default function DetailView() {
 
   const { fieldMetaData } = appState.detailUi;
   const { detail } = appState;
-  debugger;
+  const { objectName } = appState.ui;
   const history = useHistory();
   function handleGoBack() {
     history.goBack();
   }
 
   function handleSaveAndClose() {
-    //  handleSave();
+      handleSave();
     handleGoBack();
   }
 
+  function handleSave() {
+    dispatch(insertOne({ objectName }));
+  }
   function handleValueChange(e) {
     const { value, name } = e.target;
 
@@ -87,7 +90,7 @@ export default function DetailView() {
           );
         })}
 
-      <Editor onSave={null} onSaveAndClose={handleSaveAndClose} />
+      <Editor onSave={handleSave} onSaveAndClose={handleSaveAndClose} />
     </div>
   );
 }

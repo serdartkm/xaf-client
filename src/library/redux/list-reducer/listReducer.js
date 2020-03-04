@@ -1,5 +1,5 @@
 import actionTypes from './listActionTypes';
-
+import detailActionTypes from '../detail-reducer/detailActionTypes';
 const initState = {
   list: [],
   finding: false,
@@ -21,7 +21,7 @@ export default function(state = initState, action) {
         finding: false,
         list: action.payload.result
       };
-  
+
       return nextState;
     case actionTypes.FINDING_LIST_FAILED:
       nextState = {
@@ -31,7 +31,11 @@ export default function(state = initState, action) {
       };
 
       return nextState;
-
+    case detailActionTypes.INSERTING_DOCUMENT_FULFILLED:
+      nextState = {
+        ...state,
+        list: [...state.list, action.payload.data]
+      };
     default:
       return state;
   }

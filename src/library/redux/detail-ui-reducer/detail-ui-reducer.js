@@ -8,7 +8,7 @@ export default function detailUiReducer(state = initState, action) {
   switch (action.type) {
     case detailUiActionType.CREATE_OBJECT_CLICKED:
       nextState ={ ...state, fieldMetaData: action.payload.fieldMetaData };
-      debugger;
+
       return nextState
 
     default:
