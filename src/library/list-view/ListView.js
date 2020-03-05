@@ -13,6 +13,7 @@ export default function ListView() {
   const location = useLocation();
 
   const { objectName } = appState.ui;
+  const { list } = appState.list;
   function handleCreateObject() {
     dispatch(createObjectClicked({ objectName }));
   }
@@ -26,7 +27,7 @@ export default function ListView() {
   }, []);
 
   useEffect(() => {
-    if (objectName) {
+    if (objectName && list && list.length === 0) {
       dispatch(findList({ objectName }));
     }
   }, [objectName]);

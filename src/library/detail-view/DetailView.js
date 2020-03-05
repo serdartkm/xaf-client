@@ -62,6 +62,7 @@ export default function DetailView() {
   }
 
   function handleSave() {
+
     dispatch(insertOne({ objectName }));
   }
   function handleValueChange(e) {

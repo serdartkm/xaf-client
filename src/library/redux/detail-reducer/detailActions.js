@@ -10,7 +10,7 @@ export function valueChanged({ propName, value }) {
 
 export function createObject({ objectName }) {
   const { metaData } = store.getState().ui;
-  debugger;
+
   const object = createObjectHelper({ objectName, metaData });
   return {
     type: actionTypes.CREATED_OBJECT,
@@ -19,6 +19,7 @@ export function createObject({ objectName }) {
 }
 
 export function insertOne({ objectName, data }) {
+ 
   return (dispatch, getState) => {
     const detail = getState().detail;
     dispatch({ type: actionTypes.INSERTING_DOCUMENT });
@@ -32,9 +33,11 @@ export function insertOne({ objectName, data }) {
           type: actionTypes.INSERTING_DOCUMENT_FULFILLED,
           payload: { data: { ...detail, _id: json._id } }
         };
+    
         dispatch(action);
       })
       .catch(err => {
+     
         dispatch({
           type: actionTypes.INSERTING_DOCUMENT_FAILED,
           payload: { error: err }

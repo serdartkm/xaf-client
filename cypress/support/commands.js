@@ -18,8 +18,4 @@ Cypress.Commands.add('listViewDisplay', ({ objectName }) => {
   });
 });
 
-Cypress.Commands.add('newBtnClicked', ({ objectName }) => {
-  cy.visit(`/${objectName}`);
-  // cy.findAPICall({ objectName });
-  cy.get(`[data-testid=new-${objectName}]`).click();
-});
+

@@ -36,6 +36,8 @@ export default function(state = initState, action) {
         ...state,
         list: [...state.list, action.payload.data]
       };
+
+      return nextState
     default:
       return state;
   }
