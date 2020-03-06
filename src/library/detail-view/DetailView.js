@@ -57,12 +57,11 @@ export default function DetailView() {
   }
 
   function handleSaveAndClose() {
-      handleSave();
     handleGoBack();
+    handleSave();
   }
 
   function handleSave() {
-
     dispatch(insertOne({ objectName }));
   }
   function handleValueChange(e) {

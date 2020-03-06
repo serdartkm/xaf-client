@@ -24,8 +24,7 @@ Cypress.Commands.add('userEntersInputData', ({ field }) => {
 });
 
 Cypress.Commands.add('userClickedNewBtn', ({ objectName }) => {
-  cy.visit(`/${objectName}`);
-  cy.findAPICall({ objectName });
+
   cy.get(`[data-testid=new-${objectName}]`).click();
 });
 
@@ -52,16 +51,13 @@ Cypress.Commands.add('navigationClicked', ({ objectName }) => {
 });
 
 Cypress.Commands.add('userClickedSaveButton', ({ objectName, btnType }) => {
-  cy.saveAPICall({ objectName });
+ 
 
   if (btnType === 'save') {
     cy.get('[data-testid=save-btn]').click();
   } else {
     cy.get('[data-testid=save-close-btn]').click();
   }
-  cy.fixture(`${objectName}.json`).then(list => {
-    cy.get('[data-testid=row-data]').should('have.length', list.length + 1);
-  });
 
-  cy.wait(`@${objectName}`);
+
 });

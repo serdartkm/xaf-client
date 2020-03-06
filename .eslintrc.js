@@ -13,7 +13,9 @@ module.exports = {
     Cypress: 'readonly',
     context: 'readonly',
     before: 'readonly',
-    expect:'readonly'
+    expect:'readonly',
+    beforeEach:'readonly',
+    afterAll:'readonly'
   },
   parserOptions: {
     ecmaFeatures: {

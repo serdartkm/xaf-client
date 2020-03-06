@@ -8,11 +8,13 @@ Cypress.Commands.add('findAPICall', ({ objectName }) => {
   );
 });
 
-Cypress.Commands.add('saveAPICall', ({ objectName }) => {
+Cypress.Commands.add('saveAPICall', ({ objectName, delay = 0 }) => {
   cy.server({ method: 'POST' });
   cy.route({
     url: `http://localhost:8000/insertOne?document=${objectName}`,
     response: { _id: '1234' },
-    status: 201
+    status: 201,
+    delay
   }).as(objectName);
+  cy.wait(`@${objectName}`);
 });
