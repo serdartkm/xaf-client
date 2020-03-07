@@ -1,9 +1,15 @@
 .input {
-    padding: 3px;
-    margin-bottom: 2px;
-  }
-  
-  .btn {
-    margin-right: 2px;
-    min-width: 80px;
-  }
+  padding: 5px;
+  flex: 1;
+}
+
+.btn {
+  margin-right: 2px;
+  min-width: 80px;
+}
+
+.input-container {
+  flex: 1;
+  display: flex;
+  margin: 3px;
+}

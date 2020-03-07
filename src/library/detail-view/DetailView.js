@@ -10,7 +10,7 @@ function Editor({ onSave, onSaveAndClose, onDelete, onCancel }) {
     <div className='editor'>
       <button
         data-testid='save-btn'
-        className='btn'
+        className='detail-btn'
         type='button'
         onClick={onSave}
       >
@@ -18,7 +18,7 @@ function Editor({ onSave, onSaveAndClose, onDelete, onCancel }) {
       </button>
       <button
         data-testid='save-close-btn'
-        className='btn'
+        className='detail-btn'
         type='button'
         onClick={onSaveAndClose}
       >
@@ -26,7 +26,7 @@ function Editor({ onSave, onSaveAndClose, onDelete, onCancel }) {
       </button>
       <button
         data-testid='delete-btn'
-        className='btn'
+        className='detail-btn'
         type='button'
         onClick={onDelete}
       >
@@ -34,7 +34,7 @@ function Editor({ onSave, onSaveAndClose, onDelete, onCancel }) {
       </button>
       <button
         data-testid='cancel-btn'
-        className='btn'
+        className='detail-btn'
         type='button'
         onClick={onCancel}
       >
@@ -72,25 +72,33 @@ export default function DetailView() {
 
   return (
     <div className='detail-view'>
-      {fieldMetaData &&
-        fieldMetaData.map(m => {
-          const name = m.name;
-          const type = m.type;
-          const placeholder = m.placeholder;
+      <div className="detail-editor-container">
+        <Editor onSave={handleSave} onSaveAndClose={handleSaveAndClose} />
+      </div>
+      <div className="detail-input-container">
+        <fieldset>
+          <legend>{objectName}:</legend>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {fieldMetaData &&
+              fieldMetaData.map(m => {
+                const name = m.name;
+                const type = m.type;
+                const placeholder = m.placeholder;
 
-          return (
-            <Input
-              key={name}
-              type={type}
-              value={detail[name]}
-              name={name}
-              placeholder={placeholder}
-              onChange={handleValueChange}
-            />
-          );
-        })}
-
-      <Editor onSave={handleSave} onSaveAndClose={handleSaveAndClose} />
+                return (
+                  <Input
+                    key={name}
+                    type={type}
+                    value={detail[name]}
+                    name={name}
+                    placeholder={placeholder}
+                    onChange={handleValueChange}
+                  />
+                );
+              })}
+          </div>
+        </fieldset>
+      </div>
     </div>
   );
 }

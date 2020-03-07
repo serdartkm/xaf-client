@@ -17,6 +17,7 @@ objectNames
         cy.findAPICall({ objectName });
 
         cy.userClickedNewBtn({ objectName });
+        cy.pause()
         cy.fixture(`${objectName}.json`).then(function(list) {
           this.list = list;
         });
