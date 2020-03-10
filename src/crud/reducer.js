@@ -10,7 +10,7 @@ export const initState = {
   loading: false,
   error: null
 };
-export default function reducer(state = initState, action) {
+export default function reducer(state, action) {
   switch (action.type) {
     case actionTypes.VALUE_CHANGED:
       return {
@@ -30,7 +30,7 @@ export default function reducer(state = initState, action) {
         list: action.payload.data
       };
     case actionTypes.FINDING_FAILED:
-      return { ...state, error: action.payload.error };
+      return { ...state, loading: false, error: action.payload.error };
 
     case actionTypes.INSERT_ONE_STARTED:
       return { ...state, loading: true };
@@ -72,8 +72,18 @@ export default function reducer(state = initState, action) {
     case actionTypes.DELETE_ONE_FAILED:
       return { ...state, loading: false, error: action.payload.error };
 
-    case actionTypes.CREATE_OBJECT:
-      return { ...state, obj: action.payload.obj };
+    case actionTypes.OBJECT_CREATED:
+      return {
+        ...state,
+        obj: action.payload.obj,
+        fields: action.payload.fields
+      };
+    case actionTypes.OBJECT_SELECTED:
+      return {
+        ...state,
+        obj: action.payload.obj,
+        fields: action.payload.fields
+      };
     default:
       return state;
   }

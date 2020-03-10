@@ -1,0 +1,30 @@
+.detail-view {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #ffe0b2;
+}
+
+.editor {
+  padding: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-left: 18px;
+}
+
+.detail-btn {
+  height: 60px;
+  width: 70px;
+  margin-right: 3px;
+}
+/*# sourceMappingURL=style.css.map */

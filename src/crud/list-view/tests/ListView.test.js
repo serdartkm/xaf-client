@@ -1,20 +1,24 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import ListView from '../ListView';
+import ListView from '../../list-view/ListView';
 import { BrowserRouter } from 'react-router-dom';
-import CRUDContextProvider from '../../CRUDContext';
+import CrudProvider from '../../CrudProvider';
 describe('ListView component', () => {
   it.skip('Generates ListView with required fields', () => {
     const { getByText } = render(
       <BrowserRouter>
-        <CRUDContextProvider
-          columnNames={['firstName', 'lastName']}
-          list={[{ firstName: 'Gurban', lastName: 'Jumyev' }]}
-          objectName='employee'
-        >
-          <ListView />
-        </CRUDContextProvider>
+        <CrudProvider>
+          {({ state: { list, objectName, propNames } }) => {
+            return (
+              <ListView
+                list={list}
+                objectName={objectName}
+                propNames={propNames}
+              />
+            );
+          }}
+        </CrudProvider>
       </BrowserRouter>
     );
     expect(getByText(/Gurban/i)).toBeVisible();

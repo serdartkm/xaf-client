@@ -1,37 +1,47 @@
+import createObjectHelper from '../createObjectHelper';
+import mockData from '../mock-data/mockMetaData';
+import getFieldsMetaData from '../getFieldsMetaData';
 import reducer from '../reducer';
 import { initState } from '../reducer';
 import actionTypes from '../actionTypes';
+
+const obj = createObjectHelper({
+  metaData: mockData,
+  objectName: 'employee'
+});
+const fields = getFieldsMetaData({
+  metaData: mockData,
+  objectName: 'employee'
+});
 describe('Reducer', () => {
   it('handles VALUE_CHANGE action', () => {
     expect(
-      reducer(undefined, {
+      reducer(initState, {
         type: actionTypes.VALUE_CHANGED,
         payload: {
           propName: 'firstName',
           value: 'dragos'
         }
       })
-    ).toEqual({
-      ...initState,
-      obj: { ...initState.obj, firstName: 'dragos' }
-    });
+    ).toStrictEqual({ ...initState, obj: { firstName: 'dragos' } });
   });
-
+  //
   it('handles FINDING_STARTED', () => {
     expect(
-      reducer(undefined, {
+      reducer(initState, {
         type: actionTypes.FINDING_STARTED
       })
-    ).toEqual({ ...initState, loading: true });
+    ).toStrictEqual({ ...initState, loading: true });
   });
 
   it('handles FINDING_SUCCESS', () => {
+    const currentState ={...initState,loading:true}
     expect(
-      reducer(undefined, {
+      reducer(currentState, {
         type: actionTypes.FINDING_SUCCESS,
         payload: { data: ['one', 'two'] }
       })
-    ).toEqual({
+    ).toStrictEqual({
       ...initState,
       loading: false,
       success: true,
@@ -40,18 +50,24 @@ describe('Reducer', () => {
   });
 
   it('handles FINDING_FAILED', () => {
+    const currentState = { ...initState, loading: true };
     expect(
-      reducer(undefined, {
+      reducer(currentState, {
         type: actionTypes.FINDING_FAILED,
         payload: { error: 'error happened' }
       })
-    ).toEqual({ ...initState, error: 'error happened' });
+    ).toStrictEqual({
+      ...currentState,
+      loading: false,
+      error: 'error happened'
+    });
   });
 
   it('handles INSERT_ONE_STARTED', () => {
+
     expect(
-      reducer(undefined, { type: actionTypes.INSERT_ONE_STARTED })
-    ).toEqual({ ...initState, loading: true });
+      reducer(initState, { type: actionTypes.INSERT_ONE_STARTED })
+    ).toStrictEqual({...initState, loading: true });
   });
 
   it('handles INSERT_ONE_SUCCESS', () => {
@@ -201,13 +217,20 @@ describe('Reducer', () => {
     ).toEqual({ ...currentState, loading: false, error: 'error happened' });
   });
 
-  it('handles CREATE_OBJECT', () => {
-    const object = { firstName: '', lastName: '' };
+  it('handles OBJECT SELECTED', () => {
     expect(
       reducer(undefined, {
-        type: actionTypes.CREATE_OBJECT,
-        payload: { obj: object }
+        type: actionTypes.OBJECT_SELECTED,
+        payload: { obj, fields }
       })
-    ).toEqual({ ...initState, obj: object });
+    ).toStrictEqual({ obj, fields });
+  });
+  it('handle OBJECT CREATED', () => {
+    expect(
+      reducer(undefined, {
+        type: actionTypes.OBJECT_CREATED,
+        payload: { obj, fields }
+      })
+    ).toStrictEqual({ obj, fields });
   });
 });

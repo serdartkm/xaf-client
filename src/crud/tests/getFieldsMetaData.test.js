@@ -1,5 +1,5 @@
 import getFieldsMetaData from '../getFieldsMetaData';
-import mockData from '../../../mock-data/mockMetaData';
+import mockData from '../mock-data/mockMetaData'
 describe('getFieldsMetaData', () => {
   it('return correct fields metadata', () => {
     expect(

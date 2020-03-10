@@ -1,5 +1,5 @@
 import createObjectHelper from '../createObjectHelper';
-import mockData from '../../../mock-data/mockMetaData';
+import mockData from '../mock-data/mockMetaData';
 describe('createObjectHelper', () => {
   it('returns an object with all props and initial empty values', () => {
     expect(

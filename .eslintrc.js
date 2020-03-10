@@ -13,9 +13,12 @@ module.exports = {
     Cypress: 'readonly',
     context: 'readonly',
     before: 'readonly',
-    expect:'readonly',
-    beforeEach:'readonly',
-    afterAll:'readonly'
+    expect: 'readonly',
+    beforeEach: 'readonly',
+    afterAll: 'readonly',
+    process: 'readonly',
+    jest: 'readonly',
+    global: 'readonly'
   },
   parserOptions: {
     ecmaFeatures: {
