@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import 'whatwg-fetch';
 import * as serviceWorker from './serviceWorker';
 import Authentication from './auth/Authentication';
+import { Provider } from 'react-redux';
 import CrudApplication from './crud/CrudApplication';
 import { BrowserRouter } from 'react-router-dom';
 import Navigation from './nav/Navigation';
@@ -10,6 +11,7 @@ import SideBar from './nav/SideBar';
 import CrudSideNav from './crud/CrudSideNav';
 import AuthSideNav from './auth/AuthSideNav';
 import mockMetaData from './crud/mock-data/mockMetaData';
+import store from './store';
 function RenderSideBar() {
   return (
     <SideBar>
@@ -36,25 +38,27 @@ function RenderSideBar() {
 }
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Navigation>
-      <RenderSideBar />
-    </Navigation>
-    <div
-      style={{
-        position: 'absolute',
-        top: 108,
-        left: 330,
-        backgroundColor: '#546e7a',
-        width: '77%',
-        height: '85%',
-        padding: 5
-      }}
-    >
-      <Authentication />
-      <CrudApplication metaData={mockMetaData} />
-    </div>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <Navigation>
+        <RenderSideBar />
+      </Navigation>
+      <div
+        style={{
+          position: 'absolute',
+          top: 108,
+          left: 330,
+          backgroundColor: '#546e7a',
+          width: '77%',
+          height: '85%',
+          padding: 5
+        }}
+      >
+        <Authentication />
+        <CrudApplication metaData={mockMetaData} />
+      </div>
+    </BrowserRouter>
+  </Provider>,
 
   document.getElementById('root')
 );

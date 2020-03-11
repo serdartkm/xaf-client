@@ -12,7 +12,7 @@ export const initState = {
   propNames: []
 };
 export default function reducer(state, action) {
-  if (action) {
+    debugger
     switch (action.type) {
       case actionTypes.VALUE_CHANGED:
         return {
@@ -89,5 +89,5 @@ export default function reducer(state, action) {
       default:
         return state;
     }
-  }
+  
 }

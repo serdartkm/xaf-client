@@ -79,7 +79,7 @@ export default function DetailView({ state, createObject }) {
         <Editor onSave={handleSave} onSaveAndClose={handleSaveAndClose} />
       </div>
       <div className='detail-input-container'>
-        sadasd
+
         <fieldset>
           <legend>{objectName}:</legend>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
