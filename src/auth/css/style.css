@@ -1,5 +1,8 @@
 .auth-form {
-  width: 100%;
+  background-color: #37474f;
+  padding: 5px;
+  border: 1px solid white;
+  border-radius: 5px;
 }
 
 .auth-form input {
@@ -17,6 +20,10 @@
   display: -ms-flexbox;
   display: flex;
   padding: 10px;
+  color: white;
+}
+
+.auth-form a {
   color: white;
 }
 

@@ -12,7 +12,8 @@ export default function TableBody(props) {
 
   return (
     <div>
-      {list.length > 0 &&
+      {list &&
+        list.length > 0 &&
         list.map((c, i) => {
           const obj = c;
 

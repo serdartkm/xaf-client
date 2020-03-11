@@ -2,7 +2,6 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Input from '../input/Input';
-import { valueChanged, insertOne } from '../redux/detail-reducer/detailActions';
 import './css/style.css';
 
 function Editor({ onSave, onSaveAndClose, onDelete, onCancel }) {
@@ -62,20 +61,20 @@ export default function DetailView() {
   }
 
   function handleSave() {
-    dispatch(insertOne({ objectName }));
+    // dispatch(insertOne({ objectName }));
   }
   function handleValueChange(e) {
     const { value, name } = e.target;
 
-    dispatch(valueChanged({ propName: name, value }));
+    // dispatch(valueChanged({ propName: name, value }));
   }
 
   return (
     <div className='detail-view'>
-      <div className="detail-editor-container">
+      <div className='detail-editor-container'>
         <Editor onSave={handleSave} onSaveAndClose={handleSaveAndClose} />
       </div>
-      <div className="detail-input-container">
+      <div className='detail-input-container'>
         <fieldset>
           <legend>{objectName}:</legend>
           <div style={{ display: 'flex', flexDirection: 'column' }}>

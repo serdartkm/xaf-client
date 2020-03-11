@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { CRUDContext } from '../CRUDContext';
+import React from 'react';
 import './css/style.css';
 export default function Input({
   type,

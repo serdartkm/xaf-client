@@ -17,7 +17,8 @@ export default function CrudApplication({ metaData, objectName }) {
       }) => {
         return (
           <div className='nav-route-container'>
-            <Route path={`/list/${objectName}`}>
+          
+            <Route exact path={`/crud/list/:objectName`}>
               <ListView
                 createObject={createObject}
                 selectObject={selectObject}
@@ -26,7 +27,7 @@ export default function CrudApplication({ metaData, objectName }) {
                 deleteOne={deleteOne}
               />
             </Route>
-            <Route path={`/detail/${objectName}`}>
+            <Route path={`/crud/detail/${objectName}`}>
               <DetailView
                 insertOne={insertOne}
                 handleChange={handleChange}

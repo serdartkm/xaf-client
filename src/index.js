@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import 'whatwg-fetch';
 import * as serviceWorker from './serviceWorker';
 import Authentication from './auth/Authentication';
-import { BrowserRouter } from 'react-router-dom';
+import CrudApplication from './crud/CrudApplication';
+import { BrowserRouter, Route } from 'react-router-dom';
 import Navigation from './nav/Navigation';
 import SideBar from './nav/SideBar';
 import CrudSideNav from './crud/CrudSideNav';
@@ -35,14 +36,26 @@ function RenderSideBar() {
 
 ReactDOM.render(
   <BrowserRouter>
-    <div>
-  
-        <Authentication sidebar={<RenderSideBar />}>
-          {({ authState }) => {
-            return <Navigation />;
-          }}
-        </Authentication>
-      
+    <Navigation>
+      <RenderSideBar />
+    </Navigation>
+    <div
+      style={{
+        position: 'absolute',
+        top: 108,
+        left: 330,
+        backgroundColor: '#546e7a',
+        width: '77%',
+        height: '85%',
+        padding: 5
+      }}
+    >
+      <Route path='/auth'>
+        <Authentication />
+      </Route>
+      <Route path='/crud'>
+        <CrudApplication />
+      </Route>
     </div>
   </BrowserRouter>,
 
