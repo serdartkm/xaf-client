@@ -1,9 +1,15 @@
-import { useReducer } from 'react';
+import { useReducer,useEffect } from 'react';
 import reducer, { initState } from './reducer';
 import * as actions from './actions';
 
 export default function useCrud({ metaData }) {
   const [state, dispatch] = useReducer(reducer, initState);
+
+
+  useEffect(()=>{
+      debugger;
+  },[state])
+
 
   function handleChange(e) {
     const { value, name } = e.target;
@@ -36,7 +42,7 @@ export default function useCrud({ metaData }) {
     if (objectName) {
       dispatch(actions.createObject({ objectName, dispatch, metaData }));
     }
-    debugger;
+  
   }
   function selectObject({ objectName, obj }) {
     const { metaData } = state;
@@ -49,7 +55,7 @@ export default function useCrud({ metaData }) {
     state,
     updateOne,
     deleteOne,
-    createObject,   
+    createObject,
     selectObject,
     find
   };

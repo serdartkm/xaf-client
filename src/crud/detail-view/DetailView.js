@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 import Input from '../input/Input';
 import './css/style.css';
 
@@ -42,15 +42,18 @@ function Editor({ onSave, onSaveAndClose, onDelete, onCancel }) {
   );
 }
 
-export default function DetailView({ state }) {
+export default function DetailView({ state, createObject }) {
   const history = useHistory();
+  const location = useLocation();
   const params = useParams();
-  debugger;
+
   const { objectName } = params;
-  const { fields, obj } = state;
+  // const { fields, obj } = state;
   useEffect(() => {
-    console.log('Detail VIew logged');
-  }, []);
+    if (location.state === 'new') {
+      createObject({ objectName });
+    }
+  }, [location]);
 
   function handleGoBack() {
     history.goBack();
@@ -80,8 +83,9 @@ export default function DetailView({ state }) {
         <fieldset>
           <legend>{objectName}:</legend>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {fields &&
-              fields.map(m => {
+            {state &&
+              state.fields &&
+              state.fields.map(m => {
                 const name = m.name;
                 const type = m.type;
                 const placeholder = m.placeholder;
@@ -90,7 +94,7 @@ export default function DetailView({ state }) {
                   <Input
                     key={name}
                     type={type}
-                    value={obj[name]}
+                    value={state.obj[name]}
                     name={name}
                     placeholder={placeholder}
                     onChange={handleValueChange}

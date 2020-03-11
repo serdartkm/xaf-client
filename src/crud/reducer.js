@@ -13,7 +13,6 @@ export const initState = {
 };
 export default function reducer(state, action) {
   if (action) {
-    debugger;
     switch (action.type) {
       case actionTypes.VALUE_CHANGED:
         return {
@@ -24,7 +23,6 @@ export default function reducer(state, action) {
           }
         };
       case actionTypes.FINDING_STARTED:
-        debugger;
         return { ...state, loading: true, propNames: action.payload.propNames };
       case actionTypes.FINDING_SUCCESS:
         return {
@@ -77,7 +75,6 @@ export default function reducer(state, action) {
         return { ...state, loading: false, error: action.payload.error };
 
       case actionTypes.OBJECT_CREATED:
-        debugger;
         return {
           ...state,
           obj: action.payload.obj,

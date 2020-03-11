@@ -19,7 +19,6 @@ export default function CrudApplication({ metaData }) {
       <Route exact path={`/crud/list/:objectName`}>
         <ListView
           find={find}
-          createObject={createObject}
           selectObject={selectObject}
           state={state}
           deleteOne={deleteOne}
@@ -27,6 +26,7 @@ export default function CrudApplication({ metaData }) {
       </Route>
       <Route exact path={`/crud/detail/:objectName`}>
         <DetailView
+          createObject={createObject}
           insertOne={insertOne}
           handleChange={handleChange}
           state={state}
