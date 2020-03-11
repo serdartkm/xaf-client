@@ -7,6 +7,8 @@
       -ms-flex-direction: column;
           flex-direction: column;
   background-color: #ffe0b2;
+  position: absolute;
+  z-index: 10;
 }
 
 .editor {

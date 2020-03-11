@@ -1,20 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Table from './Table';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import './css/style.css';
 
-export default function ListView({
-  propNames,
-  objectName,
-  list,
-  createObject
-}) {
+export default function ListView({ state, createObject, find }) {
+  const params = useParams();
+  const { objectName } = params;
+  const { list, propNames } = state;
+
+  useEffect(() => {
+    find({ objectName });
+  }, [objectName]);
   return (
     <div className='list-view'>
       <Link
         data-testid={`new-${objectName}`}
-        to={`/edit/${objectName}`}
-        onClick={createObject}
+        to={`/crud/detail/${objectName}`}
+        onClick={() => createObject({ objectName })}
       >
         New
       </Link>

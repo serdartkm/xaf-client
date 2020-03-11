@@ -1,14 +1,15 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import 'whatwg-fetch';
 import * as serviceWorker from './serviceWorker';
 import Authentication from './auth/Authentication';
 import CrudApplication from './crud/CrudApplication';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import Navigation from './nav/Navigation';
 import SideBar from './nav/SideBar';
 import CrudSideNav from './crud/CrudSideNav';
 import AuthSideNav from './auth/AuthSideNav';
+import mockMetaData from './crud/mock-data/mockMetaData';
 function RenderSideBar() {
   return (
     <SideBar>
@@ -50,12 +51,8 @@ ReactDOM.render(
         padding: 5
       }}
     >
-      <Route path='/auth'>
-        <Authentication />
-      </Route>
-      <Route path='/crud'>
-        <CrudApplication />
-      </Route>
+      <Authentication />
+      <CrudApplication metaData={mockMetaData} />
     </div>
   </BrowserRouter>,
 

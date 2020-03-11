@@ -1,6 +1,5 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import Input from '../input/Input';
 import './css/style.css';
 
@@ -43,14 +42,16 @@ function Editor({ onSave, onSaveAndClose, onDelete, onCancel }) {
   );
 }
 
-export default function DetailView() {
-  const appState = useSelector(state => state);
-  const dispatch = useDispatch();
-
-  const { fieldMetaData } = appState.detailUi;
-  const { detail } = appState;
-  const { objectName } = appState.ui;
+export default function DetailView({ state }) {
   const history = useHistory();
+  const params = useParams();
+  debugger;
+  const { objectName } = params;
+  const { fields, obj } = state;
+  useEffect(() => {
+    console.log('Detail VIew logged');
+  }, []);
+
   function handleGoBack() {
     history.goBack();
   }
@@ -75,11 +76,12 @@ export default function DetailView() {
         <Editor onSave={handleSave} onSaveAndClose={handleSaveAndClose} />
       </div>
       <div className='detail-input-container'>
+        sadasd
         <fieldset>
           <legend>{objectName}:</legend>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {fieldMetaData &&
-              fieldMetaData.map(m => {
+            {fields &&
+              fields.map(m => {
                 const name = m.name;
                 const type = m.type;
                 const placeholder = m.placeholder;
@@ -88,7 +90,7 @@ export default function DetailView() {
                   <Input
                     key={name}
                     type={type}
-                    value={detail[name]}
+                    value={obj[name]}
                     name={name}
                     placeholder={placeholder}
                     onChange={handleValueChange}

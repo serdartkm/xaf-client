@@ -1,11 +1,13 @@
 import actionTypes from './actionTypes';
 import createObjectHalper from './createObjectHelper';
 import getFieldsMetaData from './getFieldsMetaData';
+import getPropNames from './getPropNames';
 export function valueChanged({ propName, value, dispatch }) {
   dispatch({ type: actionTypes.VALUE_CHANGED, payload: { propName, value } });
 }
 
 export function createObject({ objectName, dispatch, metaData }) {
+    debugger;
   const obj = createObjectHalper({ objectName, metaData });
   const fields = getFieldsMetaData({ metaData, objectName });
   dispatch({ type: actionTypes.OBJECT_CREATED, payload: { obj, fields } });
@@ -16,9 +18,9 @@ export function selectObject({ objectName, dispatch, metaData, obj }) {
   dispatch({ type: actionTypes.OBJECT_SELECTED, payload: { obj, fields } });
 }
 
-
-export function find({ objectName, dispatch }) {
-  dispatch({ type: actionTypes.FINDING_STARTED });
+export function find({ objectName, dispatch, metaData }) {
+  const propNames = getPropNames({ objectName, metaData });
+  dispatch({ type: actionTypes.FINDING_STARTED, payload: { propNames } });
   return fetch(
     `${process.env.REACT_APP_XAF_SERVER_URL}/find?document=${objectName}`
   )
