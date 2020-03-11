@@ -14,8 +14,18 @@ function RenderSideBar() {
       {({ openNav, selectedNav }) => {
         return (
           <div>
-            <AuthSideNav title="Authentication" id={0} openNav={openNav} selectedNav={selectedNav} />
-            <CrudSideNav title="CRUD" id={1} openNav={openNav} selectedNav={selectedNav} />
+            <AuthSideNav
+              title='Authentication'
+              id={0}
+              openNav={openNav}
+              selectedNav={selectedNav}
+            />
+            <CrudSideNav
+              title='CRUD'
+              id={1}
+              openNav={openNav}
+              selectedNav={selectedNav}
+            />
           </div>
         );
       }}

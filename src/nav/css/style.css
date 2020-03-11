@@ -38,6 +38,9 @@
 
 .side-bar {
   border-radius: 5px;
+  margin-top: 45px;
+  position: fixed;
+  width: 300px;
 }
 
 .side-nav {
@@ -75,5 +78,7 @@
 .nav-border {
   padding: 5px;
   background-color: #546e7a;
+  position: fixed;
+  width: 100%;
 }
 /*# sourceMappingURL=style.css.map */

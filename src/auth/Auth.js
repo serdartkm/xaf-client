@@ -9,7 +9,7 @@ export default function Auth() {
           <Login
             state={state}
             handleLogin={handleLogin}
-            handleChange={handleLogin}
+            handleChange={handleChange}
           />
         );
       }}

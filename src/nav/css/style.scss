@@ -28,6 +28,9 @@
 
 .side-bar {
   border-radius: 5px;
+  margin-top: 45px;
+  position: fixed;
+  width: 300px;
 }
 
 .side-nav {
@@ -51,7 +54,6 @@
   color: white;
   display: flex;
   justify-content: space-between;
-
 }
 .nav-item-cont {
   border: 1px solid white;
@@ -62,4 +64,6 @@
 .nav-border {
   padding: 5px;
   background-color: #546e7a;
+  position: fixed;
+  width: 100%;
 }
