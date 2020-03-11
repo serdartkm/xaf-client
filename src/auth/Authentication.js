@@ -6,6 +6,7 @@ const Login = React.lazy(() => import('./Login'));
 const ChangePassword = React.lazy(() => import('./ChangePassword'));
 const ForgotPassword = React.lazy(() => import('./ForgotPassword'));
 const Signup = React.lazy(() => import('./Signup'));
+const Profile = React.lazy(() => import('./Profile'));
 export default function Authentication({ children, sidebar }) {
   const {
     handleChange,
@@ -47,6 +48,12 @@ export default function Authentication({ children, sidebar }) {
             <ForgotPassword
               requestPassChange={handleRequestPassChange}
               handleChange={handleChange}
+              state={state}
+            />
+          </Route>
+          <Route path="/profile">
+            <Profile
+         
               state={state}
             />
           </Route>

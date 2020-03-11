@@ -36,7 +36,7 @@ function RenderSideBar() {
 ReactDOM.render(
   <BrowserRouter>
     <div>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div style={{display:'fixed', top:300, left:300}}>Loading...</div>}>
         <Authentication sidebar={<RenderSideBar />}>
           {({ authState }) => {
             return <Navigation />;

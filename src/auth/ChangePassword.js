@@ -6,9 +6,10 @@ export default function ChangePassword({
   handleChangePass
 }) {
   return (
+    <div data-testid='signupform' className='auth-form'>
     <fieldset>
       <legend>Change Password:</legend>
-      <div data-testid="changepassform" className="auth-form">
+    
         <input
           value={state.password}
           type="password"
@@ -30,7 +31,8 @@ export default function ChangePassword({
         >
           Change
         </button>
-      </div>
+
     </fieldset>
+    </div>
   );
 }
