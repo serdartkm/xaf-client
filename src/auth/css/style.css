@@ -1,0 +1,67 @@
+.auth-form {
+  background-color: #eceff1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+}
+
+.auth-form input {
+  padding: 5px;
+  margin: 5px;
+}
+
+.auth-form button {
+  padding: 5px;
+  margin: 5px;
+}
+
+.auth-form fieldset {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: yellow;
+}
+
+.auth-form fieldset div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: yellowgreen;
+}
+
+.authentication {
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.bar-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.side-bar {
+  -webkit-box-flex: 2;
+      -ms-flex: 2;
+          flex: 2;
+  margin-top: 5px;
+}
+
+.main-content {
+  -webkit-box-flex: 8;
+      -ms-flex: 8;
+          flex: 8;
+  background-color: yellow;
+}
+/*# sourceMappingURL=style.css.map */

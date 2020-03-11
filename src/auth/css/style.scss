@@ -1,0 +1,44 @@
+.auth-form {
+  background-color: #eceff1;
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  input {
+    padding: 5px;
+    margin: 5px;
+  }
+  button {
+    padding: 5px;
+    margin: 5px;
+  }
+  fieldset {
+    display: flex;
+    background-color: yellow;
+
+    div {
+      display: flex;
+      background-color: yellowgreen;
+    }
+  }
+}
+
+.authentication {
+  height: 100vh;
+  display: flex;
+
+  flex-direction: column;
+}
+.bar-content {
+  display: flex;
+}
+
+.side-bar {
+  flex: 2;
+
+  margin-top: 5px;
+}
+.main-content {
+  flex: 8;
+  background-color: yellow;
+}

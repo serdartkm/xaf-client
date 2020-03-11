@@ -1,0 +1,65 @@
+.nav-root {
+  border: 1px solid white;
+  background-color: #37474f;
+  border-radius: 5px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.auth-nav {
+  flex: 1;
+  a {
+    margin-right: 10px;
+    color: white;
+  }
+  a:visited {
+    border: white 1px solid;
+    margin: 5px;
+  }
+}
+.title-nav {
+  flex: 9;
+}
+
+// .toggle {
+//   height: 50px;
+// }
+
+.side-bar {
+  border-radius: 5px;
+}
+
+.side-nav {
+  // height: auto;
+  //transition: height 2s;
+  //  background-color: blue;
+  overflow: hidden;
+  width: 100%;
+  background-color: #546e7a;
+}
+.nav-item {
+  padding: 5px;
+  color: white;
+}
+.bar-tool {
+  border: 1px solid white;
+  margin: 5px;
+  border-radius: 5px;
+  background-color: #37474f;
+  padding: 5px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+
+}
+.nav-item-cont {
+  border: 1px solid white;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.nav-border {
+  padding: 5px;
+  background-color: #546e7a;
+}
