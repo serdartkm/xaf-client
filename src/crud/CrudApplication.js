@@ -24,7 +24,6 @@ export default function CrudApplication({ metaData }) {
           deleteOne={deleteOne}
           find={find}
           state={state}
-          metaData={metaData}
         />
       </Route>
       <Route exact path='/crud/detail'>

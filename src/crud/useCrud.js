@@ -15,6 +15,7 @@ export default function useCrud({ metaData }) {
   }
 
   function find({ objectName }) {
+    debugger;
     dispatch(actions.find({ objectName, metaData }));
   }
 
@@ -26,6 +27,7 @@ export default function useCrud({ metaData }) {
     dispatch(actions.deleteOne());
   }
   function createObject() {
+    debugger;
     dispatch(actions.createObject());
   }
   function selectObject() {
