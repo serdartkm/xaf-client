@@ -1,6 +1,6 @@
 .nav-root {
   border: 1px solid white;
-  background-color: #37474f;
+  background-color: #455a64;
   border-radius: 5px;
   height: 70px;
   display: -webkit-box;
@@ -46,7 +46,7 @@
 .side-nav {
   overflow: hidden;
   width: 100%;
-  background-color: #546e7a;
+  background-color: #607d8b;
 }
 
 .nav-item {
@@ -58,7 +58,7 @@
   border: 1px solid white;
   margin: 5px;
   border-radius: 5px;
-  background-color: #37474f;
+  background-color: #455a64;
   padding: 5px;
   color: white;
   display: -webkit-box;
@@ -77,7 +77,7 @@
 
 .nav-border {
   padding: 5px;
-  background-color: #546e7a;
+  background-color: #607d8b;
   position: fixed;
   width: 100%;
 }

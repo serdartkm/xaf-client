@@ -1,7 +1,10 @@
 .detail-view {
   display: flex;
   flex-direction: column;
-  background-color: #ffe0b2;
+  background-color: #455a64;
+  fieldset{
+    color: white;
+  }
 }
 
 .editor {

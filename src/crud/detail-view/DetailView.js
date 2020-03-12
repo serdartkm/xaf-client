@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { useParams, useHistory, useLocation } from 'react-router-dom';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 import Input from '../input/Input';
 import './css/style.css';
 
-function Editor({ onSave, onSaveAndClose, onDelete, onCancel }) {
+function Editor({ onSave, onSaveAndClose, deleteOne, onCancel }) {
   return (
     <div className='editor'>
       <button
@@ -26,7 +26,7 @@ function Editor({ onSave, onSaveAndClose, onDelete, onCancel }) {
         data-testid='delete-btn'
         className='detail-btn'
         type='button'
-        onClick={onDelete}
+        onClick={deleteOne}
       >
         Delete
       </button>
@@ -42,18 +42,16 @@ function Editor({ onSave, onSaveAndClose, onDelete, onCancel }) {
   );
 }
 
-export default function DetailView({ state, createObject }) {
+export default function DetailView({
+  state,
+  insertOne,
+  updateOne,
+  deleteOne,
+  handleChange
+}) {
   const history = useHistory();
-  const location = useLocation();
-  const params = useParams();
 
-  const { objectName } = params;
-  // const { fields, obj } = state;
-  useEffect(() => {
-    if (location.state === 'new') {
-      createObject({ objectName });
-    }
-  }, [location]);
+  const { fields, obj, objectName } = state;
 
   function handleGoBack() {
     history.goBack();
@@ -65,27 +63,28 @@ export default function DetailView({ state, createObject }) {
   }
 
   function handleSave() {
-    // dispatch(insertOne({ objectName }));
-  }
-  function handleValueChange(e) {
-    const { value, name } = e.target;
-
-    // dispatch(valueChanged({ propName: name, value }));
+    if (obj._id) {
+      updateOne();
+    } else {
+      insertOne();
+    }
   }
 
   return (
     <div className='detail-view'>
       <div className='detail-editor-container'>
-        <Editor onSave={handleSave} onSaveAndClose={handleSaveAndClose} />
+        <Editor
+          onSave={handleSave}
+          onSaveAndClose={handleSaveAndClose}
+          deleteOne={deleteOne}
+        />
       </div>
       <div className='detail-input-container'>
-
         <fieldset>
           <legend>{objectName}:</legend>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {state &&
-              state.fields &&
-              state.fields.map(m => {
+            {fields &&
+              fields.map(m => {
                 const name = m.name;
                 const type = m.type;
                 const placeholder = m.placeholder;
@@ -94,10 +93,10 @@ export default function DetailView({ state, createObject }) {
                   <Input
                     key={name}
                     type={type}
-                    value={state.obj[name]}
+                    value={obj[name]}
                     name={name}
                     placeholder={placeholder}
-                    onChange={handleValueChange}
+                    onChange={handleChange}
                   />
                 );
               })}

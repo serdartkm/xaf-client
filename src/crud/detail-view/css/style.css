@@ -6,7 +6,11 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  background-color: #ffe0b2;
+  background-color: #455a64;
+}
+
+.detail-view fieldset {
+  color: white;
 }
 
 .editor {

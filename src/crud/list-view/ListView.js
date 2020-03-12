@@ -1,47 +1,24 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import Table from './Table';
+import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import Table from './Table';
 import './css/style.css';
-import DetailView from '../detail-view/DetailView';
-import useCrud from '../useCrud';
-export default function ListView({ metaData }) {
-  const {
-    insertOne,
-    handleChange,
-    state,
-    updateOne,
-    deleteOne,
-    createObject,
-    selectObject,
-    find
-  } = useCrud({ metaData });
-  const [edit, setEdit] = useState(false);
+export default function ListView({ state, find, createObject }) {
   const params = useParams();
   const { objectName } = params;
-
+  const { list, propNames } = state;
   useEffect(() => {
     find({ objectName });
-    setEdit(false);
-  }, []);
-
-  const handleCreateObject = useMemo(() => {
-    createObject({ objectName });
-    setEdit(true);
-  });
+  }, [objectName]);
   return (
     <div className='list-view'>
-      <button onClick={handleCreateObject}>New Obj</button>
+      <Link to='/crud/detail' onClick={createObject}>
+        Create
+      </Link>
+
       {objectName}
       <div className='table'>
-        <Table
-          list={state && state.list}
-          objectName={objectName}
-          propNames={state && state.propNames}
-        />
+        <Table list={list} objectName={objectName} propNames={propNames} />
       </div>
-      <dialog open={edit}>
-        <DetailView />
-      </dialog>
     </div>
   );
 }

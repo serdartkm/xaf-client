@@ -48,7 +48,7 @@ ReactDOM.render(
           position: 'absolute',
           top: 108,
           left: 330,
-          backgroundColor: '#546e7a',
+          backgroundColor: '#607d8b',
           width: '77%',
           height: '85%',
           padding: 5

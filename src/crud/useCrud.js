@@ -1,15 +1,9 @@
-import { useReducer,useEffect } from 'react';
-import reducer, { initState } from './reducer';
+import { useSelector, useDispatch } from 'react-redux';
 import * as actions from './actions';
 
 export default function useCrud({ metaData }) {
-  const [state, dispatch] = useReducer(reducer, initState);
-
-
-  useEffect(()=>{
-      debugger;
-  },[state])
-
+  const state = useSelector(state => state);
+  const dispatch = useDispatch();
 
   function handleChange(e) {
     const { value, name } = e.target;
@@ -17,42 +11,31 @@ export default function useCrud({ metaData }) {
   }
 
   function insertOne() {
-    const { obj, objectName } = state;
-
-    dispatch(actions.insertOne({ objectName, dispatch, object: obj }));
+    dispatch(actions.insertOne());
   }
 
   function find({ objectName }) {
-    dispatch(actions.find({ objectName, dispatch, metaData }));
+    dispatch(actions.find({ objectName, metaData }));
   }
 
   function updateOne() {
-    const { objectName, obj } = state;
-    dispatch(actions.updateOne({ objectName, dispatch, object: obj }));
+    dispatch(actions.updateOne());
   }
 
   function deleteOne() {
-    const {
-      objectName,
-      obj: { _id }
-    } = state;
-    dispatch(actions.deleteOne({ objectName, dispatch, _id }));
+    dispatch(actions.deleteOne());
   }
-  function createObject({ objectName }) {
-    if (objectName) {
-      dispatch(actions.createObject({ objectName, dispatch, metaData }));
-    }
-  
+  function createObject() {
+    dispatch(actions.createObject());
   }
-  function selectObject({ objectName, obj }) {
-    const { metaData } = state;
-    dispatch(actions.selectObject({ objectName, dispatch, metaData, obj }));
+  function selectObject() {
+    dispatch(actions.selectObject());
   }
 
   return {
     insertOne,
     handleChange,
-    state,
+    state: state.crud,
     updateOne,
     deleteOne,
     createObject,
