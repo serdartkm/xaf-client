@@ -1,26 +1,34 @@
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import * as actions from '../actions';
 import 'babel-polyfill';
 import actionTypes from '../actionTypes';
-import Store from './Store';
-describe('ACTIONS', () => {
-  const store = new Store();
-  it('valueChanged', () => {
-    actions.valueChanged({
-      propName: 'firstName',
-      value: 'dragos',
-      dispatch: store.dispatch
-    });
+import mockMetaData from '../mock-data/mockMetaData';
+import { initState } from '../reducer';
+import getPropNames from '../getPropNames';
+const propNames = getPropNames({
+  metaData: mockMetaData,
+  objectName: 'employee'
+});
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
 
-    expect(store.getActions()).toEqual([
-      {
-        type: actionTypes.VALUE_CHANGED,
-        payload: { propName: 'firstName', value: 'dragos' }
-      }
-    ]);
+describe('ACTIONS', () => {
+  it('valueChanged', () => {
+    expect(
+      actions.valueChanged({
+        propName: 'firstName',
+        value: 'dragos'
+      })
+    ).toEqual({
+      type: actionTypes.VALUE_CHANGED,
+      payload: { propName: 'firstName', value: 'dragos' }
+    });
   });
 
   describe('FIND ACTION', () => {
     it(` handles ${actionTypes.FINDING_SUCCESS}`, done => {
+      const store = mockStore({ todos: [] });
       global.fetch = jest.fn().mockImplementationOnce(() => {
         return new Promise((resolve, reject) => {
           resolve({
@@ -32,9 +40,12 @@ describe('ACTIONS', () => {
           });
         });
       });
-      const store = new Store();
+
       const expectedActions = [
-        { type: 'FINDING_STARTED' },
+        {
+          type: 'FINDING_STARTED',
+          payload: { propNames, objectName: 'employee', metaData: mockMetaData }
+        },
         {
           payload: {
             data: [{ _id: '1', firstName: 'dragos', lastName: 'mario' }]
@@ -42,31 +53,42 @@ describe('ACTIONS', () => {
           type: 'FINDING_SUCCESS'
         }
       ];
-      actions
-        .find({ objectName: 'employee', dispatch: store.dispatch })
+
+      return store
+        .dispatch(
+          actions.find({ objectName: 'employee', metaData: mockMetaData })
+        )
         .then(() => {
-          expect(store.getActions()).toStrictEqual(expectedActions);
+          // return of async actions
+          expect(store.getActions()).toEqual(expectedActions);
           done();
         });
     });
+
     it(`handles ${actionTypes.FINDING_FAILED}`, done => {
       global.fetch = jest.fn().mockImplementationOnce(() => {
         return new Promise((resolve, reject) => {
           reject({ message: 'not found' });
         });
       });
-      const store = new Store();
+      const store = mockStore({ todos: [] });
       const expectedActions = [
-        { type: actionTypes.FINDING_STARTED },
+        {
+          type: actionTypes.FINDING_STARTED,
+          payload: { propNames, objectName: 'employee', metaData: mockMetaData }
+        },
         {
           type: actionTypes.FINDING_FAILED,
           payload: { error: { message: 'not found' } }
         }
       ];
-      actions
-        .find({ objectName: 'employee', dispatch: store.dispatch })
+      return store
+        .dispatch(
+          actions.find({ objectName: 'employee', metaData: mockMetaData })
+        )
         .then(() => {
-          expect(store.getActions()).toStrictEqual(expectedActions);
+          // return of async actions
+          expect(store.getActions()).toEqual(expectedActions);
           done();
         });
     });
@@ -74,7 +96,10 @@ describe('ACTIONS', () => {
 
   describe('INSERT_ONE ACTION', () => {
     it(`handles ${actionTypes.INSERT_ONE_SUCCESS}`, done => {
-      const store = new Store();
+      const obj = { firstName: 'dragos', lastName: 'mario' };
+      const store = mockStore({
+        crud: { ...initState, metaData: mockMetaData, obj }
+      });
       const expectedActions = [
         { type: actionTypes.INSERT_ONE_STARTED },
         {
@@ -93,19 +118,17 @@ describe('ACTIONS', () => {
           });
         });
       });
-      actions
-        .insertOne({
-          objectName: 'employee',
-          dispatch: store.dispatch,
-          payload: { id: '1', firstName: 'dragos', lastName: 'mario' }
-        })
-        .then(() => {
-          expect(store.getActions()).toStrictEqual(expectedActions);
-          done();
-        });
+      return store.dispatch(actions.insertOne()).then(() => {
+        // return of async actions
+        expect(store.getActions()).toEqual(expectedActions);
+        done();
+      });
     });
     it(`handles ${actionTypes.INSERT_ONE_FAILED}`, done => {
-      const store = new Store();
+      const obj = { firstName: 'dragos', lastName: 'mario' };
+      const store = mockStore({
+        crud: { ...initState, metaData: mockMetaData, obj }
+      });
       const expectedActions = [
         { type: actionTypes.INSERT_ONE_STARTED },
         {
@@ -119,26 +142,24 @@ describe('ACTIONS', () => {
         });
       });
 
-      actions
-        .insertOne({
-          objectName: 'employee',
-          dispatch: store.dispatch,
-          payload: { id: '1', firstName: 'dragos', lastName: 'mario' }
-        })
-        .then(() => {
-          expect(store.getActions()).toStrictEqual(expectedActions);
-          done();
-        });
+      return store.dispatch(actions.insertOne()).then(() => {
+        // return of async actions
+        expect(store.getActions()).toEqual(expectedActions);
+        done();
+      });
     });
   });
 
   describe('UPDATE_ONE ACTION', () => {
     it(`handles ${actionTypes.UPDATE_ONE_SUCCESS}`, done => {
-      const store = new Store();
       const obj = { id: '1', firstName: 'dragos', lastName: 'mario' };
-      const expectActions = [
+      const store = mockStore({
+        crud: { ...initState, metaData: mockMetaData, obj }
+      });
+
+      const expectedActions = [
         { type: actionTypes.UPDATE_ONE_STARTED },
-        { type: actionTypes.UPDATE_ONE_SUCCESS, payload: { object: obj } }
+        { type: actionTypes.UPDATE_ONE_SUCCESS }
       ];
       global.fetch = jest.fn().mockImplementationOnce(() => {
         return new Promise((resolve, reject) => {
@@ -152,20 +173,18 @@ describe('ACTIONS', () => {
         });
       });
 
-      actions
-        .updateOne({
-          objectName: 'employee',
-          dispatch: store.dispatch,
-          object: obj
-        })
-        .then(() => {
-          expect(store.getActions()).toStrictEqual(expectActions);
-          done();
-        });
+      return store.dispatch(actions.updateOne()).then(() => {
+        // return of async actions
+        expect(store.getActions()).toEqual(expectedActions);
+        done();
+      });
     });
     it(`handles ${actionTypes.UPDATE_ONE_FAILED}`, done => {
-      const store = new Store();
-      const expectActions = [
+      const obj = { id: '1', firstName: 'dragos', lastName: 'mario' };
+      const store = mockStore({
+        crud: { ...initState, metaData: mockMetaData, obj }
+      });
+      const expectedActions = [
         { type: actionTypes.UPDATE_ONE_STARTED },
         {
           type: actionTypes.UPDATE_ONE_FAILED,
@@ -178,25 +197,23 @@ describe('ACTIONS', () => {
         });
       });
 
-      actions
-        .updateOne({
-          objectName: 'employee',
-          dispatch: store.dispatch,
-          object: {}
-        })
-        .then(() => {
-          expect(store.getActions()).toStrictEqual(expectActions);
-          done();
-        });
+      return store.dispatch(actions.updateOne()).then(() => {
+        // return of async actions
+        expect(store.getActions()).toEqual(expectedActions);
+        done();
+      });
     });
   });
 
   describe('DELETE_ONE ACTION', () => {
     it(`handles ${actionTypes.DELETE_ONE_SUCCESS}`, done => {
-      const store = new Store();
+      const obj = { id: '1', firstName: 'dragos', lastName: 'mario' };
+      const store = mockStore({
+        crud: { ...initState, metaData: mockMetaData, obj }
+      });
       const expectedActions = [
         { type: actionTypes.DELETE_ONE_STARTED },
-        { type: actionTypes.DELETE_ONE_SUCCESS, payload: { _id: '1' } }
+        { type: actionTypes.DELETE_ONE_SUCCESS }
       ];
 
       global.fetch = jest.fn().mockImplementationOnce(() => {
@@ -211,20 +228,18 @@ describe('ACTIONS', () => {
         });
       });
 
-      actions
-        .deleteOne({
-          objectName: 'employee',
-          dispatch: store.dispatch,
-          _id: '1'
-        })
-        .then(() => {
-          expect(store.getActions()).toStrictEqual(expectedActions);
-          done();
-        });
+      return store.dispatch(actions.deleteOne()).then(() => {
+        // return of async actions
+        expect(store.getActions()).toEqual(expectedActions);
+        done();
+      });
     });
 
     it(`handles ${actionTypes.DELETE_ONE_FAILED}`, done => {
-      const store = new Store();
+      const obj = { id: '1', firstName: 'dragos', lastName: 'mario' };
+      const store = mockStore({
+        crud: { ...initState, metaData: mockMetaData, obj }
+      });
       const expectedActions = [
         { type: actionTypes.DELETE_ONE_STARTED },
         {
@@ -238,16 +253,11 @@ describe('ACTIONS', () => {
           reject({ message: 'deleting error' });
         });
       });
-      actions
-        .deleteOne({
-          objectName: 'employee',
-          dispatch: store.dispatch,
-          _id: '1'
-        })
-        .then(() => {
-          expect(store.getActions()).toStrictEqual(expectedActions);
-          done();
-        });
+      return store.dispatch(actions.deleteOne()).then(() => {
+        // return of async actions
+        expect(store.getActions()).toEqual(expectedActions);
+        done();
+      });
     });
   });
 });

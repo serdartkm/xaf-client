@@ -4,7 +4,12 @@ import getFieldsMetaData from '../getFieldsMetaData';
 import reducer from '../reducer';
 import { initState } from '../reducer';
 import actionTypes from '../actionTypes';
-
+import mockMetaData from '../mock-data/mockMetaData';
+import getPropNames from '../getPropNames';
+const propNames = getPropNames({
+  metaData: mockMetaData,
+  objectName: 'employee'
+});
 const obj = createObjectHelper({
   metaData: mockData,
   objectName: 'employee'
@@ -29,13 +34,20 @@ describe('Reducer', () => {
   it('handles FINDING_STARTED', () => {
     expect(
       reducer(initState, {
-        type: actionTypes.FINDING_STARTED
+        type: actionTypes.FINDING_STARTED,
+        payload: { propNames, metaData: mockMetaData, objectName: 'employee' }
       })
-    ).toStrictEqual({ ...initState, loading: true });
+    ).toStrictEqual({
+      ...initState,
+      loading: true,
+      metaData: mockMetaData,
+      propNames,
+      objectName: 'employee'
+    });
   });
 
   it('handles FINDING_SUCCESS', () => {
-    const currentState ={...initState,loading:true}
+    const currentState = { ...initState, loading: true };
     expect(
       reducer(currentState, {
         type: actionTypes.FINDING_SUCCESS,
@@ -64,10 +76,9 @@ describe('Reducer', () => {
   });
 
   it('handles INSERT_ONE_STARTED', () => {
-
     expect(
       reducer(initState, { type: actionTypes.INSERT_ONE_STARTED })
-    ).toStrictEqual({...initState, loading: true });
+    ).toStrictEqual({ ...initState, loading: true });
   });
 
   it('handles INSERT_ONE_SUCCESS', () => {
@@ -128,8 +139,7 @@ describe('Reducer', () => {
 
     expect(
       reducer(currentState, {
-        type: actionTypes.UPDATE_ONE_SUCCESS,
-        payload: { _id: '1' }
+        type: actionTypes.UPDATE_ONE_SUCCESS
       })
     ).toEqual({
       ...currentState,
@@ -171,8 +181,7 @@ describe('Reducer', () => {
 
     expect(
       reducer(currentState, {
-        type: actionTypes.DELETE_ONE_STARTED,
-        payload: { _id: '1' }
+        type: actionTypes.DELETE_ONE_STARTED
       })
     ).toEqual({ ...currentState, loading: true });
   });
@@ -181,6 +190,7 @@ describe('Reducer', () => {
     const currentState = {
       ...initState,
       loading: true,
+      obj: { _id: '1', firstName: 'drago', lastName: 'mario' },
       list: [
         { _id: '1', firstName: 'drago', lastName: 'mario' },
         { _id: '2', firstName: 'mergen', lastName: 'mergenov' }
@@ -189,10 +199,9 @@ describe('Reducer', () => {
 
     expect(
       reducer(currentState, {
-        type: actionTypes.DELETE_ONE_SUCCESS,
-        payload: { _id: '1' }
+        type: actionTypes.DELETE_ONE_SUCCESS
       })
-    ).toEqual({
+    ).toStrictEqual({
       ...currentState,
       loading: false,
       list: [{ _id: '2', firstName: 'mergen', lastName: 'mergenov' }]
@@ -203,6 +212,7 @@ describe('Reducer', () => {
     const currentState = {
       ...initState,
       loading: true,
+      obj: { _id: '1', firstName: 'drago', lastName: 'mario' },
       list: [
         { _id: '1', firstName: 'drago', lastName: 'mario' },
         { _id: '2', firstName: 'mergen', lastName: 'mergenov' }
@@ -214,23 +224,24 @@ describe('Reducer', () => {
         type: actionTypes.DELETE_ONE_FAILED,
         payload: { error: 'error happened' }
       })
-    ).toEqual({ ...currentState, loading: false, error: 'error happened' });
+    ).toStrictEqual({ ...currentState, loading: false, error: 'error happened' });
   });
 
   it('handles OBJECT SELECTED', () => {
+   const  obj= { _id: '1', firstName: 'drago', lastName: 'mario' }
     expect(
-      reducer(undefined, {
+      reducer(initState, {
         type: actionTypes.OBJECT_SELECTED,
         payload: { obj, fields }
       })
-    ).toStrictEqual({ obj, fields });
+    ).toStrictEqual({...initState, obj, fields });
   });
   it('handle OBJECT CREATED', () => {
     expect(
-      reducer(undefined, {
+      reducer(initState, {
         type: actionTypes.OBJECT_CREATED,
         payload: { obj, fields }
       })
-    ).toStrictEqual({ obj, fields });
+    ).toStrictEqual({...initState, obj, fields });
   });
 });
