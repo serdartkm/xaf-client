@@ -1,56 +1,90 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, render, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import store from '../../redux/store';
-import { applicationStarted } from '../../redux/ui-reducer/uiActions';
-import { createObjectClicked } from '../../redux/detail-ui-reducer/detail-ui-action';
 import mockMetaData from '../../mock-data/mockMetaData';
+import getFieldsMetaData from '../../getFieldsMetaData';
+import createObjectHelper from '../../createObjectHelper';
 import DetailView from '../DetailView';
+import renderWithRedux from './renderWithRedux';
+import useCrud from '../../useCrud';
+import { initState } from '../../reducer';
+
+const fields = getFieldsMetaData({
+  metaData: mockMetaData,
+  objectName: 'employee'
+});
+const obj = createObjectHelper({
+  metaData: mockMetaData,
+  objectName: 'employee'
+});
+
+function CrudApplication({ metaData }) {
+  const { state, handleChange } = useCrud({
+    metaData
+  });
+  return <DetailView handleChange={handleChange} state={state} />;
+}
 
 describe('DetailView', () => {
-  beforeEach(()=>{
-    store.dispatch(
-      applicationStarted({ objectName: 'employee', metaData: mockMetaData })
-    );
-
-  })
-  it('New button on ListView clicked', () => {
-
-    store.dispatch(createObjectClicked({ objectName: 'employee' }));
-    const { getByTestId, getByPlaceholderText } = render(
-      <Provider store={store}>
+  beforeEach(() => {
+    cleanup();
+  });
+  it('All input fields and controls are visible', () => {
+    render(
+      <div>
         <BrowserRouter>
-          <DetailView />
+          <DetailView
+            state={{ fields, obj, objectName: 'employee' }}
+            handleChange={() => {}}
+          />
         </BrowserRouter>
-      </Provider>
+      </div>
     );
 
-    expect(getByPlaceholderText(/Enter firstname/i)).toBeVisible();
-    expect(getByPlaceholderText(/Enter lastname/i)).toBeVisible();
-    expect(getByPlaceholderText(/Enter place of birth/i)).toBeVisible();
-    expect(getByTestId('date')).toHaveAttribute('type', 'date');
-    fireEvent.change(getByPlaceholderText(/Enter firstname/i), {
+    expect(screen.getByTestId(/firstName/i)).toBeVisible();
+    expect(screen.getByTestId(/lastName/i)).toBeVisible();
+    expect(screen.getByTestId(/birthDate/i)).toBeVisible();
+    expect(screen.getByTestId(/birthPlace/i)).toBeVisible();
+
+    expect(screen.getByTestId('close-btn')).toBeVisible();
+    expect(screen.getByTestId(/save-btn/i)).toBeVisible();
+    expect(screen.getByTestId(/delete-btn/i)).toBeVisible();
+    expect(screen.getByTestId(/save-close-btn/i)).toBeVisible();
+  });
+
+  it('Enter input data', async () => {
+    const { getByTestId } = renderWithRedux(
+      <div>
+        <BrowserRouter>
+          <CrudApplication metaData={mockMetaData} />
+        </BrowserRouter>
+      </div>,
+      { crud: { ...initState, fields, obj, objectName: 'employee' } }
+    );
+
+    fireEvent.change(getByTestId('firstName'), {
       target: { value: 'dragos' }
     });
-    expect(getByPlaceholderText(/Enter firstname/i)).toHaveValue('dragos');
+    expect(getByTestId(/firstName/i).value).toEqual('dragos');
+
+    fireEvent.change(getByTestId('lastName'), {
+      target: { value: 'mario' }
+    });
+    expect(getByTestId(/lastName/i).value).toEqual('mario');
+
+    fireEvent.change(getByTestId('birthPlace'), {
+      target: { value: 'tokio' }
+    });
+    expect(getByTestId(/birthPlace/i).value).toEqual('tokio');
+
+    fireEvent.change(getByTestId(/birthDate/i), {
+      target: { value: '2020-05-12' }
+    });
+    expect(getByTestId(/birthDate/i).value).toEqual('2020-05-12');
   });
 
-
-  it('Update button has been clicked',()=>{
-    //application started
-    //employee list selected by default
-    //listview fetches some data
-    //user clicked edit button on listnew for  for editing specific user
-    //user edites documents
-    //user clickes update btn (update adn close btn)
-    // when detailview closed and checkes whether data has been updated
-    
-
-
-  });
-
-
-  it.todo('DetailView save button clicked');
+  it.todo('save input data');
+  it.todo('cancel input data');
+  it.todo('delete input data');
 });

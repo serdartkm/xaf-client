@@ -31,12 +31,12 @@ function Editor({ onSave, onSaveAndClose, deleteOne, onCancel }) {
         Delete
       </button>
       <button
-        data-testid='cancel-btn'
+        data-testid='close-btn'
         className='detail-btn'
         type='button'
         onClick={onCancel}
       >
-        Cancel
+        Close
       </button>
     </div>
   );
@@ -52,7 +52,7 @@ export default function DetailView({
   const history = useHistory();
 
   const { fields, obj, objectName } = state;
-
+  debugger;
   function handleGoBack() {
     history.goBack();
   }
