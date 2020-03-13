@@ -8,6 +8,7 @@ export default function Input({
   name,
   items
 }) {
+  debugger;
   switch (type) {
     case 'text':
       return (

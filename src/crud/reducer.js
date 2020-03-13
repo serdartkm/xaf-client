@@ -20,7 +20,7 @@ export default function reducer(state = initState, action) {
         ...state,
         obj: {
           ...state.obj,
-          firstName: action.payload.value
+          [action.payload.propName]: action.payload.value
         }
       };
     case actionTypes.FINDING_STARTED:

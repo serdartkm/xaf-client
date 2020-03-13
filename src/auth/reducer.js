@@ -9,6 +9,7 @@ export const initState = {
   confirm: ''
 };
 export default function reducer(state = initState, action) {
+  debugger;
   switch (action.type) {
     case actionTypes.VALUE_CHANGED:
       return { ...state, [action.payload.propName]: action.payload.value };
