@@ -1,0 +1,60 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "objects": [
+    {
+      "id": 1,
+      "name": "employee",
+      "propNames": [
+        {
+          "name": "firstName"
+        },
+        {
+          "name": "lastNames"
+        },
+        {
+          "name": "birthDate"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "passport",
+      "propNames": [
+        {
+          "name": "passportNumber"
+        },
+        {
+          "name": "issuedDate"
+        },
+        {
+          "name": "issuedPlace"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "visa",
+      "propNames": [
+        {
+          "name": "visaNumber"
+        }
+      ]
+    }
+  ]
+}

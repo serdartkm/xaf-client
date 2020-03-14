@@ -2,6 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import ListView from './list-view/ListView';
 import DetailView from './detail-view/DetailView';
+import Dashboard from './dataset/index'
 import useCrud from './useCrud';
 
 export default function CrudApplication({ metaData }) {
@@ -34,6 +35,9 @@ export default function CrudApplication({ metaData }) {
           state={state}
           metaData={metaData}
         />
+      </Route>
+      <Route exact path='/crud/dataset'>
+        <Dashboard/>
       </Route>
     </div>
   );

@@ -9,7 +9,7 @@ export function valueChanged({ propName, value }) {
 
 export function createObject() {
   const { metaData, objectName } = store.getState().crud;
-  debugger;
+
   const obj = createObjectHalper({ objectName, metaData });
   const fields = getFieldsMetaData({ metaData, objectName });
   return { type: actionTypes.OBJECT_CREATED, payload: { obj, fields } };
@@ -22,7 +22,7 @@ export function selectObject({ obj }) {
 }
 
 export function find({ objectName, metaData }) {
-  debugger;
+
   const propNames = getPropNames({ objectName, metaData });
   return function(dispatch) {
     dispatch({

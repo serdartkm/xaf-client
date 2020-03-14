@@ -13,7 +13,7 @@ export const initState = {
   metaData: null
 };
 export default function reducer(state = initState, action) {
-  debugger;
+
   switch (action.type) {
     case actionTypes.VALUE_CHANGED:
       return {

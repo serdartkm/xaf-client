@@ -4,10 +4,10 @@ import * as actions from './actions';
 export default function useCrud({ metaData }) {
   const state = useSelector(state => state);
   const dispatch = useDispatch();
-debugger;
+
   function handleChange(e) {
     const { value, name } = e.target;
-    debugger;
+  
     dispatch(actions.valueChanged({ propName: name, value }));
   }
 
@@ -16,7 +16,7 @@ debugger;
   }
 
   function find({ objectName }) {
-    debugger;
+
     dispatch(actions.find({ objectName, metaData }));
   }
 
@@ -28,7 +28,7 @@ debugger;
     dispatch(actions.deleteOne());
   }
   function createObject() {
-    debugger;
+
     dispatch(actions.createObject());
   }
   function selectObject() {

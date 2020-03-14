@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import 'whatwg-fetch';
 import * as serviceWorker from './serviceWorker';
 import Authentication from './auth/Authentication';
+import FileSystem from './file-system/FileSystem';
 import { Provider } from 'react-redux';
 import CrudApplication from './crud/CrudApplication';
 import { BrowserRouter } from 'react-router-dom';
@@ -10,6 +11,7 @@ import Navigation from './nav/Navigation';
 import SideBar from './nav/SideBar';
 import CrudSideNav from './crud/CrudSideNav';
 import AuthSideNav from './auth/AuthSideNav';
+import FileSystemSideNav from './file-system/FileSystemSideNav';
 import mockMetaData from './crud/mock-data/mockMetaData';
 import store from './store';
 function RenderSideBar() {
@@ -27,6 +29,12 @@ function RenderSideBar() {
             <CrudSideNav
               title='CRUD'
               id={1}
+              openNav={openNav}
+              selectedNav={selectedNav}
+            />
+            <FileSystemSideNav
+              title='FileSystem API'
+              id={2}
               openNav={openNav}
               selectedNav={selectedNav}
             />
@@ -56,6 +64,7 @@ ReactDOM.render(
       >
         <Authentication />
         <CrudApplication metaData={mockMetaData} />
+        <FileSystem />
       </div>
     </BrowserRouter>
   </Provider>,

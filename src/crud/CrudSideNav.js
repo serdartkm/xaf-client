@@ -19,6 +19,11 @@ export default function CrudSideNav({ openNav, selectedNav, id, title }) {
           </NavItem>
         );
       })}
+      <NavItem >
+      <NavLink activeStyle={activeState} to='/crud/dataset'>
+             DataSet
+            </NavLink>
+      </NavItem>
     </SideNav>
   );
 }
