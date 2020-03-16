@@ -2,12 +2,11 @@ import React, { useEffect } from 'react';
 import useFetch from './useFetch';
 import DataSet from './DataSet';
 import Droppable from './dnd/Droppable';
-import requestLocFileSystem from './file-system/file-system'
 export default function DataSetContainer() {
   const { objects, getObjects } = useFetch();
 
   useEffect(() => {
-    requestLocFileSystem()
+ 
     getObjects();
   }, []);
 

@@ -10,6 +10,8 @@ export default function useFetch() {
       .then(data => setObjects(data))
       .catch(err => setError(err));
   }
-
+  function createObject (object){
+    
+  }
   return { updateDate, objects, getObjects, error };
 }
