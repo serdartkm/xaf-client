@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from './actions';
 import validationStates from './validationStates';
+
 function ValidityIcon({ valid }) {
   let stateColor = '#4fc3f7';
   switch (valid) {
@@ -17,7 +18,7 @@ function ValidityIcon({ valid }) {
     default:
       stateColor = '#4fc3f7';
   }
-  debugger;
+
   return (
     <div
       style={{
@@ -65,7 +66,8 @@ export default function Input({
   name,
   onChange,
   value,
-  validationType
+  validationType,
+  calculatedValidation
 }) {
   useEffect(() => {
     dispatch(actions.initValidationState({ propName: name }));
@@ -74,7 +76,7 @@ export default function Input({
   const validationState =
     state.form.validation && state.form.validation[name].validationState;
   const message = state.form.validation && state.form.validation[name].message;
-  debugger;
+
   const dispatch = useDispatch();
   const [borderColor, setBorderColor] = useState('');
   useEffect(() => {
@@ -92,7 +94,15 @@ export default function Input({
     dispatch(actions.inputFocused({ propName: name }));
   }
   function handleBlur() {
-    dispatch(actions.validateInput({ propName: name, validationType, value }));
+    if (validationType) {
+      dispatch(
+        actions.validateInput({ propName: name, validationType, value })
+      );
+    }
+
+    if (calculatedValidation) {
+      calculatedValidation();
+    }
   }
   return (
     <div style={style.root}>

@@ -54,7 +54,7 @@ export function validateUserNameConstraint({ username, propName }) {
   if (usernameRegex.test(username)) {
     return {
       propName,
-      payload: { validationState: validationState.VALID, message:'' }
+      payload: { validationState: validationState.VALID, message: '' }
     };
   } else {
     return {
@@ -79,7 +79,9 @@ export function validateEmptyString({ value, propName }) {
   } else {
     return {
       propName,
-      payload: { validationState: validationState.VALID, message:'' }
+      payload: { validationState: validationState.VALID, message: '' }
     };
   }
 }
+
+

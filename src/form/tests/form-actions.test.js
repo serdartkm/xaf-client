@@ -148,4 +148,43 @@ describe('validateEmailConstraint', () => {
       });
     });
   });
+
+  describe('validatePasswordMatch', () => {
+    it('validationState.VALID', () => {
+      expect(
+        actions.validatePasswordMatch({
+          passwordValue: '123',
+          confirmValue: '123',
+          propName: 'confirm'
+        })
+      ).toStrictEqual({
+        type: actionTypes.INPUT_BLURRED,
+        propName: 'confirm',
+        payload: {
+          validationState: validationStates.VALID,
+          message: ``
+        }
+      });
+    });
+
+    it('validationState.INVALID', () => {
+      expect(
+        actions.validatePasswordMatch({
+          passwordValue: '123',
+          confirmValue: '123DD',
+          propName: 'confirm'
+        })
+      ).toStrictEqual({
+        type: actionTypes.INPUT_BLURRED,
+        propName: 'confirm',
+        payload: {
+          validationState: validationStates.INVALID,
+          message: `password do not match`
+        }
+      });
+    });
+
+
+  });
+
 });

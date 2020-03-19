@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './css/style.css';
 import Input from '../form/Input';
+import Button from '../form/Button';
 import Form from '../form/Form';
 import validationTypes from '../form/validationTypes';
 export default function Login({ state, handleLogin, handleChange }) {
@@ -17,7 +18,6 @@ export default function Login({ state, handleLogin, handleChange }) {
           data-testid="email"
           validationType={validationTypes.EMAIL}
         />
-
         <Input
           onChange={handleChange}
           name="password"
@@ -28,15 +28,13 @@ export default function Login({ state, handleLogin, handleChange }) {
           validationType={validationTypes.EMPTY_STRING}
         />
 
-        <button
+        <Button
           className="btn"
           type="button"
           data-testid="login-btn"
           onClick={handleLogin}
-        >
-          Login
-        </button>
-
+          title="Login"
+        />
         <Link to="/requestpasschange">Forgot Password!</Link>
       </Form>
     </div>

@@ -1,4 +1,7 @@
 import React from 'react';
+import Input from '../form/Input';
+import Form from '../form/Form';
+import validationTypes from '../form/validationTypes';
 import './css/style.css';
 export default function RequestPassChange({
   handleChange,
@@ -6,26 +9,26 @@ export default function RequestPassChange({
   handleRequestPassChange
 }) {
   return (
-    <div data-testid='signupform' className='auth-form'>
-      <fieldset>
-        <legend>Forgot Password:</legend>
-
-        <input
-          placeholder='email'
-          name='email'
+    <div data-testid="signupform" className="auth-form">
+      <Form formTitle="Forgot Password">
+        <Input
+          placeholder="email"
+          name="email"
           value={state.email}
           onChange={handleChange}
-          type='email'
-          data-testid='email'
+          type="email"
+          data-testid="email"
+          validationType={validationTypes.EMAIL}
         />
         <button
-          type='button'
+          className="btn"
+          type="button"
           onClick={handleRequestPassChange}
-          data-testid='requestpasschange-btn'
+          data-testid="requestpasschange-btn"
         >
           Send
         </button>
-      </fieldset>
+      </Form>
     </div>
   );
 }

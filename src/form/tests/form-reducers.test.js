@@ -16,6 +16,7 @@ describe('Reducer', () => {
       })
     ).toStrictEqual({
       validation: {
+        formState: validationStates.INACTIVE,
         email: { validationState: validationStates.INACTIVE, message: '' }
       }
     });
@@ -38,6 +39,7 @@ describe('validateEmailConstraint', () => {
       })
     ).toStrictEqual({
       validation: {
+        formState: validationStates.VALID,
         email: { validationState: validationStates.VALID, message: '' }
       }
     });
@@ -58,6 +60,7 @@ describe('validateEmailConstraint', () => {
       })
     ).toStrictEqual({
       validation: {
+        formState: validationStates.INVALID,
         email: {
           validationState: validationStates.INVALID,
           message: 'email is not valid'
@@ -83,6 +86,7 @@ describe('validatePasswordConstraint', () => {
       })
     ).toStrictEqual({
       validation: {
+        formState: validationStates.VALID,
         password: { validationState: validationStates.VALID, message: '' }
       }
     });
@@ -103,6 +107,7 @@ describe('validatePasswordConstraint', () => {
       })
     ).toStrictEqual({
       validation: {
+        formState: validationStates.INVALID,
         password: {
           validationState: validationStates.INVALID,
           message: `at least 8 characters, must contain at least 1 uppercase letter,  1 lowercase letter, Can contain special characters`
@@ -129,6 +134,7 @@ describe('validateUsernameConstraint', () => {
       })
     ).toStrictEqual({
       validation: {
+        formState: validationStates.VALID,
         username: { validationState: validationStates.VALID, message: '' }
       }
     });
@@ -149,6 +155,7 @@ describe('validateUsernameConstraint', () => {
       })
     ).toStrictEqual({
       validation: {
+        formState: validationStates.INVALID,
         username: {
           validationState: validationStates.INVALID,
           message: `Only Letters a-z or A-Z and the Symbols - and _ are allowed`
@@ -175,6 +182,7 @@ describe('validateUsernameConstraint', () => {
       })
     ).toStrictEqual({
       validation: {
+        formState: validationStates.VALID,
         password: { validationState: validationStates.VALID, message: '' }
       }
     });
@@ -195,6 +203,59 @@ describe('validateUsernameConstraint', () => {
       })
     ).toStrictEqual({
       validation: {
+        formState: validationStates.INVALID,
+        password: {
+          validationState: validationStates.INVALID,
+          message: `empty string not allowed`
+        }
+      }
+    });
+  });
+});
+
+describe('FORM VALIDATION STATE', () => {
+
+  it('formState VALID', () => {
+    const currentState = {
+      validation: {
+        password: { validationState: validationStates.INACTIVE, message: '' }
+      }
+    };
+    expect(
+      reducer(currentState, {
+        type: actionTypes.INPUT_BLURRED,
+        ...validations.validateEmptyString({
+          value: 'sdsd',
+          propName: 'password'
+        })
+      })
+    ).toStrictEqual({
+      validation: {
+        formState: validationStates.VALID,
+        password: {
+          validationState: validationStates.VALID,
+          message: ``
+        }
+      }
+    });
+  });
+  it('formState INVALID', () => {
+    const currentState = {
+      validation: {
+        password: { validationState: validationStates.INACTIVE, message: '' }
+      }
+    };
+    expect(
+      reducer(currentState, {
+        type: actionTypes.INPUT_BLURRED,
+        ...validations.validateEmptyString({
+          value: '',
+          propName: 'password'
+        })
+      })
+    ).toStrictEqual({
+      validation: {
+        formState: validationStates.INVALID,
         password: {
           validationState: validationStates.INVALID,
           message: `empty string not allowed`

@@ -1,5 +1,7 @@
 import actionTypes from './actionTypes';
 import validationState from './validationStates';
+
+
 export default function reducer(state = {}, action) {
   let nextState = null;
   switch (action.type) {
@@ -8,10 +10,10 @@ export default function reducer(state = {}, action) {
         ...state,
         validation: {
           ...state.validation,
+          formState:action.payload.validationState ,
           [action.propName]: action.payload
         }
       };
-      debugger;
 
       return nextState;
     case actionTypes.INIT_VALIDATION_STATE:
@@ -19,6 +21,7 @@ export default function reducer(state = {}, action) {
         ...state,
         validation: {
           ...state.validation,
+          formState: validationState.INACTIVE ,
           [action.propName]: {
             validationState: validationState.INACTIVE,
             message: ''
@@ -30,13 +33,21 @@ export default function reducer(state = {}, action) {
         ...state,
         validation: {
           ...state.validation,
+          formState: validationState.INACTIVE ,
           [action.propName]: {
             validationState: validationState.INACTIVE,
             message: ''
           }
         }
       };
-
+    case actionTypes.INIT_FORM_VALIDATION_STATE:
+      return {
+        ...state,
+        validation: {
+          ...state.validation,
+          formState:validationState.INACTIVE 
+        }
+      };
     default:
       return state;
   }
