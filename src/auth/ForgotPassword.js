@@ -1,6 +1,7 @@
 import React from 'react';
 import Input from '../form/Input';
 import Form from '../form/Form';
+import Button from '../form/Button';
 import validationTypes from '../form/validationTypes';
 import './css/style.css';
 export default function RequestPassChange({
@@ -20,14 +21,14 @@ export default function RequestPassChange({
           data-testid="email"
           validationType={validationTypes.EMAIL}
         />
-        <button
+        <Button
           className="btn"
           type="button"
           onClick={handleRequestPassChange}
           data-testid="requestpasschange-btn"
-        >
-          Send
-        </button>
+          title="Send"
+       />
+        
       </Form>
     </div>
   );

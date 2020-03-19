@@ -2,6 +2,7 @@ import React from 'react';
 import './css/style.css';
 import Form from '../form/Form';
 import Input from '../form/Input';
+import Button from '../form/Button';
 import validationTypes from '../form/validationTypes'
 export default function Signup({
   state,
@@ -41,14 +42,14 @@ export default function Signup({
           value={state.password}
           validationType={validationTypes.PASSWORD}
         />
-        <button
+        <Button
           className="btn"
           type="button"
           onClick={handleSignup}
           data-testid="signup-btn"
-        >
-          Signup
-        </button>
+          title="Signup"
+        />
+       
       </Form>
     </div>
   );

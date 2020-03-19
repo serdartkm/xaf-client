@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './css/style.css';
 import Input from '../form/Input';
 import Form from '../form/Form';
+import Button from '../form/Button';
 import validationTypes from '../form/validationTypes';
 import * as validationActions from '../form/actions';
 export default function ChangePassword({
@@ -42,13 +43,13 @@ export default function ChangePassword({
           onChange={handleChange}
           calculatedValidation={validatePasswordMatch}
         />
-        <button
+        <Button
           type="button"
           data-testid="change-pass-btn"
           onClick={handleChangePass}
-        >
-          Change
-        </button>
+          title="Change"
+        />
+       
       </Form>
     </div>
   );
