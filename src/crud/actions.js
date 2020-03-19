@@ -22,7 +22,6 @@ export function selectObject({ obj }) {
 }
 
 export function find({ objectName, metaData }) {
-
   const propNames = getPropNames({ objectName, metaData });
   return function(dispatch) {
     dispatch({
@@ -53,7 +52,13 @@ export function insertOne() {
       `${process.env.REACT_APP_XAF_SERVER_URL}/insertOne?document=${objectName}`,
       { method: 'POST', body: JSON.stringify(obj) }
     )
-      .then(response => response.json())
+      .then(response => {
+        if (response.status === 201) {
+          return response.json();
+        } else {
+          throw new Error('Something went wrong on api server! for insertOne ');
+        }
+      })
       .then(json =>
         dispatch({
           type: actionTypes.INSERT_ONE_SUCCESS,
@@ -77,9 +82,14 @@ export function updateOne() {
       `${process.env.REACT_APP_XAF_SERVER_URL}/updateOne?document=${objectName}`,
       { method: 'put', body: JSON.stringify(obj) }
     )
-      .then(response => response.json())
-      .then(() => {
-        dispatch({ type: actionTypes.UPDATE_ONE_SUCCESS });
+      .then(response => {
+        if (response.status === 204) {
+          dispatch({ type: actionTypes.UPDATE_ONE_SUCCESS });
+        } else if (response.status === 304) {
+          throw new Error('could not find object for updateOne ');
+        } else {
+          throw new Error('Something went wrong on api server! for updateOne ');
+        }
       })
       .catch(err => {
         dispatch({
@@ -98,8 +108,13 @@ export function deleteOne() {
       `${process.env.REACT_APP_XAF_SERVER_URL}/deleteOne?document=${objectName}`,
       { method: 'delete', body: JSON.stringify({ _id: obj._id }) }
     )
-      .then(response => response.json())
-      .then(() => dispatch({ type: actionTypes.DELETE_ONE_SUCCESS }))
+      .then(response => {
+        if (response.status === 202) {
+          dispatch({ type: actionTypes.DELETE_ONE_SUCCESS });
+        } else {
+          throw new Error('Something went wrong on api server! for deleteOne ');
+        }
+      })
       .catch(err =>
         dispatch({
           type: actionTypes.DELETE_ONE_FAILED,
