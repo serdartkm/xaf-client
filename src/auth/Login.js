@@ -10,6 +10,9 @@ export default function Login({ state, handleLogin, handleChange }) {
   return (
     <div data-testid="loginform" className="auth-form">
       <Form formTitle="Login">
+ 
+
+      
         <Input
           onChange={handleChange}
           name="emailorusername"
@@ -22,18 +25,21 @@ export default function Login({ state, handleLogin, handleChange }) {
             validationTypes.INVALID_CREDENTIALS
           ]}
         />
-        <Input
-          onChange={handleChange}
-          name="password"
-          value={state.password}
-          type="password"
-          placeholder="enter password"
-          data-testid="password"
-          validationTypes={[
-            validationTypes.EMPTY_STRING_VALIDATION,
-            validationTypes.INVALID_CREDENTIALS
-          ]}
-        />
+      
+ 
+          <Input
+            onChange={handleChange}
+            name="password"
+            value={state.password}
+            type="password"
+            placeholder="enter password"
+            data-testid="password"
+            validationTypes={[
+              validationTypes.EMPTY_STRING_VALIDATION,
+              validationTypes.INVALID_CREDENTIALS
+            ]}
+          />
+        
 
         <Button
           className="btn"

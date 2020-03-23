@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as actions from './actions';
 import validationStates from './validationStates';
 import { isClientValidationType } from '../form/constraintValidators';
+import EyeIcon from './EyeIcon';
 function ValidityIcon({ valid }) {
   let stateColor = '#4fc3f7';
   switch (valid) {
@@ -74,7 +75,7 @@ export default function Input({
     validationState: validationStates.INACTIVE,
     message: ''
   });
-  
+  const [inputType, setInputType] = useState(type);
   function registerValidation() {
     if (validationTypes.length > 0) {
       validationTypes.forEach(validationName => {
@@ -136,22 +137,25 @@ export default function Input({
   function handleBlur() {
     if (validationTypes.length > 0) {
       validationTypes.forEach(validationType => {
-      
-        if (
-          isClientValidationType({ validationType })
-        ) {
+        if (isClientValidationType({ validationType })) {
           dispatch(actions.clientValidation({ validationType, value, state }));
         }
       });
     }
   }
-
+  function toggleEye() {
+    if (inputType === 'password') {
+      setInputType('text');
+    } else {
+      setInputType('password');
+    }
+  }
   return (
     <div style={style.root}>
       <div style={style.inputContainer}>
         <input
           style={{ ...style.input, borderColor }}
-          type={type}
+          type={inputType}
           name={name}
           onChange={onChange}
           value={value}
@@ -164,6 +168,7 @@ export default function Input({
             inputValidation.validationState === validationStates.VALID) && (
             <ValidityIcon valid={inputValidation.validationState} />
           )}
+        {type === 'password' && <EyeIcon onClick={toggleEye} />}
       </div>
       {inputValidation.validationState === validationStates.INVALID && (
         <div style={style.message}>*{inputValidation.message}</div>
