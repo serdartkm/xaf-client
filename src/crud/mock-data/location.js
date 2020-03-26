@@ -1,6 +1,6 @@
 export default {
   objectName: 'country',
-  defaultDisplay: 'name',
+  defaultProperty: 'nameOfCountry',
   propNames: [
     { name: 'codeOfCountry', type: 'text' },
     { name: 'nameOfCountry', type: 'text' }

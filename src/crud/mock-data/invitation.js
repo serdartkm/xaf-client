@@ -1,5 +1,6 @@
 export default {
   objectName: 'invitation',
+  defaultProperty: 'asgh',
   propNames: [
     { name: 'asgh', type: 'text' },
     { name: 'asNumber', type: 'text' },
@@ -14,6 +15,7 @@ export default {
 
 export const personInInvitation = {
   objectName: 'personInInvitation',
+  defaultProperty: 'invitation',
   propNames: [
     { name: 'person', type: 'id', source: 'person' },
     { name: 'passport', type: 'id', source: 'passport', filter: 'person' },

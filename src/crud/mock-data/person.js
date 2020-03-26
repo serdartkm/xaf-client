@@ -1,5 +1,6 @@
 export default {
   objectName: 'person',
+  defaultProperty: 'fullName',
   propNames: [
     { name: 'personType', type: 'bool' },
     { name: 'firstName', type: 'text', placeholder: 'Enter firstname' },
@@ -8,6 +9,7 @@ export default {
     { name: 'gender', type: 'id', source: 'gender' },
     { name: 'birthCountry', type: 'id', source: 'country' },
     { name: 'birthPlace', type: 'text' },
+    { name: 'fullname', type: 'calculated',value:['concat',['firstNmae','lastName']] }
     {
       name: 'maritalStatus',
       type: 'id',

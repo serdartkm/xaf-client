@@ -1,5 +1,6 @@
 export default {
   objectName: 'visa',
+  defaultProperty: 'number',
   propNames: [
     {
       name: 'number',
@@ -41,14 +42,17 @@ export default {
 
 export const visaType = {
   objectName: 'visaType',
+  defaultProperty: 'nameOfVisaType',
   propNames: [{ name: 'nameOfVisaType', type: 'text' }]
 };
 export const visaCategory = {
   objectName: 'visaCategory',
+  defaultProperty: 'nameOfVisaCategory',
   propNames: [{ name: 'nameOfVisaCategory', type: 'text' }]
 };
 
 export const borderZone = {
   objectName: 'borderZone',
+  defaultProperty: 'nameOfBorderZone',
   propNames: [{ name: 'nameOfBorderZone', type: 'text' }]
 };

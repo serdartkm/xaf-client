@@ -1,5 +1,6 @@
 export default {
   objectName: 'application',
+  defaultProperty: 'number',
   propNames: [
     { name: 'number', type: 'text' },
     { name: 'date', type: 'date' },

@@ -1,5 +1,6 @@
 export default {
   objectName: 'company',
+  defaultProperty: 'titleOfCompany',
   propNames: [
     { name: 'titleOfCompany', type: 'text' },
     { name: 'address', type: 'text' },

@@ -1,8 +1,9 @@
 export default {
   objectName: 'passport',
+  defaultProperty: 'number',
   propNames: [
     {
-      name: 'passportNumber',
+      name: 'number',
       type: 'text',
       placeholder: 'Enter Passport Number'
     },

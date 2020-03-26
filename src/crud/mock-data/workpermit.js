@@ -1,5 +1,6 @@
 export default {
   objectName: 'workpermit',
+  defaultProperty: 'number',
   propNames: [
     { name: 'issuedDate', type: 'date' },
     { name: 'number', type: 'text' },
@@ -10,6 +11,7 @@ export default {
 
 export const personInWokrkpermit = {
   objectName: 'personInWorkPermit',
+  defaultProperty: 'employee',
   propNames: [
     { name: 'asNumber', type: 'text' },
     { name: 'employee', type: 'id', source: 'employee' },
@@ -29,5 +31,6 @@ export const personInWokrkpermit = {
 
 export const workpermitplace = {
   objectName: 'workPermittedPlaces',
+  defaultProperty: 'nameOfLocation',
   propNames: [{ name: 'nameOfLocation', type: 'text' }]
 };
