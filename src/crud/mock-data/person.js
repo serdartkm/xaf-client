@@ -8,8 +8,12 @@ export default {
     { name: 'birthDate', type: 'date' },
     { name: 'gender', type: 'id', source: 'gender' },
     { name: 'birthCountry', type: 'id', source: 'country' },
-    { name: 'birthPlace', type: 'text' },
-    { name: 'fullname', type: 'calculated',value:['concat',['firstNmae','lastName']] },
+    {
+      name: 'birthPlace',
+      type: 'text',
+      placeholder: 'Enter place of birth'
+    },
+    //{ name: 'fullname', type: 'calculated',value:['concat',['firstNmae','lastName']] },
     {
       name: 'maritalStatus',
       type: 'id',
@@ -40,12 +44,7 @@ export default {
       visible: ['personType', true]
     },
     { name: 'active', type: 'bool' },
-    { name: 'outsideOfCountry', type: 'bool' },
-    {
-      name: 'birthPlace',
-      type: 'text',
-      placeholder: 'Enter place of birth'
-    }
+    { name: 'outsideOfCountry', type: 'bool' }
   ],
   collections: [
     { name: 'passports', type: 'passport' },

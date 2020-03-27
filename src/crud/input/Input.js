@@ -6,14 +6,18 @@ export default function Input({
   value = '',
   placeholder,
   name,
-  items
+  items = [
+    { id: 1, label: 'One' },
+    { id: 1, label: 'Two' }
+  ]
 }) {
-  debugger;
   switch (type) {
     case 'text':
       return (
         <div className='input-container'>
+          <label htmlFor={name}>{name}:</label>
           <input
+            id={name}
             data-testid={name}
             className='input'
             type='text'
@@ -69,7 +73,9 @@ export default function Input({
     case 'date':
       return (
         <div className='input-container'>
+          <label htmlFor={name}>{name}:</label>
           <input
+            id={name}
             data-testid={name}
             className='input'
             type='date'
@@ -82,6 +88,7 @@ export default function Input({
     case 'bool':
       return (
         <div className='input-container'>
+          <label htmlFor={name}>{name}:</label>
           <input
             data-testid={name}
             className='input'
@@ -91,7 +98,7 @@ export default function Input({
             name={name}
             id={name}
           />
-          <label htmlFor={name}>{name}</label>
+
           <br></br>
         </div>
       );
@@ -111,22 +118,25 @@ export default function Input({
         </div>
       ));
 
-    case 'select':
+    case 'id':
       return (
         <div className='input-container'>
-          <select
+          <label htmlFor={name}>{name}:</label>
+          <input className='input' list={name} name={name} />
+          <datalist
+            id={name}
+            className='input'
             value={value}
             onChange={onChange}
             data-testid={name}
-            type='select'
             name={name}
           >
             {items.map(v => (
-              <option key={v.id} value={v.id}>
-                {v.lable}
+              <option key={v.id} value={v.label}>
+                {v.label}
               </option>
             ))}
-          </select>
+          </datalist>
         </div>
       );
     case 'search':
