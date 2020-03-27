@@ -1,6 +1,7 @@
 export default {
   objectName: 'rejection',
   defaultProperty:'number',
+  
   propNames: [
     { name: 'number', type: 'text' },
     { name: 'date', type: 'date' }

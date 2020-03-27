@@ -12,7 +12,7 @@ export default function Input({
   switch (type) {
     case 'text':
       return (
-        <div className="input-container">
+        <div className='input-container'>
           <input
             data-testid={name}
             className='input'
@@ -26,7 +26,7 @@ export default function Input({
       );
     case 'email':
       return (
-        <div className="input-container">
+        <div className='input-container'>
           <input
             data-testid={name}
             className='input'
@@ -40,7 +40,7 @@ export default function Input({
       );
     case 'password':
       return (
-        <div className="input-container">
+        <div className='input-container'>
           <input
             data-testid={name}
             className='input'
@@ -54,7 +54,7 @@ export default function Input({
       );
     case 'file':
       return (
-        <div className="input-container">
+        <div className='input-container'>
           <input
             data-testid={name}
             className='input'
@@ -68,7 +68,7 @@ export default function Input({
 
     case 'date':
       return (
-        <div className="input-container">
+        <div className='input-container'>
           <input
             data-testid={name}
             className='input'
@@ -79,9 +79,9 @@ export default function Input({
           />
         </div>
       );
-    case 'checkbox':
+    case 'bool':
       return (
-        <div className="input-container">
+        <div className='input-container'>
           <input
             data-testid={name}
             className='input'
@@ -89,13 +89,16 @@ export default function Input({
             onChange={onChange}
             checked={value}
             name={name}
+            id={name}
           />
+          <label htmlFor={name}>{name}</label>
+          <br></br>
         </div>
       );
 
     case 'radio':
       return items.map(i => (
-        <div key={i.id} className="input-container">
+        <div key={i.id} className='input-container'>
           <input
             data-testid={`${name}-${i.label}`}
             type='radio'
@@ -110,7 +113,7 @@ export default function Input({
 
     case 'select':
       return (
-        <div className="input-container">
+        <div className='input-container'>
           <select
             value={value}
             onChange={onChange}
@@ -128,7 +131,7 @@ export default function Input({
       );
     case 'search':
       return (
-        <div className="input-container">
+        <div className='input-container'>
           <input
             data-testid={name}
             className='input'
