@@ -1,5 +1,5 @@
-import getPropNames from '../../src/library/redux/ui-reducer/getPropNames';
-import metaData from '../../src/library/mock-data/mockMetaData';
+import getPropNames from '../../src/crud/getPropNames';
+import metaData from '../../src/crud/mock-data/mockMetaData';
 
 Cypress.Commands.add('listViewDisplay', ({ objectName }) => {
   describe('ListView', () => {
@@ -17,5 +17,3 @@ Cypress.Commands.add('listViewDisplay', ({ objectName }) => {
     });
   });
 });
-
-

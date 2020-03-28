@@ -123,3 +123,25 @@ export function deleteOne() {
       );
   };
 }
+
+export function initDatalist({ datalist }) {
+  return function(dispatch) {
+    dispatch({ type: actionTypes.DATALIST_STARTED });
+    return fetch(
+      `${process.env.REACT_APP_XAF_SERVER_URL}/find?document=${datalist}`
+    )
+      .then(response => response.json())
+      .then(data => {
+        dispatch({
+          type: actionTypes.DATALIST_SUCCESS,
+          payload: { propName:datalist, data }
+        });
+      })
+      .catch(err => {
+        dispatch({
+          type: actionTypes.DATALIST_FAILED,
+          payload: { error: err }
+        });
+      });
+  };
+}

@@ -16,6 +16,7 @@ export default function CrudApplication({ metaData }) {
     selectObject,
     find
   } = useCrud({ metaData });
+
   return (
     <div className='nav-route-container'>
       <Route exact path={`/crud/list/:objectName`}>

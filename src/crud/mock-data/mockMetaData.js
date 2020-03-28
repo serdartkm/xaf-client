@@ -1,2 +1,3 @@
-import person from './person';
-export default [{ ...person }];
+import person, { gender } from './person';
+import country from './location';
+export default [person, country, gender];

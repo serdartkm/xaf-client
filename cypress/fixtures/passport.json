@@ -1,5 +1,9 @@
 [
-  { "_id": 1, "passportNumber": "12345", "passportIssuedDate": "01.10.2020" },
-  { "_id": 2, "passportNumber": "678910", "passportIssuedDate": "02.10.2020" },
-  { "_id": 3, "passportNumber": "111213", "passportIssuedDate": "03.10.2020" }
+  { "_id": "1", "passportNumber": "12345", "passportIssuedDate": "01.10.2020" },
+  {
+    "_id": "2",
+    "passportNumber": "678910",
+    "passportIssuedDate": "02.10.2020"
+  },
+  { "_id": "3", "passportNumber": "111213", "passportIssuedDate": "03.10.2020" }
 ]

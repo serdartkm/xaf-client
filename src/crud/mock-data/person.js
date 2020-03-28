@@ -63,13 +63,12 @@ export default {
 
 export const maritalStatus = {
   objectName: 'maritalStatus',
-  propNames: [
-    { name: 'nameOfMaritalStatus', type: 'text' },
-    { name: 'gender', type: 'id', source: 'gender' }
-  ]
+  defaultProperty: 'nameOfMaritalStatus',
+  propNames: [{ name: 'nameOfMaritalStatus', type: 'text' }]
 };
 
 export const gender = {
   objectName: 'gender',
+  defaultProperty: 'nameOfGender',
   propNames: [{ name: 'nameOfGender', type: 'text' }]
 };

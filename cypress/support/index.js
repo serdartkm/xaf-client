@@ -15,9 +15,9 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
-import './api-calls'
-import './user-actions'
-import 'cypress-pipe';
+//import './api-calls'
+//import './user-actions'
+//import 'cypress-pipe';
 Cypress.on('window:before:load', win => {
     delete win.fetch;
   });

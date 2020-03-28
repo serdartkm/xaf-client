@@ -13,16 +13,20 @@ export default function CrudSideNav({ openNav, selectedNav, id, title }) {
       {objectNames.map(objectName => {
         return (
           <NavItem key={objectName}>
-            <NavLink activeStyle={activeState} to={`/crud/list/${objectName}`}>
+            <NavLink
+              data-testid={objectName}
+              activeStyle={activeState}
+              to={`/crud/list/${objectName}`}
+            >
               {objectName}
             </NavLink>
           </NavItem>
         );
       })}
-      <NavItem >
-      <NavLink activeStyle={activeState} to='/crud/dataset'>
-             DataSet
-            </NavLink>
+      <NavItem>
+        <NavLink activeStyle={activeState} to='/crud/dataset'>
+          DataSet
+        </NavLink>
       </NavItem>
     </SideNav>
   );

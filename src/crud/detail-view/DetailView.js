@@ -52,7 +52,7 @@ export default function DetailView({
   const history = useHistory();
 
   const { fields, obj, objectName } = state;
-  debugger;
+
   function handleGoBack() {
     history.goBack();
   }
@@ -88,9 +88,11 @@ export default function DetailView({
                 const name = m.name;
                 const type = m.type;
                 const placeholder = m.placeholder;
-
+                const source = m.source;
                 return (
                   <Input
+                    source={source}
+                    defaultProperty={m.defaultProperty}
                     key={name}
                     type={type}
                     value={obj[name]}

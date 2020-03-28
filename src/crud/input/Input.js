@@ -1,16 +1,24 @@
 import React from 'react';
+
+import Dropdown from './dropdown/dropdown';
 import './css/style.css';
+
 export default function Input({
   type,
   onChange,
   value = '',
   placeholder,
   name,
+  source,
   items = [
     { id: 1, label: 'One' },
-    { id: 1, label: 'Two' }
+    { id: 2, label: 'Two' }
   ]
 }) {
+
+
+ 
+
   switch (type) {
     case 'text':
       return (
@@ -122,21 +130,7 @@ export default function Input({
       return (
         <div className='input-container'>
           <label htmlFor={name}>{name}:</label>
-          <input className='input' list={name} name={name} />
-          <datalist
-            id={name}
-            className='input'
-            value={value}
-            onChange={onChange}
-            data-testid={name}
-            name={name}
-          >
-            {items.map(v => (
-              <option key={v.id} value={v.label}>
-                {v.label}
-              </option>
-            ))}
-          </datalist>
+          <Dropdown name={name} source={source} />
         </div>
       );
     case 'search':

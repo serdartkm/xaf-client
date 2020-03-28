@@ -13,7 +13,12 @@ import CrudSideNav from './crud/CrudSideNav';
 import AuthSideNav from './auth/AuthSideNav';
 import FileSystemSideNav from './file-system/FileSystemSideNav';
 import mockMetaData from './crud/mock-data/mockMetaData';
+
 import store from './store';
+
+if (window.Cypress) {
+  window.store = store
+}
 function RenderSideBar() {
   return (
     <SideBar>
