@@ -27,8 +27,7 @@ export default function reducer(state = initState, action) {
         ...state,
         loading: true,
         propNames: action.payload.propNames,
-        objectName: action.payload.objectName,
-        metaData: action.payload.metaData
+        objectName: action.payload.objectName
       };
     case actionTypes.FINDING_SUCCESS:
       return {
@@ -104,6 +103,8 @@ export default function reducer(state = initState, action) {
         loading: false,
         datalist: { ...state.datalist, [action.propName]: action.data }
       };
+    case actionTypes.META_DATA_IS_SET:
+      return { ...state, metaData: action.metaData };
     default:
       return state;
   }

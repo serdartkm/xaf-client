@@ -3,8 +3,13 @@ import createObjectHalper from './createObjectHelper';
 import getFieldsMetaData from './getFieldsMetaData';
 import getPropNames from './getPropNames';
 import store from '../store';
+
 export function valueChanged({ propName, value }) {
   return { type: actionTypes.VALUE_CHANGED, payload: { propName, value } };
+}
+
+export function setMetaData({ metaData }) {
+  return { type: actionTypes.META_DATA_IS_SET, metaData };
 }
 
 export function createObject() {
@@ -21,16 +26,33 @@ export function selectObject({ obj }) {
   return { type: actionTypes.OBJECT_SELECTED, payload: { obj, fields } };
 }
 
-export function find({ objectName, metaData }) {
+export function find({ objectName, metaData, filter, listView }) {
   const propNames = getPropNames({ objectName, metaData });
+  let url;
   return function(dispatch) {
     dispatch({
       type: actionTypes.FINDING_STARTED,
       payload: { propNames, objectName, metaData }
     });
-    return fetch(
-      `${process.env.REACT_APP_XAF_SERVER_URL}/find?document=${objectName}`
-    )
+    if (!filter) {
+      url =
+        `${process.env.REACT_APP_XAF_SERVER_URL}/find?` +
+        new URLSearchParams({
+          document: objectName,
+          metaData,
+          listView
+        });
+    } else {
+      url =
+        `${process.env.REACT_APP_XAF_SERVER_URL}/find?` +
+        new URLSearchParams({
+          document: objectName,
+          filter,
+          metaData,
+          listView
+        });
+    }
+    return fetch(url)
       .then(response => response.json())
       .then(data => {
         dispatch({
@@ -134,7 +156,7 @@ export function initDatalist({ datalist }) {
       .then(data => {
         dispatch({
           type: actionTypes.DATALIST_SUCCESS,
-          payload: { propName:datalist, data }
+          payload: { propName: datalist, data }
         });
       })
       .catch(err => {

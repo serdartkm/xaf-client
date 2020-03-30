@@ -1,21 +1,30 @@
 import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import Table from './Table';
+import getNavigationFilter from '../getNavigationFilter';
 import './css/style.css';
 export default function ListView({ state, find, createObject }) {
- 
   const params = useParams();
   const { objectName } = params;
-  const { list, propNames } = state;
+  const location = useLocation();
+
+  const { list, propNames, metaData } = state;
+
   useEffect(() => {
-    if (objectName) {
-  
-      find({ objectName });
+    if (objectName && location && metaData) {
+      const objMeta = metaData.find(m => m.objectName === objectName);
+      const listView = '';
+      const filter = getNavigationFilter({
+        metaData,
+        objectName,
+        navigation: location.state.navigation
+      });
+      find({ objectName, filter, metaData: objMeta, listView });
     }
-  }, [objectName]);
+  }, [objectName, location, metaData]);
   return (
     <div className='list-view' data-testid='listview'>
-      <Link data-testid="new" to='/crud/detail' onClick={createObject}>
+      <Link data-testid='new' to='/crud/detail' onClick={createObject}>
         New
       </Link>
       {objectName}

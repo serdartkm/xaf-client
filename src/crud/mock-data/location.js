@@ -1,14 +1,15 @@
 export default {
   objectName: 'country',
   defaultProperty: 'codeOfCountry',
+  
   propNames: [
     { name: 'codeOfCountry', type: 'text' },
     { name: 'nameOfCountry', type: 'text' }
   ]
 };
 
-export const addressOfResidence = {
-  objectName: 'addressOfResidence',
+export const addressOfRegistration = {
+  objectName: 'addressOfRegistration',
   defaultProperty: 'description',
   propNames: [{ name: 'description', type: 'text' }]
 };

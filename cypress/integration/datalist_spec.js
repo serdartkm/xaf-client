@@ -3,6 +3,11 @@ describe('My First Test', function() {
     cy.server();
     cy.route(
       'GET',
+      `http://localhost:8000/find?document=person`,
+      'fixture:person'
+    ).as('person');
+    cy.route(
+      'GET',
       `http://localhost:8000/find?document=birthCountry`,
       'fixture:country'
     ).as('birthCounry');
@@ -14,7 +19,7 @@ describe('My First Test', function() {
     cy.visit('http://localhost:3000');
     cy.contains('CRUD').click();
     cy.get('[data-testid="person"]').click();
-    cy.get('[data-testid="new"]').click();
+   // cy.get('[data-testid="new"]').click();
     // cy.get('[data-testid="dropdown-input-gender"]').focus();
     // cy.wait(1000);
     // cy.get('[data-testid="dropdown-input-birthCountry"]').focus();

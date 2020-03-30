@@ -1,24 +1,28 @@
 import React from 'react';
 import SideNav, { NavItem } from '../nav/SideNav';
 import metaData from '../crud/mock-data/mockMetaData';
-import getObjectNames from './getObjectNames';
+
 import { NavLink } from 'react-router-dom';
+import getNavigations from './getNavigations';
 const activeState = {
   color: 'white'
 };
-const objectNames = getObjectNames({ metaData });
+
 export default function CrudSideNav({ openNav, selectedNav, id, title }) {
   return (
     <SideNav title={title} id={id} openNav={openNav} selectedNav={selectedNav}>
-      {objectNames.map(objectName => {
+      {getNavigations({ metaData }).map(nav => {
         return (
-          <NavItem key={objectName}>
+          <NavItem key={nav.objectName}>
             <NavLink
-              data-testid={objectName}
+              data-testid={nav.objectName}
               activeStyle={activeState}
-              to={`/crud/list/${objectName}`}
+              to={{
+                pathname: `/crud/list/${nav.objectName}`,
+                state: { navigation: nav.navigation }
+              }}
             >
-              {objectName}
+              {nav.navigation}
             </NavLink>
           </NavItem>
         );

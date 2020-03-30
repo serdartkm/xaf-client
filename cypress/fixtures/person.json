@@ -1,24 +1,40 @@
 [
   {
     "_id": "1",
+    "personType": true,
     "firstName": "Diego",
     "lastName": "Maradona",
     "birthDate": "01.01.1952",
     "birthPlace": "Brazil",
-    "gender": { "_id": "1", "nameOfGender": "male" },
-    "maritalStatus": { "_id": "1", "nameOfMaritalStatus": "married" },
-    "countryOfResidence": {
-      "_id": "1",
-      "codeOfCountry": "USA",
-      "nameOfCountry": "United States Of America"
-    },
-    "addressOfResidence": {}
+    "gender": "male",
+    "maritalStatus": "married",
+    "birthCountry": "USA",
+    "countryOfResidence": "USA",
+    "addressOfResidence": "California, Building 5",
+    "employee": null,
+    "relation": null,
+    "project": "YAN",
+    "subcontractor": "NetMuh",
+    "salary": "4000",
+    "active": true
   },
   {
     "_id": "2",
-    "firstName": "Cristiano",
-    "lastName": "Ronalsdo",
-    "birthDate": "01.01.1980",
-    "birthPlace": "Brazil"
+    "personType": true,
+    "firstName": "Fernando",
+    "lastName": "Moris",
+    "birthDate": "01.01.1952",
+    "birthPlace": "Brazil",
+    "gender": "male",
+    "maritalStatus": "married",
+    "birthCountry": "USA",
+    "countryOfResidence": "USA",
+    "addressOfResidence": "California, Building 5",
+    "employee": null,
+    "relation": null,
+    "project": "YAN",
+    "subcontractor": "NetMuh",
+    "salary": "4000",
+    "active": true
   }
 ]
