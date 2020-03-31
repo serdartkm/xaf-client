@@ -30,7 +30,7 @@ export default function CrudSideNav({
   }, [state.crud.nav, appName]);
   return (
     <SideNav title={title} id={id} openNav={openNav} selectedNav={selectedNav}>
-      {navigations.map(nav => {
+      {navigations.length>0 &&  navigations.map(nav => {
         return (
           <NavItem key={nav.objectName}>
             <NavLink
