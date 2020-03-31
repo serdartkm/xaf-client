@@ -2,10 +2,10 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import ListView from './list-view/ListView';
 import DetailView from './detail-view/DetailView';
-import Dashboard from './dataset/index'
+import Dashboard from './dataset/index';
 import useCrud from './useCrud';
 
-export default function CrudApplication({ metaData }) {
+export default function CrudApplication({ appName }) {
   const {
     insertOne,
     handleChange,
@@ -15,7 +15,7 @@ export default function CrudApplication({ metaData }) {
     createObject,
     selectObject,
     find
-  } = useCrud({ metaData });
+  } = useCrud({ appName });
 
   return (
     <div className='nav-route-container'>
@@ -34,11 +34,10 @@ export default function CrudApplication({ metaData }) {
           insertOne={insertOne}
           updateOne={updateOne}
           state={state}
-          metaData={metaData}
         />
       </Route>
       <Route exact path='/crud/dataset'>
-        <Dashboard/>
+        <Dashboard />
       </Route>
     </div>
   );

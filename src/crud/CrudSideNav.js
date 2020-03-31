@@ -1,17 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SideNav, { NavItem } from '../nav/SideNav';
-import metaData from '../crud/mock-data/mockMetaData';
-
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import getNavigations from './getNavigations';
+import { fetchNavigations } from './nav/actions';
 const activeState = {
   color: 'white'
 };
 
-export default function CrudSideNav({ openNav, selectedNav, id, title }) {
+export default function CrudSideNav({
+  openNav,
+  selectedNav,
+  id,
+  title,
+  appName
+}) {
+  const [navigations, setNavigations] = useState([]);
+  const dispatch = useDispatch();
+  const state = useSelector(state => state);
+
+  useEffect(() => {
+    if (appName) {
+      dispatch(fetchNavigations({ appName }));
+    }
+  }, [appName]);
+  useEffect(() => {
+    if (appName && state.crud.nav[appName]) {
+      setNavigations(state.crud.nav[appName]);
+    }
+  }, [state.crud.nav, appName]);
   return (
     <SideNav title={title} id={id} openNav={openNav} selectedNav={selectedNav}>
-      {getNavigations({ metaData }).map(nav => {
+      {navigations.map(nav => {
         return (
           <NavItem key={nav.objectName}>
             <NavLink

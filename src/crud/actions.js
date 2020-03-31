@@ -26,32 +26,18 @@ export function selectObject({ obj }) {
   return { type: actionTypes.OBJECT_SELECTED, payload: { obj, fields } };
 }
 
-export function find({ objectName, metaData, filter, listView }) {
-  const propNames = getPropNames({ objectName, metaData });
-  let url;
+export function find({ objectName, route }) {
+  let url =
+    `${process.env.REACT_APP_XAF_SERVER_URL}/${route}?` +
+    new URLSearchParams({
+      document: objectName
+    });
   return function(dispatch) {
     dispatch({
       type: actionTypes.FINDING_STARTED,
-      payload: { propNames, objectName, metaData }
+      payload: { objectName }
     });
-    if (!filter) {
-      url =
-        `${process.env.REACT_APP_XAF_SERVER_URL}/find?` +
-        new URLSearchParams({
-          document: objectName,
-          metaData,
-          listView
-        });
-    } else {
-      url =
-        `${process.env.REACT_APP_XAF_SERVER_URL}/find?` +
-        new URLSearchParams({
-          document: objectName,
-          filter,
-          metaData,
-          listView
-        });
-    }
+
     return fetch(url)
       .then(response => response.json())
       .then(data => {
@@ -65,6 +51,8 @@ export function find({ objectName, metaData, filter, listView }) {
       });
   };
 }
+
+
 
 export function insertOne() {
   return function(dispatch, getState) {

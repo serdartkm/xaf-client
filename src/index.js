@@ -12,12 +12,11 @@ import SideBar from './nav/SideBar';
 import CrudSideNav from './crud/CrudSideNav';
 import AuthSideNav from './auth/AuthSideNav';
 import FileSystemSideNav from './file-system/FileSystemSideNav';
-import mockMetaData from './crud/mock-data/mockMetaData';
 
 import store from './store';
 
 if (window.Cypress) {
-  window.store = store
+  window.store = store;
 }
 function RenderSideBar() {
   return (
@@ -32,8 +31,16 @@ function RenderSideBar() {
               selectedNav={selectedNav}
             />
             <CrudSideNav
-              title='CRUD'
+              title='CRUD (visa)'
+              appName='visa'
               id={1}
+              openNav={openNav}
+              selectedNav={selectedNav}
+            />
+            <CrudSideNav
+              title='CRUD (stock)'
+              appName='stock'
+              id={3}
               openNav={openNav}
               selectedNav={selectedNav}
             />
@@ -68,7 +75,7 @@ ReactDOM.render(
         }}
       >
         <Authentication />
-        <CrudApplication metaData={mockMetaData} />
+        <CrudApplication appName='visa' />
         <FileSystem />
       </div>
     </BrowserRouter>

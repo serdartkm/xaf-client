@@ -1,4 +1,6 @@
+import { combineReducers } from 'redux';
 import actionTypes from './actionTypes';
+import navReducer from './nav/reducer';
 export const initState = {
   obj: {},
   objectName: null,
@@ -12,7 +14,7 @@ export const initState = {
   propNames: [],
   metaData: null
 };
-export default function reducer(state = initState, action) {
+function reducer(state = initState, action) {
   switch (action.type) {
     case actionTypes.VALUE_CHANGED:
       return {
@@ -63,7 +65,6 @@ export default function reducer(state = initState, action) {
           }
         })
       };
-
     case actionTypes.UPDATE_ONE_FAILED: {
       return { ...state, loading: false, error: action.payload.error };
     }
@@ -92,20 +93,9 @@ export default function reducer(state = initState, action) {
         fields: action.payload.fields
       };
 
-    case actionTypes.DATALIST_STARTED:
-      return {
-        ...state,
-        loading: true
-      };
-    case actionTypes.DATALIST_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        datalist: { ...state.datalist, [action.propName]: action.data }
-      };
-    case actionTypes.META_DATA_IS_SET:
-      return { ...state, metaData: action.metaData };
     default:
       return state;
   }
 }
+
+export default combineReducers({ detail: reducer, nav: navReducer });

@@ -1,14 +1,12 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from './actions';
-
-export default function useCrud({ metaData }) {
+import { fetchNavigations } from './nav/actions';
+export default function useCrud({ appName }) {
   const state = useSelector(state => state);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(actions.setMetaData({ metaData }));
-  }, []);
+
 
   function handleChange(e) {
     const { value, name } = e.target;
