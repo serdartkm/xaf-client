@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import actionTypes from './actionTypes';
 import navReducer from './nav/reducer';
+import listReducer from './list-view/reducer';
 export const initState = {
   obj: {},
   objectName: null,
@@ -98,4 +99,8 @@ function reducer(state = initState, action) {
   }
 }
 
-export default combineReducers({ detail: reducer, nav: navReducer });
+export default combineReducers({
+  detail: reducer,
+  nav: navReducer,
+  list: listReducer
+});

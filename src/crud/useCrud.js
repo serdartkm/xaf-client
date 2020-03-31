@@ -1,11 +1,9 @@
-import { useEffect } from 'react';
+
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from './actions';
-import { fetchNavigations } from './nav/actions';
-export default function useCrud({ appName }) {
+export default function useCrud() {
   const state = useSelector(state => state);
   const dispatch = useDispatch();
-
 
 
   function handleChange(e) {

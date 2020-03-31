@@ -7,7 +7,7 @@ const metaData = [
 ];
 describe('getNavigations', () => {
   it('start', () => {
-    const navs = getNavigations({ metaData });
+    const navs = getNavigations({ appName:'visa' });
  
     expect(navs).toStrictEqual([
         { navigation: 'application', objectName: 'application' },

@@ -14,23 +14,22 @@ export default function CrudSideNav({
   title,
   appName
 }) {
-  const [navigations, setNavigations] = useState([]);
   const dispatch = useDispatch();
   const state = useSelector(state => state);
 
-  useEffect(() => {
-    if (appName) {
-      dispatch(fetchNavigations({ appName }));
-    }
-  }, [appName]);
-  useEffect(() => {
-    if (appName && state.crud.nav[appName]) {
-      setNavigations(state.crud.nav[appName]);
-    }
-  }, [state.crud.nav, appName]);
+  function handleFetchNavigation() {
+    dispatch(fetchNavigations({ appName }));
+  }
+
   return (
-    <SideNav title={title} id={id} openNav={openNav} selectedNav={selectedNav}>
-      {navigations.length>0 &&  navigations.map(nav => {
+    <SideNav
+      title={title}
+      id={id}
+      openNav={openNav}
+      selectedNav={selectedNav}
+      onClick={handleFetchNavigation}
+    >
+      {state.crud.nav.navigations.map(nav => {
         return (
           <NavItem key={nav.objectName}>
             <NavLink

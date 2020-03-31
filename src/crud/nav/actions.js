@@ -5,15 +5,16 @@ export function fetchNavigations({ appName }) {
     new URLSearchParams({ appName });
   return function(dispatch) {
     dispatch({
-      type: actionTypes.FETCH_NAVIGATIONS_STARTED
+      type: actionTypes.FETCH_NAVIGATIONS_STARTED,
+      appName
     });
     return fetch(url)
       .then(response => response.json())
-      .then(data => {
-  
+      .then(navigations => {
         dispatch({
           type: actionTypes.FETCH_NAVIGATIONS_SUCCESS,
-          data, appName
+          navigations,
+          appName
         });
       })
       .catch(error => {

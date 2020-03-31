@@ -1,27 +1,23 @@
 import React, { useEffect } from 'react';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
 import Table from './Table';
-import getNavigationFilter from '../getNavigationFilter';
+import { fetchList } from './actions';
+import useCrud from '../useCrud';
 import './css/style.css';
-export default function ListView({ state, find, createObject }) {
+export default function ListView() {
   const params = useParams();
+  const dispatch = useDispatch();
+  const state = useSelector(state => state);
+  const { createObject } = useCrud();
   const { objectName } = params;
-  const location = useLocation();
-
-  const { list, propNames, metaData } = state;
-
+  const { list, propNames } = state;
+  debugger;
   useEffect(() => {
-    if (objectName && location && metaData) {
-      const objMeta = metaData.find(m => m.objectName === objectName);
-      const listView = '';
-      const filter = getNavigationFilter({
-        metaData,
-        objectName,
-        navigation: location.state.navigation
-      });
-      find({ objectName, filter, metaData: objMeta, listView });
+    if (objectName) {
+      dispatch(fetchList({ objectName }));
     }
-  }, [objectName, location, metaData]);
+  }, [objectName]);
   return (
     <div className='list-view' data-testid='listview'>
       <Link data-testid='new' to='/crud/detail' onClick={createObject}>

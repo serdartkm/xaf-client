@@ -3,38 +3,15 @@ import { Route } from 'react-router-dom';
 import ListView from './list-view/ListView';
 import DetailView from './detail-view/DetailView';
 import Dashboard from './dataset/index';
-import useCrud from './useCrud';
 
-export default function CrudApplication({ appName }) {
-  const {
-    insertOne,
-    handleChange,
-    state,
-    updateOne,
-    deleteOne,
-    createObject,
-    selectObject,
-    find
-  } = useCrud({ appName });
-
+export default function CrudApplication() {
   return (
     <div className='nav-route-container'>
       <Route exact path={`/crud/list/:objectName`}>
-        <ListView
-          createObject={createObject}
-          selectObject={selectObject}
-          deleteOne={deleteOne}
-          find={find}
-          state={state}
-        />
+        <ListView />
       </Route>
       <Route exact path='/crud/detail'>
-        <DetailView
-          handleChange={handleChange}
-          insertOne={insertOne}
-          updateOne={updateOne}
-          state={state}
-        />
+        <DetailView />
       </Route>
       <Route exact path='/crud/dataset'>
         <Dashboard />
