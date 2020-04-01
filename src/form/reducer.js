@@ -1,7 +1,7 @@
 import actionTypes from './actionTypes';
 import validationState from './validationStates';
 
-export default function reducer(state = { validation: {} }, action) {
+export default function reducer(state = { validation: { count: 0 } }, action) {
   let nextState = null;
   switch (action.type) {
     case actionTypes.SERVER_VALIDATION:
@@ -17,7 +17,7 @@ export default function reducer(state = { validation: {} }, action) {
           }
         }
       };
-
+debugger;
       return nextState;
 
     case actionTypes.RESET_VALIDATION_STATE:
@@ -52,7 +52,8 @@ export default function reducer(state = { validation: {} }, action) {
           formState: validationState.INACTIVE
         }
       };
-
+    case actionTypes.INC_INPUT_COUTN:
+      return { ...state, count: state.count +1 };
     default:
       return state;
   }

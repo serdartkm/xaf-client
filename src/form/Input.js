@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from './actions';
 import validationStates from './validationStates';
+import { isClientValidationType } from './constraintValidators';
 import EyeIcon from './EyeIcon';
 function ValidityIcon({ valid }) {
   let stateColor = '#4fc3f7';
@@ -66,15 +67,18 @@ export default function Input({
   name,
   onChange,
   value = '',
-  validationTypes = []
+  validationTypes = [],
+  id
 }) {
   const dispatch = useDispatch();
   const state = useSelector(state => state);
+
   const [inputValidation, setInputValidation] = useState({
     validationState: validationStates.INACTIVE,
     message: '',
     validationType: undefined
   });
+
   const [inputType, setInputType] = useState(type);
 
   const [borderColor, setBorderColor] = useState('');
@@ -101,20 +105,24 @@ export default function Input({
   }, [inputValidation]);
   function handleFocus() {
     validationTypes.forEach(validationName => {
-      dispatch(
-        actions.resetInputValidationState({ validationType: validationName })
-      );
+      if (state.form.validation[validationName]) {
+        dispatch(
+          actions.resetInputValidationState({ validationType: validationName })
+        );
+      }
     });
   }
   function handleBlur() {
     validationTypes.forEach(validationName => {
-      dispatch(
-        actions.clientValidation({
-          validationType: validationName,
-          value,
-          state
-        })
-      );
+      if (isClientValidationType({ validationType: validationName })) {
+        dispatch(
+          actions.clientValidation({
+            validationType: validationName,
+            value,
+            state
+          })
+        );
+      }
     });
   }
 
@@ -137,6 +145,7 @@ export default function Input({
           onBlur={handleBlur}
           placeholder={placeholder}
           onFocus={handleFocus}
+          data-testid={id}
         />
         {validationTypes.map(validationName => {
           if (state.form.validation[validationName]) {
@@ -145,7 +154,9 @@ export default function Input({
               validationState === validationStates.VALID ||
               validationState === validationStates.INVALID
             ) {
-              return <ValidityIcon key={validationName} valid={validationState} />;
+              return (
+                <ValidityIcon key={validationName} valid={validationState} />
+              );
             }
             return null;
           }
@@ -154,10 +165,13 @@ export default function Input({
       </div>
       {validationTypes.map(validationName => {
         if (state.form.validation[validationName]) {
+          debugger;
           const { message } = state.form.validation[validationName];
           return (
             <div key={validationName} style={style.message}>
-              {message !== '' && <div>*{message}</div>}
+              {message !== '' && (
+                <div role="message" data-testid={`message-${name}`}>{`* ${message}`}</div>
+              )}
             </div>
           );
         }

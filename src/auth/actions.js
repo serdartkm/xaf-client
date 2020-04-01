@@ -20,19 +20,27 @@ export function login() {
       body: JSON.stringify({ password, email })
     })
       .then(response => {
-        if (httpStatus.serverValidationRange({status:response.status})) {
-          dispatch(
-            serverValidation({
-              status: response.status
-            })
-          );
-        } else if (response.status === 200) {
-          dispatch({
-            type: actionTypes.LOGIN_SUCCESS,
-            payload: response.json().token
-          });
+        if (response.status === 400 || response.status === 200) {
+          return { data: response.json(), status: response.status };
         } else {
           throw new Error('Login failed');
+        }
+      })
+      .then(result => {
+        if (result.status === 400) {
+          const errors = result.data.errors;
+          errors.forEach(error => {
+            dispatch(
+              serverValidation({
+                status: error
+              })
+            );
+          });
+        } else {
+          dispatch({
+            type: actionTypes.LOGIN_SUCCESS,
+            payload: result.data.token
+          });
         }
       })
       .catch(err => {
@@ -42,6 +50,7 @@ export function login() {
 }
 
 export function signup() {
+  debugger;
   return function(dispatch, getState) {
     dispatch({ type: actionTypes.SIGNUP_STARTED });
     const { email, password, username } = getState().auth;
@@ -50,23 +59,39 @@ export function signup() {
       body: JSON.stringify({ email, password, username })
     })
       .then(response => {
-        if (httpStatus.serverValidationRange({status:response.status})) {
-          dispatch(
-            serverValidation({
-              status: response.status
-            })
-          );
-        } else if (response.status === 200) {
-          dispatch({
-            type: actionTypes.SIGNUP_SUCCESS,
-            payload: response.json().token
-          });
+        debugger;
+        if (response.status === 400 || response.status === 200) {
+          debugger
+          return { data: response.json(), status: response.status };
         } else {
+          debugger;
           throw new Error('SIGNUP failed');
         }
       })
-      .catch(err =>
+      .then(result => {
+        if (result.status === 400) {
+          debugger;
+          const errors = result.data;
+          errors.forEach(error => {
+            dispatch(
+              serverValidation({
+                status: error
+              })
+            );
+          });
+        } else {
+          debugger;
+          dispatch({
+            type: actionTypes.SIGNUP_SUCCESS,
+            payload: result.data.token
+          });
+        }
+      })
+      .catch(err =>{
+        debugger;
         dispatch({ type: actionTypes.SIGNUP_FAILED, payload: { error: err } })
+      }
+
       );
   };
 }
@@ -81,7 +106,7 @@ export function changePassword() {
       body: JSON.stringify({ email, password })
     })
       .then(response => {
-        if (httpStatus.serverValidationRange({status:response.status})) {
+        if (httpStatus.serverValidationRange({ status: response.status })) {
           dispatch(
             serverValidation({
               status: response.status
@@ -115,7 +140,7 @@ export function requestPassChange() {
       body: JSON.stringify({ email })
     })
       .then(response => {
-        if (httpStatus.serverValidationRange({status:response.status})) {
+        if (httpStatus.serverValidationRange({ status: response.status })) {
           dispatch(
             serverValidation({
               status: response.status

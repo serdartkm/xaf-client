@@ -7,6 +7,7 @@ export const initState = {
   username: '',
   loading: false,
   confirm: '',
+  emailorusername:''
 
 };
 export default function reducer(state = initState, action) {

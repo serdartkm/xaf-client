@@ -19,6 +19,7 @@ export function validateEmailConstraint({ email }) {
     };
   }
 }
+
 export function isClientValidationType({ validationType }) {
   switch (validationType) {
     case validationTypes.PASSWORD_FORMAT_VALIDATION:
@@ -40,7 +41,6 @@ export function isClientValidationType({ validationType }) {
 export function validatePasswordConstraint({ password }) {
   const passwordConstraint = new RegExp(passwordRegex);
   if (passwordConstraint.test(password)) {
-  
     return {
       validationType: validationTypes.PASSWORD_FORMAT_VALIDATION,
       validationState: validationState.VALID,
@@ -48,7 +48,6 @@ export function validatePasswordConstraint({ password }) {
     };
   }
   if (!passwordConstraint.test(password)) {
-  
     return {
       validationType: validationTypes.PASSWORD_FORMAT_VALIDATION,
       validationState: validationState.INVALID,
@@ -80,21 +79,18 @@ export function validateEmailOrUsername({ value }) {
   const usernameConstraint = new RegExp(usernameRegex);
 
   if (emailConstraint.test(value)) {
-   
     return {
       validationType: validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION,
       validationState: validationState.VALID,
       message: ''
     };
   } else if (usernameConstraint.test(value)) {
-  
     return {
       validationType: validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION,
       validationState: validationState.VALID,
       message: ''
     };
   } else {
-
     return {
       validationType: validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION,
       validationState: validationState.INVALID,
@@ -104,16 +100,13 @@ export function validateEmailOrUsername({ value }) {
 }
 
 export function validateEmptyString({ value }) {
-
   if (value.length === 0) {
-  
     return {
       validationType: validationTypes.EMPTY_STRING_VALIDATION,
       validationState: validationState.INVALID,
       message: validationMessages.INVALID_EMPTY_STRING
     };
   } else {
-  
     return {
       validationType: validationTypes.EMPTY_STRING_VALIDATION,
       validationState: validationState.VALID,

@@ -1,38 +1,56 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import { screen, render, fireEvent, wait } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import { screen, fireEvent, cleanup } from '@testing-library/react';
 import ForgotPassword from '../ForgotPassword';
-import AuthProvider from '../AuthProvider';
+import renderWithRedux from './renderWithRedux';
+import { initState } from '../reducer';
+import validationTypes from '../../form/validationTypes';
+import validationStates from '../../form/validationStates';
+import validationMessages from '../../form/validationMessages';
 describe('ForgotPassword', () => {
   beforeEach(() => {
-    render(
-      <AuthProvider>
-        {({ state, handleChange, handleRequestPassChange }) => {
-          return (
-            <ForgotPassword
-              state={state}
-              handleChange={handleChange}
-              handleRequestPassChange={handleRequestPassChange}
-            />
-          );
-        }}
-      </AuthProvider>
+    cleanup();
+    renderWithRedux(
+      <BrowserRouter>
+        <ForgotPassword />
+      </BrowserRouter>,
+      {
+        auth: initState,
+        form: {
+          validation: {
+            [validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION]: {
+              validationState: validationStates.INACTIVE,
+              message: ''
+            }
+          }
+        }
+      }
     );
   });
-  it('ui controls visible', () => {
+  it('ForgotPassword form is rendered', () => {
     expect(screen.getByTestId('email')).toBeVisible();
     expect(screen.getByTestId('requestpasschange-btn')).toBeVisible();
   });
 
-  it('enter email', () => {
+  it('user enters valid email', () => {
     fireEvent.change(screen.getByTestId(/email/i), {
       target: { value: 'test@gmail.com' }
     });
-    expect(screen.getByTestId(/email/i).value).toEqual('test@gmail.com');
+    expect(screen.getByTestId(/email/i).value).toBe('test@gmail.com');
+    fireEvent.blur(screen.getByTestId(/email/i));
+    expect(screen.getByTestId(/email/i)).not.toHaveTextContent(
+      validationMessages.INVALID_EMAIL
+    );
   });
-  it('click requestchange btn', () => {
-    wait(() => {
-      fireEvent.click(screen.getByTestId(/requestpasschange/i));
+  it('user entered invalid email format', () => {
+    fireEvent.change(screen.getByTestId(/email/i), {
+      target: { value: 'testgmail.com' }
     });
+
+    fireEvent.blur(screen.getByTestId(/email/i));
+    expect(screen.getByTestId(/message-email/i)).toHaveTextContent(
+      validationMessages.INVALID_EMAIL
+    );
   });
 });

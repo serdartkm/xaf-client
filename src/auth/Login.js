@@ -1,23 +1,28 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './css/style.css';
 import Input from '../form/Input';
 import Button from '../form/Button';
 import Form from '../form/Form';
 import validationTypes from '../form/validationTypes';
-import useForm from '../form/useFormState';
-export default function Login({ handleLogin, handleChange }) {
-  const { formState } = useForm();
+
+import useAuth from './useAuth';
+export default function Login() {
+  const { handleChange, handleLogin } = useAuth();
+  const state = useSelector(state => state);
+  const { emailorusername, password } = state.auth;
 
   return (
     <div data-testid="loginform" className="auth-form">
       <Form formTitle="Login">
         <Input
+          value={emailorusername}
           onChange={handleChange}
           name="emailorusername"
           type="text"
           placeholder="Enter email or username"
-          data-testid="emailOrUsername"
+          id="emailOrUsername"
           validationTypes={[
             validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION,
             validationTypes.INVALID_CREDENTIALS
@@ -25,11 +30,12 @@ export default function Login({ handleLogin, handleChange }) {
         />
 
         <Input
+          value={password}
           onChange={handleChange}
           name="password"
           type="password"
           placeholder="enter password"
-          data-testid="password"
+          id="password"
           validationTypes={[
             validationTypes.EMPTY_STRING_VALIDATION,
             validationTypes.INVALID_CREDENTIALS
@@ -37,9 +43,8 @@ export default function Login({ handleLogin, handleChange }) {
         />
 
         <Button
-          disabled={formState !== 'VALID'}
           type="button"
-          data-testid="login-btn"
+          id="login-btn"
           onClick={handleLogin}
           title="Login"
         />

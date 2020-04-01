@@ -50,7 +50,11 @@ export function resetInputValidationState({ validationType }) {
   return { type: actionTypes.RESET_VALIDATION_STATE, validationType };
 }
 
+export function incInputCount (){
+  return {type:actionTypes.INC_INPUT_COUTN}
+}
 export function serverValidation({ status = 0 }) {
+  debugger;
   switch (status) {
     case httpStatus.credentialInvalid:
       return {

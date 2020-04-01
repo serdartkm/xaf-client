@@ -1,18 +1,23 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import './css/style.css';
 import Form from '../form/Form';
 import Input from '../form/Input';
 import Button from '../form/Button';
 import validationTypes from '../form/validationTypes';
-export default function Signup({handleChange, handleSignup }) {
+import useAuth from './useAuth';
+export default function Signup() {
+  const { handleChange, handleSignup } = useAuth();
+  const state = useSelector(state => state);
+  const { username, password, email } = state.auth;
   return (
     <div data-testid="signupform" className="auth-form">
       <Form formTitle="Sign up">
         <Input
+          value={username}
           onChange={handleChange}
-       
           type="text"
-          data-testid="username"
+          id="username"
           name="username"
           placeholder="username"
           validationTypes={[
@@ -22,9 +27,10 @@ export default function Signup({handleChange, handleSignup }) {
         />
         <Input
           onChange={handleChange}
+          value={email}
           placeholder="email"
           type="email"
-          data-testid="email"
+          id="email"
           name="email"
           validationTypes={[
             validationTypes.EMAIL_FORMAT_VALIDATION,
@@ -33,18 +39,18 @@ export default function Signup({handleChange, handleSignup }) {
         />
         <Input
           onChange={handleChange}
+          value={password}
           placeholder="password"
           type="password"
-          data-testid="password"
+          id="password"
           name="password"
-
           validationTypes={[validationTypes.PASSWORD_FORMAT_VALIDATION]}
         />
         <Button
           className="btn"
           type="button"
           onClick={handleSignup}
-          data-testid="signup-btn"
+          id="signup-btn"
           title="Signup"
         />
       </Form>
