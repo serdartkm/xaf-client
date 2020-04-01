@@ -1,0 +1,5 @@
+[
+  { "navigation": "employee", "objectName": "person" },
+  { "navigation": "familyMember", "objectName": "person" },
+  { "navigation": "country", "objectName": "country" }
+]

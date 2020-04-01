@@ -1,0 +1,4 @@
+[
+  { "navigation": "salary", "objectName": "salary" },
+  { "navigation": "tax", "objectName": "tax" }
+]

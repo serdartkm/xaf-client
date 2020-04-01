@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import 'whatwg-fetch';
 import * as serviceWorker from './serviceWorker';
 import Authentication from './auth/Authentication';
+import FileSystem from './file-system/FileSystem';
 import { Provider } from 'react-redux';
 import CrudApplication from './crud/CrudApplication';
 import { BrowserRouter } from 'react-router-dom';
@@ -10,8 +11,13 @@ import Navigation from './nav/Navigation';
 import SideBar from './nav/SideBar';
 import CrudSideNav from './crud/CrudSideNav';
 import AuthSideNav from './auth/AuthSideNav';
-import mockMetaData from './crud/mock-data/mockMetaData';
+import FileSystemSideNav from './file-system/FileSystemSideNav';
+
 import store from './store';
+
+if (window.Cypress) {
+  window.store = store;
+}
 function RenderSideBar() {
   return (
     <SideBar>
@@ -25,8 +31,22 @@ function RenderSideBar() {
               selectedNav={selectedNav}
             />
             <CrudSideNav
-              title='CRUD'
+              title='CRUD (visa)'
+              appName='visa'
               id={1}
+              openNav={openNav}
+              selectedNav={selectedNav}
+            />
+            <CrudSideNav
+              title='CRUD (stock)'
+              appName='stock'
+              id={3}
+              openNav={openNav}
+              selectedNav={selectedNav}
+            />
+            <FileSystemSideNav
+              title='FileSystem API'
+              id={2}
               openNav={openNav}
               selectedNav={selectedNav}
             />
@@ -55,7 +75,8 @@ ReactDOM.render(
         }}
       >
         <Authentication />
-        <CrudApplication metaData={mockMetaData} />
+        <CrudApplication appName='visa' />
+        <FileSystem />
       </div>
     </BrowserRouter>
   </Provider>,

@@ -1,0 +1,40 @@
+[
+  {
+    "_id": "1",
+    "personType": true,
+    "firstName": "Diego",
+    "lastName": "Maradona",
+    "birthDate": "01.01.1952",
+    "birthPlace": "Brazil",
+    "gender": "male",
+    "maritalStatus": "married",
+    "birthCountry": "USA",
+    "countryOfResidence": "USA",
+    "addressOfResidence": "California, Building 5",
+    "employee": null,
+    "relation": null,
+    "project": "YAN",
+    "subcontractor": "NetMuh",
+    "salary": "4000",
+    "active": true
+  },
+  {
+    "_id": "2",
+    "personType": true,
+    "firstName": "Fernando",
+    "lastName": "Moris",
+    "birthDate": "01.01.1952",
+    "birthPlace": "Brazil",
+    "gender": "male",
+    "maritalStatus": "married",
+    "birthCountry": "USA",
+    "countryOfResidence": "USA",
+    "addressOfResidence": "California, Building 5",
+    "employee": null,
+    "relation": null,
+    "project": "YAN",
+    "subcontractor": "NetMuh",
+    "salary": "4000",
+    "active": true
+  }
+]

@@ -12,4 +12,10 @@
   flex: 1;
   display: flex;
   margin: 3px;
+  label {
+    flex: 1;
+  }
+  input,select {
+    flex: 4;
+  }
 }

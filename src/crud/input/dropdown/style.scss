@@ -1,0 +1,11 @@
+.dropdown-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.dropdown-list-container {
+  position: absolute;
+  z-index: 1000;
+  background-color: yellow;
+  color: black;
+}

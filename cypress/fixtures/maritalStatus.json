@@ -1,0 +1,5 @@
+[
+  { "_id": "1", "nameOfMaritalStatus": "married" },
+  { "_id": "2", "nameOfMaritalStatus": "single" },
+  { "_id": "3", "nameOfMaritalStatus": "divorced" }
+]

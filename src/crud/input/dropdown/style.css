@@ -1,0 +1,18 @@
+.dropdown-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  position: relative;
+}
+
+.dropdown-list-container {
+  position: absolute;
+  z-index: 1000;
+  background-color: yellow;
+  color: black;
+}
+/*# sourceMappingURL=style.css.map */

@@ -1,7 +1,7 @@
 
 
 export default function getPropNames({ objectName,metaData }) {
-  debugger;
+
   const object = metaData.find(m => objectName === m.objectName);
 
   if (object.propNames.length === 1) {

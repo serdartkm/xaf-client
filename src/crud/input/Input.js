@@ -1,19 +1,31 @@
 import React from 'react';
+
+import Dropdown from './dropdown/dropdown';
 import './css/style.css';
+
 export default function Input({
   type,
   onChange,
   value = '',
   placeholder,
   name,
-  items
+  source,
+  items = [
+    { id: 1, label: 'One' },
+    { id: 2, label: 'Two' }
+  ]
 }) {
-  debugger;
+
+
+ 
+
   switch (type) {
     case 'text':
       return (
-        <div className="input-container">
+        <div className='input-container'>
+          <label htmlFor={name}>{name}:</label>
           <input
+            id={name}
             data-testid={name}
             className='input'
             type='text'
@@ -26,7 +38,7 @@ export default function Input({
       );
     case 'email':
       return (
-        <div className="input-container">
+        <div className='input-container'>
           <input
             data-testid={name}
             className='input'
@@ -40,7 +52,7 @@ export default function Input({
       );
     case 'password':
       return (
-        <div className="input-container">
+        <div className='input-container'>
           <input
             data-testid={name}
             className='input'
@@ -54,7 +66,7 @@ export default function Input({
       );
     case 'file':
       return (
-        <div className="input-container">
+        <div className='input-container'>
           <input
             data-testid={name}
             className='input'
@@ -68,8 +80,10 @@ export default function Input({
 
     case 'date':
       return (
-        <div className="input-container">
+        <div className='input-container'>
+          <label htmlFor={name}>{name}:</label>
           <input
+            id={name}
             data-testid={name}
             className='input'
             type='date'
@@ -79,9 +93,10 @@ export default function Input({
           />
         </div>
       );
-    case 'checkbox':
+    case 'bool':
       return (
-        <div className="input-container">
+        <div className='input-container'>
+          <label htmlFor={name}>{name}:</label>
           <input
             data-testid={name}
             className='input'
@@ -89,13 +104,16 @@ export default function Input({
             onChange={onChange}
             checked={value}
             name={name}
+            id={name}
           />
+
+          <br></br>
         </div>
       );
 
     case 'radio':
       return items.map(i => (
-        <div key={i.id} className="input-container">
+        <div key={i.id} className='input-container'>
           <input
             data-testid={`${name}-${i.label}`}
             type='radio'
@@ -108,27 +126,16 @@ export default function Input({
         </div>
       ));
 
-    case 'select':
+    case 'id':
       return (
-        <div className="input-container">
-          <select
-            value={value}
-            onChange={onChange}
-            data-testid={name}
-            type='select'
-            name={name}
-          >
-            {items.map(v => (
-              <option key={v.id} value={v.id}>
-                {v.lable}
-              </option>
-            ))}
-          </select>
+        <div className='input-container'>
+          <label htmlFor={name}>{name}:</label>
+          <Dropdown name={name} source={source} />
         </div>
       );
     case 'search':
       return (
-        <div className="input-container">
+        <div className='input-container'>
           <input
             data-testid={name}
             className='input'

@@ -1,4 +1,7 @@
+import { combineReducers } from 'redux';
 import actionTypes from './actionTypes';
+import navReducer from './nav/reducer';
+import listReducer from './list-view/reducer';
 export const initState = {
   obj: {},
   objectName: null,
@@ -12,8 +15,9 @@ export const initState = {
   propNames: [],
   metaData: null
 };
-export default function reducer(state = initState, action) {
- 
+
+function reducer(state = initState, action) {
+
   switch (action.type) {
     case actionTypes.VALUE_CHANGED:
       return {
@@ -28,8 +32,7 @@ export default function reducer(state = initState, action) {
         ...state,
         loading: true,
         propNames: action.payload.propNames,
-        objectName: action.payload.objectName,
-        metaData: action.payload.metaData
+        objectName: action.payload.objectName
       };
     case actionTypes.FINDING_SUCCESS:
       return {
@@ -65,7 +68,6 @@ export default function reducer(state = initState, action) {
           }
         })
       };
-
     case actionTypes.UPDATE_ONE_FAILED: {
       return { ...state, loading: false, error: action.payload.error };
     }
@@ -93,7 +95,14 @@ export default function reducer(state = initState, action) {
         obj: action.payload.obj,
         fields: action.payload.fields
       };
+
     default:
       return state;
   }
 }
+
+export default combineReducers({
+  detail: reducer,
+  nav: navReducer,
+  list: listReducer
+});

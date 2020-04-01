@@ -1,13 +1,17 @@
+
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from './actions';
-
-export default function useCrud({ metaData }) {
+export default function useCrud() {
   const state = useSelector(state => state);
   const dispatch = useDispatch();
 
+
+
+
   function handleChange(e) {
     const { value, name } = e.target;
-  
+
+
     dispatch(actions.valueChanged({ propName: name, value }));
   }
 
@@ -15,9 +19,10 @@ export default function useCrud({ metaData }) {
     dispatch(actions.insertOne());
   }
 
-  function find({ objectName }) {
- 
-    dispatch(actions.find({ objectName, metaData }));
+
+  function find({ objectName, filter, metaData, listView }) {
+    dispatch(actions.find({ objectName, metaData, filter, listView }));
+
   }
 
   function updateOne() {
@@ -28,7 +33,8 @@ export default function useCrud({ metaData }) {
     dispatch(actions.deleteOne());
   }
   function createObject() {
- 
+
+
     dispatch(actions.createObject());
   }
   function selectObject() {
