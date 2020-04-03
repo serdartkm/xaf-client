@@ -12,65 +12,60 @@ export function valueChanged({ propName, value }) {
 }
 
 export function login() {
-  return function(dispatch, getState) {
-    const { email, password } = getState().auth;
+  return async function(dispatch, getState) {
+    const { emailorusername, password } = getState().auth;
     dispatch({ type: actionTypes.LOGIN_STARTED });
-    return fetch(`/login`, {
-      headers: { ContentType: 'application/json' },
-      body: JSON.stringify({ password, email })
-    })
-      .then(response => {
-        if (response.status === 400 || response.status === 200) {
-          return { data: response.json(), status: response.status };
-        } else {
-          throw new Error('Login failed');
+
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_XAF_SERVER_URL}/auth/login?` +
+          new URLSearchParams({ password, emailorusername }),
+        {
+          headers: {
+            'Conten-Type': 'application/json',
+            'Access-Control-Allow-Headers': '*'
+          },
+          method: 'GET'
         }
-      })
-      .then(result => {
-        if (result.status === 400) {
-          const errors = result.data.errors;
-          errors.forEach(error => {
-            dispatch(
-              serverValidation({
-                status: error
-              })
-            );
-          });
-        } else {
-          dispatch({
-            type: actionTypes.LOGIN_SUCCESS,
-            payload: result.data.token
-          });
-        }
-      })
-      .catch(err => {
-        dispatch({ type: actionTypes.LOGIN_FAILED, payload: { error: err } });
-      });
+      );
+      const result = await response.json();
+      if (response.status === 200) {
+        dispatch({ type: actionTypes.LOGIN_SUCCESS, token: result.token });
+      } else if (response.status === 400) {
+        debugger;
+        result.forEach(error => {
+          dispatch(
+            serverValidation({
+              status: error
+            })
+          );
+        });
+      } else {
+        throw new Error('Login failed');
+      }
+    } catch (error) {
+      dispatch({ type: actionTypes.LOGIN_FAILED, payload: { error } });
+    }
   };
 }
 
 export function signup() {
-  debugger;
   return function(dispatch, getState) {
     dispatch({ type: actionTypes.SIGNUP_STARTED });
     const { email, password, username } = getState().auth;
     return fetch('/signup', {
-      headers: { ContentType: 'application/json' },
+      headers: { ContentType: 'application/json', Accept: 'application/json' },
       body: JSON.stringify({ email, password, username })
     })
       .then(response => {
-        debugger;
         if (response.status === 400 || response.status === 200) {
-          debugger
           return { data: response.json(), status: response.status };
         } else {
-          debugger;
           throw new Error('SIGNUP failed');
         }
       })
       .then(result => {
         if (result.status === 400) {
-          debugger;
           const errors = result.data;
           errors.forEach(error => {
             dispatch(
@@ -80,19 +75,15 @@ export function signup() {
             );
           });
         } else {
-          debugger;
           dispatch({
             type: actionTypes.SIGNUP_SUCCESS,
             payload: result.data.token
           });
         }
       })
-      .catch(err =>{
-        debugger;
-        dispatch({ type: actionTypes.SIGNUP_FAILED, payload: { error: err } })
-      }
-
-      );
+      .catch(err => {
+        dispatch({ type: actionTypes.SIGNUP_FAILED, payload: { error: err } });
+      });
   };
 }
 

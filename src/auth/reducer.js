@@ -7,8 +7,8 @@ export const initState = {
   username: '',
   loading: false,
   confirm: '',
-  emailorusername:''
-
+  emailorusername: '',
+  token: ''
 };
 export default function reducer(state = initState, action) {
   switch (action.type) {
@@ -17,7 +17,12 @@ export default function reducer(state = initState, action) {
     case actionTypes.LOGIN_STARTED:
       return { ...state, loading: true };
     case actionTypes.LOGIN_SUCCESS:
-      return { ...state, success: true, loading: false };
+      return {
+        ...state,
+        success: true,
+        loading: false,
+        token: action.token
+      };
     case actionTypes.LOGIN_FAILED:
       return { ...state, loading: false, error: action.payload.error };
     case actionTypes.SIGNUP_STARTED:
@@ -38,7 +43,7 @@ export default function reducer(state = initState, action) {
       return { ...state, loading: false, success: true };
     case actionTypes.REQUEST_PASS_CHANGE_FAILED:
       return { ...state, loading: false, error: action.payload.error };
-   
+
     default:
       return state;
   }

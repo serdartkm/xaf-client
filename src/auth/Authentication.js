@@ -9,6 +9,7 @@ const ChangePassword = React.lazy(() => import('./ChangePassword'));
 const ForgotPassword = React.lazy(() => import('./ForgotPassword'));
 const Signup = React.lazy(() => import('./Signup'));
 const Profile = React.lazy(() => import('./Profile'));
+const AuthSuccess = React.lazy(() => import('./AuthSuccess'));
 export default function Authentication({ children, sidebar }) {
   const {
     handleChange,
@@ -25,20 +26,19 @@ export default function Authentication({ children, sidebar }) {
           <Login />
         </Route>
         <Route path="/auth/signup">
-          <Signup  />
+          <Signup />
         </Route>
         <Route path="/auth/changepassword">
-          <ChangePassword
-           
-          />
+          <ChangePassword />
         </Route>
         <Route path="/auth/requestpasschange">
-          <ForgotPassword
-            
-          />
+          <ForgotPassword />
         </Route>
         <Route path="/auth/profile">
           <Profile />
+        </Route>
+        <Route path="/auth/authsuccess">
+          <AuthSuccess />
         </Route>
       </Switch>
     </Suspense>

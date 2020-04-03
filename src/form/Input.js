@@ -165,7 +165,7 @@ export default function Input({
       </div>
       {validationTypes.map(validationName => {
         if (state.form.validation[validationName]) {
-          debugger;
+  
           const { message } = state.form.validation[validationName];
           return (
             <div key={validationName} style={style.message}>

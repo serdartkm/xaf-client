@@ -8,7 +8,7 @@ export default function CrudSideNav({ openNav, selectedNav, id, title }) {
   return (
     <SideNav title={title} id={id} openNav={openNav} selectedNav={selectedNav}>
       <NavItem>
-        <NavLink activeStyle={activeStyle} to='/auth/login'>
+        <NavLink data-testid="login" activeStyle={activeStyle} to='/auth/login'>
           Login
         </NavLink>
       </NavItem>

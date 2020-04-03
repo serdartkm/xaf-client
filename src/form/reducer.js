@@ -17,7 +17,7 @@ export default function reducer(state = { validation: { count: 0 } }, action) {
           }
         }
       };
-debugger;
+
       return nextState;
 
     case actionTypes.RESET_VALIDATION_STATE:

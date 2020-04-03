@@ -1,8 +1,15 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import decode from 'jwt-decode';
 
 export default function useJWToken() {
+  const state =useSelector(state=>state)
   const [token, setToken] = useState();
+  
+  useEffect(()=>{
+debugger;
+  },[state.auth])
 
   function saveToken(key, value) {
     localStorage.setItem(key, value);
