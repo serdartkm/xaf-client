@@ -33,7 +33,7 @@ export function login() {
         dispatch({ type: actionTypes.LOGIN_SUCCESS, token: result.token });
       } else if (response.status === 400) {
         const { errors } = result;
-    
+
         errors.forEach(error => {
           dispatch(
             serverValidation({
@@ -69,7 +69,6 @@ export function signup() {
       if (response.status === 200) {
         dispatch({ type: actionTypes.SIGNUP_SUCCESS, token: result.token });
       } else if (response.status === 400) {
-       
         const { errors } = result;
         errors.forEach(error => {
           dispatch(
@@ -102,35 +101,38 @@ export function signout({ token }) {
   };
 }
 export function changePassword() {
-  return function(dispatch, getState) {
+  return async function(dispatch, getState) {
     dispatch({ type: actionTypes.CHANGE_PASSWORD_STARTED });
-    const { email, password } = getState().auth;
-
-    return fetch('/changepass', {
-      method: 'put',
-      body: JSON.stringify({ email, password })
-    })
-      .then(response => {
-        if (httpStatus.serverValidationRange({ status: response.status })) {
-          serverValidation({
-            status: response.status
-          });
-        } else if (response.status === 200) {
-          dispatch({
-            type: actionTypes.CHANGE_PASSWORD_SUCCESS,
-            payload: response.json().token
-          });
-        } else {
-          throw new Error('Changing password failed');
-        }
-      })
-
-      .catch(err =>
+    const { confirm, password } = getState().auth;
+    try {
+      const response = await fetch('/changepass', {
+        method: 'put',
+        body: JSON.stringify({ confirm, password })
+      });
+      const result = await response.json();
+      if (response.status === 200) {
         dispatch({
-          type: actionTypes.CHANGE_PASSWORD_FAILED,
-          payload: { error: err }
-        })
-      );
+          type: actionTypes.CHANGE_PASSWORD_SUCCESS,
+          token: result.token
+        });
+      } else if (response.status === 400) {
+        const { errors } = result;
+        errors.forEach(error => {
+          dispatch(
+            serverValidation({
+              status: error
+            })
+          );
+        });
+      } else {
+        throw new Error('Changing password failed');
+      }
+    } catch (error) {
+      dispatch({
+        type: actionTypes.CHANGE_PASSWORD_FAILED,
+        payload: { error }
+      });
+    }
   };
 }
 
@@ -164,5 +166,12 @@ export function requestPassChange() {
           payload: { error: err }
         })
       );
+  };
+}
+
+export function getEmailFromUrl({ email }) {
+  return {
+    type: actionTypes.GOT_EMAIL_FROM_URL,
+    email
   };
 }

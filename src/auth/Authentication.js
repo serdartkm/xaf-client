@@ -35,7 +35,7 @@ export default function Authentication({ children, sidebar }) {
         <Route path="/auth/signup">
           <Signup />
         </Route>
-        <Route path="/auth/changepassword">
+        <Route path={['/auth/changepassword/:token?', '/auth/changepassword']}>
           <ChangePassword />
         </Route>
         <Route path="/auth/requestpasschange">
