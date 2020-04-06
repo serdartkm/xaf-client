@@ -5,7 +5,12 @@ export default function navReducer(
 ) {
   switch (action.type) {
     case actionTypes.FETCH_NAVIGATIONS_STARTED:
-      return { ...state, loading: true, appName: action.appName };
+      return {
+        ...state,
+        loading: true,
+        navigations: [],
+        appName: action.appName
+      };
     case actionTypes.FETCH_NAVIGATIONS_SUCCESS:
       return { ...state, loading: false, navigations: action.navigations };
     case actionTypes.FETCH_NAVIGATIONS_FAILED:
