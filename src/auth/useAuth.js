@@ -15,7 +15,6 @@ export default function useAuth() {
   }
 
   function handleSignup() {
-    debugger;
     dispatch(actions.signup());
   }
   function handleChangePass() {

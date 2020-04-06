@@ -27,12 +27,10 @@ export default function SideNav({
       className='side-nav'
       style={{ height: selectedNav === id ? '100%' : 40 }}
     >
-      <div
-        className='bar-tool'
-        data-testid={`bar-tool-${appName}`}
-        onClick={handleOpenNav}
-      >
-        <div>{title}</div>
+
+      <div className='bar-tool' data-testid={`bar-tool-${title}`} onClick={() => openNav(id)}>
+        <div onClick={onClick}>{title}</div>
+
         {selectedNav === id ? <Collapse /> : <Expand />}
       </div>
       <div className='nav-item-cont'>{children}</div>

@@ -12,122 +12,127 @@ export function valueChanged({ propName, value }) {
 }
 
 export function login() {
-  return function(dispatch, getState) {
-    const { email, password } = getState().auth;
+  return async function(dispatch, getState) {
+    const { emailorusername, password } = getState().auth;
     dispatch({ type: actionTypes.LOGIN_STARTED });
-    return fetch(`/login`, {
-      headers: { ContentType: 'application/json' },
-      body: JSON.stringify({ password, email })
-    })
-      .then(response => {
-        if (response.status === 400 || response.status === 200) {
-          return { data: response.json(), status: response.status };
-        } else {
-          throw new Error('Login failed');
+
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_XAF_SERVER_URL}/auth/login?` +
+          new URLSearchParams({ password, emailorusername }),
+        {
+          headers: {
+            'Conten-Type': 'application/json',
+            'Access-Control-Allow-Headers': '*'
+          },
+          method: 'GET'
         }
-      })
-      .then(result => {
-        if (result.status === 400) {
-          const errors = result.data.errors;
-          errors.forEach(error => {
-            dispatch(
-              serverValidation({
-                status: error
-              })
-            );
-          });
-        } else {
-          dispatch({
-            type: actionTypes.LOGIN_SUCCESS,
-            payload: result.data.token
-          });
-        }
-      })
-      .catch(err => {
-        dispatch({ type: actionTypes.LOGIN_FAILED, payload: { error: err } });
-      });
+      );
+      const result = await response.json();
+      if (response.status === 200) {
+        dispatch({ type: actionTypes.LOGIN_SUCCESS, token: result.token });
+      } else if (response.status === 400) {
+        const { errors } = result;
+
+        errors.forEach(error => {
+          dispatch(
+            serverValidation({
+              status: error
+            })
+          );
+        });
+      } else {
+        throw new Error('Login failed');
+      }
+    } catch (error) {
+      dispatch({ type: actionTypes.LOGIN_FAILED, payload: { error } });
+    }
   };
 }
 
 export function signup() {
-  debugger;
-  return function(dispatch, getState) {
+  return async function(dispatch, getState) {
     dispatch({ type: actionTypes.SIGNUP_STARTED });
     const { email, password, username } = getState().auth;
-    return fetch('/signup', {
-      headers: { ContentType: 'application/json' },
-      body: JSON.stringify({ email, password, username })
-    })
-      .then(response => {
-        debugger;
-        if (response.status === 400 || response.status === 200) {
-          debugger
-          return { data: response.json(), status: response.status };
-        } else {
-          debugger;
-          throw new Error('SIGNUP failed');
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_XAF_SERVER_URL}/auth/signup?` +
+          new URLSearchParams({ password, email, username }),
+        {
+          headers: {
+            ContentType: 'application/json',
+            Accept: 'application/json'
+          }
         }
-      })
-      .then(result => {
-        if (result.status === 400) {
-          debugger;
-          const errors = result.data;
-          errors.forEach(error => {
-            dispatch(
-              serverValidation({
-                status: error
-              })
-            );
-          });
-        } else {
-          debugger;
-          dispatch({
-            type: actionTypes.SIGNUP_SUCCESS,
-            payload: result.data.token
-          });
-        }
-      })
-      .catch(err =>{
-        debugger;
-        dispatch({ type: actionTypes.SIGNUP_FAILED, payload: { error: err } })
-      }
-
       );
-  };
-}
-
-export function changePassword() {
-  return function(dispatch, getState) {
-    dispatch({ type: actionTypes.CHANGE_PASSWORD_STARTED });
-    const { email, password } = getState().auth;
-
-    return fetch('/changepass', {
-      method: 'put',
-      body: JSON.stringify({ email, password })
-    })
-      .then(response => {
-        if (httpStatus.serverValidationRange({ status: response.status })) {
+      const result = await response.json();
+      if (response.status === 200) {
+        dispatch({ type: actionTypes.SIGNUP_SUCCESS, token: result.token });
+      } else if (response.status === 400) {
+        const { errors } = result;
+        errors.forEach(error => {
           dispatch(
             serverValidation({
-              status: response.status
+              status: error
             })
           );
-        } else if (response.status === 200) {
-          dispatch({
-            type: actionTypes.CHANGE_PASSWORD_SUCCESS,
-            payload: response.json().token
-          });
-        } else {
-          throw new Error('Changing password failed');
-        }
+        });
+      } else {
+        throw new Error('Signup failed');
+      }
+    } catch (error) {
+      dispatch({ type: actionTypes.SIGNUP_FAILED, payload: { error } });
+    }
+  };
+}
+export function signout({ token }) {
+  return function(dispatch) {
+    dispatch({ type: actionTypes.LOGOUT_STARTED });
+    return fetch(
+      `${process.env.REACT_APP_XAF_SERVER_URL}/auth/logout?` +
+        new URLSearchParams({ token })
+    )
+      .then(() => {
+        dispatch({ type: actionTypes.LOGOUT_SUCCESS });
       })
-
-      .catch(err =>
+      .catch(error => {
+        dispatch({ type: actionTypes.LOGOUT_FAILED, error });
+      });
+  };
+}
+export function changePassword() {
+  return async function(dispatch, getState) {
+    dispatch({ type: actionTypes.CHANGE_PASSWORD_STARTED });
+    const { confirm, password } = getState().auth;
+    try {
+      const response = await fetch('/changepass', {
+        method: 'put',
+        body: JSON.stringify({ confirm, password })
+      });
+      const result = await response.json();
+      if (response.status === 200) {
         dispatch({
-          type: actionTypes.CHANGE_PASSWORD_FAILED,
-          payload: { error: err }
-        })
-      );
+          type: actionTypes.CHANGE_PASSWORD_SUCCESS,
+          token: result.token
+        });
+      } else if (response.status === 400) {
+        const { errors } = result;
+        errors.forEach(error => {
+          dispatch(
+            serverValidation({
+              status: error
+            })
+          );
+        });
+      } else {
+        throw new Error('Changing password failed');
+      }
+    } catch (error) {
+      dispatch({
+        type: actionTypes.CHANGE_PASSWORD_FAILED,
+        payload: { error }
+      });
+    }
   };
 }
 
@@ -161,5 +166,12 @@ export function requestPassChange() {
           payload: { error: err }
         })
       );
+  };
+}
+
+export function getEmailFromUrl({ email }) {
+  return {
+    type: actionTypes.GOT_EMAIL_FROM_URL,
+    email
   };
 }

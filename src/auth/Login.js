@@ -23,9 +23,12 @@ export default function Login() {
           type="text"
           placeholder="Enter email or username"
           id="emailOrUsername"
+          data-testid="emailOrUsername"
           validationTypes={[
             validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION,
-            validationTypes.INVALID_CREDENTIALS
+            validationTypes.INVALID_CREDENTIALS,
+            validationTypes.EMAIL_NOT_REGISTERED,
+            validationTypes.USERNAME_NOT_REGISTERED
           ]}
         />
 
@@ -36,6 +39,7 @@ export default function Login() {
           type="password"
           placeholder="enter password"
           id="password"
+          data-testid="password"
           validationTypes={[
             validationTypes.EMPTY_STRING_VALIDATION,
             validationTypes.INVALID_CREDENTIALS
@@ -45,6 +49,7 @@ export default function Login() {
         <Button
           type="button"
           id="login-btn"
+          data-testid="login-btn"
           onClick={handleLogin}
           title="Login"
         />

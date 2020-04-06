@@ -5,6 +5,8 @@ import authReducer from './auth/reducer';
 import crudReducer from './crud/reducer';
 import formReducer from './form/reducer';
 import dropdownReducer from './crud/input/dropdown/reducer';
+import authReducer from './auth/reducer';
+import formReducer from './form/reducer';
 const loggerMiddleware = createLogger();
 
 export default createStore(

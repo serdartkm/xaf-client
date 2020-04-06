@@ -1,6 +1,6 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import useAuth from './useAuth';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import './css/style.css';
 
 import { validateUserNameConstraint } from './actions';
@@ -9,14 +9,22 @@ const ChangePassword = React.lazy(() => import('./ChangePassword'));
 const ForgotPassword = React.lazy(() => import('./ForgotPassword'));
 const Signup = React.lazy(() => import('./Signup'));
 const Profile = React.lazy(() => import('./Profile'));
+const AuthSuccess = React.lazy(() => import('./AuthSuccess'));
 export default function Authentication({ children, sidebar }) {
   const {
+    state,
     handleChange,
     handleChangePass,
     handleLogin,
     handleRequestPassChange,
     handleSignup
   } = useAuth();
+  const history = useHistory();
+  useEffect(() => {
+    if (state.token) {
+      history.push('/auth/authsuccess');
+    }
+  }, [state.token]);
 
   return (
     <Suspense fallback={<div className="loading">Loading...</div>}>
@@ -25,20 +33,19 @@ export default function Authentication({ children, sidebar }) {
           <Login />
         </Route>
         <Route path="/auth/signup">
-          <Signup  />
+          <Signup />
         </Route>
-        <Route path="/auth/changepassword">
-          <ChangePassword
-           
-          />
+        <Route path={['/auth/changepassword/:token?', '/auth/changepassword']}>
+          <ChangePassword />
         </Route>
         <Route path="/auth/requestpasschange">
-          <ForgotPassword
-            
-          />
+          <ForgotPassword />
         </Route>
         <Route path="/auth/profile">
           <Profile />
+        </Route>
+        <Route path="/auth/authsuccess">
+          <AuthSuccess />
         </Route>
       </Switch>
     </Suspense>
