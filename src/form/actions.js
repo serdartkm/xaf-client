@@ -53,6 +53,7 @@ export function resetInputValidationState({ validationType }) {
 export function incInputCount() {
   return { type: actionTypes.INC_INPUT_COUTN };
 }
+
 export function serverValidation({ status = 0 }) {
   debugger;
   switch (status) {

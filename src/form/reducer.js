@@ -8,6 +8,7 @@ export default function reducer(state = { validation: { count: 0 } }, action) {
       nextState = {
         ...state,
         validation: {
+          ...state.validation,
           [action.validationType]: {
             validationState: action.validationState,
             message: action.message

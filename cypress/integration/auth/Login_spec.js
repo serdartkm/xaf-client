@@ -2,46 +2,19 @@ import validationMessages from '../../../src/form/validationMessages';
 describe('Login', () => {
   beforeEach(() => {
     cy.server();
-    cy.route({
-      url:
-        'http://localhost:8000/auth/login?password=DragondFFFly!2324.&emailorusername=tkm.house@gmail.com',
-      response: { token: '123' }
-    }).as('loginSuccess');
-    cy.route({
-      url:
-        'http://localhost:8000/auth/login?password=DragondFFFly!&emailorusername=tkm.house.old@gmail.com',
-      status: 400,
-      response: { errors: ['401'] }
-    }).as('loginInvalidCreden401');
-    cy.route({
-      url:
-        'http://localhost:8000/auth/login?password=DragondFFFly!&emailorusername=2333',
-      status: 400,
-      response: { errors: ['410'] }
-    }).as('emailorusernameNotValid');
-    cy.route({
-      url:
-        'http://localhost:8000/auth/login?password=&emailorusername=tkm.house.old@gmail.com',
-      status: 400,
-      response: { errors: ['409'] }
-    }).as('emptyStringNotValid');
-    cy.route({
-      url:
-        'http://localhost:8000/auth/login?password=DragonProp!&emailorusername=tkm.house.temp@gmail.com',
-      status: 400,
-      response: { errors: ['408'] }
-    }).as('emailIsNotRegistered');
-    cy.route({
-      url:
-        'http://localhost:8000/auth/login?password=DragonNotRegis&emailorusername=tkmhousenew',
-      status: 400,
-      response: { errors: ['411'] }
-    }).as('usernameIsNotRegistered');
+
     cy.visit('http://localhost:3000');
     cy.get('[data-testid=bar-tool-Authentication]').click();
     cy.get('[data-testid=login]').click();
   });
   it('Login Success', () => {
+    cy.route({
+      url: 'http://localhost:8000/auth/login',
+      response: { token: '123' }
+    }).as('loginSuccess');
+
+    cy.visit('http://localhost:3000');
+
     cy.get('[data-testid=login]').click();
     cy.get('[data-testid=emailOrUsername]')
       .type('tkm.house@gmail.com')
@@ -49,10 +22,21 @@ describe('Login', () => {
       .type('DragondFFFly!2324.')
       .get('[data-testid=login-btn]')
       .click();
+    cy.wait('@loginSuccess').then(xhr => {
+      expect(xhr.request.headers['authorization']).to.equal(
+        'Basic dGttLmhvdXNlQGdtYWlsLmNvbTpEcmFnb25kRkZGbHkhMjMyNC4='
+      );
+    });
     cy.get('[data-testid=welcome]').contains('Welcome, tkm.house@gmail.com');
   });
 
   it('invalid usernameoremail and password client', () => {
+    cy.server();
+    cy.route({
+      url: 'http://localhost:8000/auth/login',
+      status: 400,
+      response: { errors: ['401'] }
+    }).as('loginInvalidCreden401');
     cy.get('[data-testid=emailOrUsername]')
       .type('1232343')
       .blur()
@@ -66,6 +50,12 @@ describe('Login', () => {
       .contains(validationMessages.INVALID_EMPTY_STRING);
   });
   it('empty emailorusername client', () => {
+    cy.server();
+    cy.route({
+      url: 'http://localhost:8000/auth/login',
+      status: 400,
+      response: { errors: ['410'] }
+    }).as('emailorusernameNotValid');
     cy.get('[data-testid=emailOrUsername]')
       .focus()
       .blur()
@@ -73,6 +63,11 @@ describe('Login', () => {
       .contains(validationMessages.INVALID_USERNAME_OR_EMAIL);
   });
   it('invalid credentials 401 server', () => {
+    cy.route({
+      url: 'http://localhost:8000/auth/login',
+      status: 400,
+      response: { errors: ['401'] }
+    }).as('invalidcredentials');
     cy.get('[data-testid=emailOrUsername]')
       .type('tkm.house.old@gmail.com')
       .get('[data-testid=password]')
@@ -87,6 +82,12 @@ describe('Login', () => {
     );
   });
   it('emailorusernameNotValid 410 server', () => {
+    cy.server();
+    cy.route({
+      url: 'http://localhost:8000/auth/login',
+      status: 400,
+      response: { errors: ['410'] }
+    }).as('emailorusernameNotValid');
     cy.get('[data-testid=emailOrUsername]')
       .type('2333')
       .get('[data-testid=password]')
@@ -107,6 +108,12 @@ describe('Login', () => {
     );
   });
   it('emailIsNotRegistered 408 server', () => {
+    cy.server();
+    cy.route({
+      url: 'http://localhost:8000/auth/login',
+      status: 400,
+      response: { errors: ['408'] }
+    }).as('emailIsNotRegistered');
     cy.get('[data-testid=emailOrUsername]')
       .type('tkm.house.temp@gmail.com')
       .get('[data-testid=password]')
@@ -119,6 +126,12 @@ describe('Login', () => {
   });
 
   it('usernameIsNotRegistered 411 server', () => {
+    cy.server();
+    cy.route({
+      url: 'http://localhost:8000/auth/login',
+      status: 400,
+      response: { errors: ['411'] }
+    }).as('usernameIsNotRegistered');
     cy.get('[data-testid=emailOrUsername]')
       .type('tkmhousenew')
       .get('[data-testid=password]')

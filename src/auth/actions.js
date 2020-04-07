@@ -18,12 +18,12 @@ export function login() {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_XAF_SERVER_URL}/auth/login?` +
-          new URLSearchParams({ password, emailorusername }),
+        `${process.env.REACT_APP_XAF_SERVER_URL}/auth/login`,
         {
           headers: {
             'Conten-Type': 'application/json',
-            'Access-Control-Allow-Headers': '*'
+            'Access-Control-Allow-Headers': '*',
+            Authorization: 'Basic ' + btoa(`${emailorusername}:${password}`)
           },
           method: 'GET'
         }
@@ -56,13 +56,14 @@ export function signup() {
     const { email, password, username } = getState().auth;
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_XAF_SERVER_URL}/auth/signup?` +
-          new URLSearchParams({ password, email, username }),
+        `${process.env.REACT_APP_XAF_SERVER_URL}/auth/signup`,
         {
+          body: JSON.stringify({ password, email, username }),
           headers: {
             ContentType: 'application/json',
             Accept: 'application/json'
-          }
+          },
+          method: 'POST'
         }
       );
       const result = await response.json();
