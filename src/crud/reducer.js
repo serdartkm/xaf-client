@@ -17,7 +17,6 @@ export const initState = {
 };
 
 function reducer(state = initState, action) {
-
   switch (action.type) {
     case actionTypes.VALUE_CHANGED:
       return {

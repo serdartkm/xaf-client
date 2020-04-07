@@ -1,6 +1,6 @@
 import actionTypes from './actionTypes';
 export function fetchList({ objectName, appName }) {
-  debugger;
+
   let url =
     `${process.env.REACT_APP_XAF_SERVER_URL}/list?` +
     new URLSearchParams({

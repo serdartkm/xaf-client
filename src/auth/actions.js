@@ -6,13 +6,13 @@ export function valueChanged({ propName, value }) {
     type: actionTypes.VALUE_CHANGED,
     payload: {
       propName,
-      value
-    }
+      value,
+    },
   };
 }
 
 export function login() {
-  return async function(dispatch, getState) {
+  return async function (dispatch, getState) {
     const { emailorusername, password } = getState().auth;
     dispatch({ type: actionTypes.LOGIN_STARTED });
 
@@ -24,8 +24,9 @@ export function login() {
             'Conten-Type': 'application/json',
             'Access-Control-Allow-Headers': '*',
             Authorization: 'Basic ' + btoa(`${emailorusername}:${password}`)
+
           },
-          method: 'GET'
+          method: 'GET',
         }
       );
       const result = await response.json();
@@ -34,10 +35,10 @@ export function login() {
       } else if (response.status === 400) {
         const { errors } = result;
 
-        errors.forEach(error => {
+        errors.forEach((error) => {
           dispatch(
             serverValidation({
-              status: error
+              status: error,
             })
           );
         });
@@ -51,7 +52,7 @@ export function login() {
 }
 
 export function signup() {
-  return async function(dispatch, getState) {
+  return async function (dispatch, getState) {
     dispatch({ type: actionTypes.SIGNUP_STARTED });
     const { email, password, username } = getState().auth;
     try {
@@ -64,6 +65,7 @@ export function signup() {
             Accept: 'application/json'
           },
           method: 'POST'
+
         }
       );
       const result = await response.json();
@@ -71,10 +73,10 @@ export function signup() {
         dispatch({ type: actionTypes.SIGNUP_SUCCESS, token: result.token });
       } else if (response.status === 400) {
         const { errors } = result;
-        errors.forEach(error => {
+        errors.forEach((error) => {
           dispatch(
             serverValidation({
-              status: error
+              status: error,
             })
           );
         });
@@ -87,7 +89,7 @@ export function signup() {
   };
 }
 export function signout({ token }) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch({ type: actionTypes.LOGOUT_STARTED });
     return fetch(
       `${process.env.REACT_APP_XAF_SERVER_URL}/auth/logout?` +
@@ -96,13 +98,13 @@ export function signout({ token }) {
       .then(() => {
         dispatch({ type: actionTypes.LOGOUT_SUCCESS });
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({ type: actionTypes.LOGOUT_FAILED, error });
       });
   };
 }
 export function changePassword() {
-  return async function(dispatch, getState) {
+  return async function (dispatch, getState) {
     dispatch({ type: actionTypes.CHANGE_PASSWORD_STARTED });
     const {
       confirm,
@@ -112,6 +114,7 @@ export function changePassword() {
       current
     } = getState().auth;
     try {
+
       const response = await fetch(
         `${process.env.REACT_APP_XAF_SERVER_URL}/auth/changepass`,
         {
@@ -125,18 +128,19 @@ export function changePassword() {
           })
         }
       );
+
       const result = await response.json();
       if (response.status === 200) {
         dispatch({
           type: actionTypes.CHANGE_PASSWORD_SUCCESS,
-          token: result.token
+          token: result.token,
         });
       } else if (response.status === 400) {
         const { errors } = result;
-        errors.forEach(error => {
+        errors.forEach((error) => {
           dispatch(
             serverValidation({
-              status: error
+              status: error,
             })
           );
         });
@@ -146,40 +150,40 @@ export function changePassword() {
     } catch (error) {
       dispatch({
         type: actionTypes.CHANGE_PASSWORD_FAILED,
-        payload: { error }
+        payload: { error },
       });
     }
   };
 }
 
 export function requestPassChange() {
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     const { email } = getState().auth;
     dispatch({ type: actionTypes.REQUEST_PASS_CHANGE_STARTED });
     return fetch('/requestpasschange', {
       method: 'post',
-      body: JSON.stringify({ email })
+      body: JSON.stringify({ email }),
     })
-      .then(response => {
+      .then((response) => {
         if (httpStatus.serverValidationRange({ status: response.status })) {
           dispatch(
             serverValidation({
-              status: response.status
+              status: response.status,
             })
           );
         } else if (response.status === 200) {
           dispatch({
-            type: actionTypes.REQUEST_PASS_CHANGE_SUCCESS
+            type: actionTypes.REQUEST_PASS_CHANGE_SUCCESS,
           });
         } else {
           throw new Error('RequestChange password failed');
         }
       })
       .then(() => dispatch({ type: actionTypes.REQUEST_PASS_CHANGE_SUCCESS }))
-      .catch(err =>
+      .catch((err) =>
         dispatch({
           type: actionTypes.REQUEST_PASS_CHANGE_FAILED,
-          payload: { error: err }
+          payload: { error: err },
         })
       );
   };
@@ -189,5 +193,6 @@ export function getTokenFromUrl({ token }) {
   return {
     type: actionTypes.GOT_TOKEN_FROM_URL,
     token
+
   };
 }

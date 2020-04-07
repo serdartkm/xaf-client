@@ -11,11 +11,11 @@ export default function ListView() {
   const state = useSelector(state => state);
   const { createObject } = useCrud();
   const { objectName } = params;
-  const { list, propNames } = state;
-  debugger;
+  const { appName } = state.crud.nav;
+
   useEffect(() => {
     if (objectName) {
-      dispatch(fetchList({ objectName }));
+      dispatch(fetchList({ objectName, appName }));
     }
   }, [objectName]);
   return (
@@ -25,7 +25,7 @@ export default function ListView() {
       </Link>
       {objectName}
       <div className='table'>
-        <Table list={list} objectName={objectName} propNames={propNames} />
+        <Table list={[]} objectName={objectName} propNames={[]} />
       </div>
     </div>
   );
