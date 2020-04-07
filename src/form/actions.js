@@ -11,22 +11,22 @@ export function clientValidation({ validationType, value, state }) {
   switch (validationType) {
     case constValTypes.EMAIL_FORMAT_VALIDATION:
       validation = validations.validateEmailConstraint({
-        email: value
+        email: value,
       });
       break;
     case constValTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION:
       validation = validations.validateEmailOrUsername({
-        value
+        value,
       });
       break;
     case constValTypes.PASSWORD_FORMAT_VALIDATION:
       validation = validations.validatePasswordConstraint({
-        password: value
+        password: value,
       });
       break;
     case constValTypes.USERNAME_FORMAT_VALIDATION:
       validation = validations.validateUserNameConstraint({
-        username: value
+        username: value,
       });
       break;
     case constValTypes.EMPTY_STRING_VALIDATION:
@@ -53,6 +53,15 @@ export function resetInputValidationState({ validationType }) {
 export function incInputCount() {
   return { type: actionTypes.INC_INPUT_COUTN };
 }
+
+// export function serverValidations(messageStatuses) {
+//   return messageStatuses.map((status) => {
+//     return {
+//       ...serverValidation(status),
+//     };
+//   });
+// }
+
 export function serverValidation({ status = 0 }) {
   debugger;
   switch (status) {
@@ -62,35 +71,35 @@ export function serverValidation({ status = 0 }) {
         type: actionTypes.SERVER_VALIDATION,
         validationType: validationTypes.INVALID_CREDENTIALS,
         message: validationMessages.INVALID_CREDENTIALS,
-        validationState: validationStates.INVALID
+        validationState: validationStates.INVALID,
       };
     case httpStatus.emailInvalid:
       return {
         type: actionTypes.SERVER_VALIDATION,
         validationType: validationTypes.EMAIL_FORMAT_VALIDATION,
         message: validationMessages.INVALID_EMAIL,
-        validationState: validationStates.INVALID
+        validationState: validationStates.INVALID,
       };
     case httpStatus.passwordInvalid:
       return {
         type: actionTypes.SERVER_VALIDATION,
         validationType: validationTypes.PASSWORD_FORMAT_VALIDATION,
         message: validationMessages.INVALID_PASSWORD,
-        validationState: validationStates.INVALID
+        validationState: validationStates.INVALID,
       };
     case httpStatus.usernameInvalid:
       return {
         type: actionTypes.SERVER_VALIDATION,
         validationType: validationTypes.USERNAME_FORMAT_VALIDATION,
         message: validationMessages.INVALID_USERNAME,
-        validationState: validationStates.INVALID
+        validationState: validationStates.INVALID,
       };
     case httpStatus.emailIsRegistered:
       return {
         type: actionTypes.SERVER_VALIDATION,
         validationType: validationTypes.REGISTERED_EMAIL,
         message: validationMessages.REGISTERED_EMAIL,
-        validationState: validationStates.INVALID
+        validationState: validationStates.INVALID,
       };
     case httpStatus.emailIsNotRegistered:
       debugger;
@@ -98,35 +107,35 @@ export function serverValidation({ status = 0 }) {
         type: actionTypes.SERVER_VALIDATION,
         validationType: validationTypes.EMAIL_NOT_REGISTERED,
         message: validationMessages.EMAIL_NOT_REGISTERED,
-        validationState: validationStates.INVALID
+        validationState: validationStates.INVALID,
       };
     case httpStatus.usernameIsTaken:
       return {
         type: actionTypes.SERVER_VALIDATION,
         validationType: validationTypes.USERNAME_TAKEN,
         message: validationMessages.USERNAME_TAKEN,
-        validationState: validationStates.INVALID
+        validationState: validationStates.INVALID,
       };
     case httpStatus.emptyStringNotValid:
       return {
         type: actionTypes.SERVER_VALIDATION,
         validationType: validationTypes.EMPTY_STRING_VALIDATION,
         message: validationMessages.INVALID_EMPTY_STRING,
-        validationState: validationStates.INVALID
+        validationState: validationStates.INVALID,
       };
     case httpStatus.emailorusernameNotValid:
       return {
         type: actionTypes.SERVER_VALIDATION,
         validationType: validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION,
         message: validationMessages.INVALID_USERNAME_OR_EMAIL,
-        validationState: validationStates.INVALID
+        validationState: validationStates.INVALID,
       };
     case httpStatus.usernameIsNotRegistered:
       return {
         type: actionTypes.SERVER_VALIDATION,
         validationType: validationTypes.USERNAME_NOT_REGISTERED,
         message: validationMessages.USERNAME_NOT_REGISTERED,
-        validationState: validationStates.INVALID
+        validationState: validationStates.INVALID,
       };
     default:
       return null;
