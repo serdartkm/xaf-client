@@ -17,7 +17,7 @@ export default function CrudSideNav({
   const dispatch = useDispatch();
   const state = useSelector(state => state);
   const { navigations, loading } = state.crud.nav;
-  debugger;
+
   function handleFetchNavigation() {
     dispatch(fetchNavigations({ appName }));
   }
@@ -35,7 +35,7 @@ export default function CrudSideNav({
         <div>Loading</div>
       ) : (
         navigations.map((nav, i) => {
-          debugger;
+       
           return (
             <NavItem key={i}>
           
