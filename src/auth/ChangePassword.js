@@ -35,8 +35,6 @@ export default function ChangePassword() {
             validationTypes={[
               validationTypes.USERNAME_OR_EMAIL_FORMAT_VALIDATION,
               validationTypes.INVALID_CREDENTIALS,
-              validationTypes.EMAIL_NOT_REGISTERED,
-              validationTypes.USERNAME_NOT_REGISTERED
             ]}
           />
         )}
