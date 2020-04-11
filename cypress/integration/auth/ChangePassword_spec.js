@@ -11,6 +11,7 @@ describe('ChangePassword', () => {
       }).as('changepassSuccess');
       cy.visit('http://localhost:3000/auth/changepassword?token=1234');
     });
+
     it('passwordDoNotMatch client', () => {
       cy.get('[data-testid=password]')
         .type('Dragonfly200!')
@@ -30,9 +31,12 @@ describe('ChangePassword', () => {
         .get('[data-testid=message-password]')
         .contains(validationMessages.INVALID_PASSWORD);
     });
-    it.only('tokenExpired client', () => {});
+    it.only('invalidtoken server', () => {});
     it('passwordDoNotMatch 412 server', () => {});
     it('passwordInvalid 406 server', () => {});
     it('tokenExpired 413 server', () => {});
   });
+  describe('change password with emailorusername and password',()=>{
+
+  })
 });
