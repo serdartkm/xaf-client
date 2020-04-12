@@ -7,7 +7,7 @@ describe('Signup', () => {
       url:
         'http://localhost:8000/auth/signup?password=1234!&email=registered@gmail.com&username=tkmhouse',
       status: 400,
-      response: { errors: ['406'] }
+      response: { errors: ['406'] },
     }).as('passwordInvalid');
 
     cy.visit('http://localhost:3000');
@@ -19,7 +19,7 @@ describe('Signup', () => {
     cy.route({
       method: 'post',
       url: 'http://localhost:8000/auth/signup',
-      response: { token: 123 }
+      response: { token: 123 },
     }).as('success');
     cy.visit('http://localhost:3000/auth/signup');
     cy.get('[data-testid=username]')
@@ -61,7 +61,7 @@ describe('Signup', () => {
       method: 'POST',
       url: 'http://localhost:8000/auth/signup',
       status: 400,
-      response: { errors: ['402'] }
+      response: { errors: ['402'] },
     }).as('usernameIsTaken');
     cy.get('[data-testid=username]')
       .type('takenname')
@@ -80,7 +80,7 @@ describe('Signup', () => {
     cy.route({
       url: 'http://localhost:8000/auth/signup',
       status: 400,
-      response: { errors: ['403'] }
+      response: { errors: ['403'] },
     }).as('emailIsRegistered');
     cy.get('[data-testid=username]')
       .type('takenname')
@@ -90,6 +90,7 @@ describe('Signup', () => {
       .type('DragonflyRRR!1977!')
       .get('[data-testid=signup-btn]')
       .click();
+
     cy.get('[data-testid=message-email]').contains(
       validationMessages.REGISTERED_EMAIL
     );
@@ -99,7 +100,7 @@ describe('Signup', () => {
     cy.route({
       url: 'http://localhost:8000/auth/signup',
       status: 400,
-      response: { errors: ['405'] }
+      response: { errors: ['405'] },
     }).as('usernameInvalid');
     cy.get('[data-testid=username]')
       .type('1234')
@@ -118,7 +119,7 @@ describe('Signup', () => {
     cy.route({
       url: 'http://localhost:8000/auth/signup',
       status: 400,
-      response: { errors: ['405'] }
+      response: { errors: ['405'] },
     }).as('usernameInvalid');
     cy.get('[data-testid=username]')
       .type('tkmhouse')
@@ -137,7 +138,7 @@ describe('Signup', () => {
     cy.route({
       url: 'http://localhost:8000/auth/signup',
       status: 400,
-      response: { errors: ['407'] }
+      response: { errors: ['407'] },
     }).as('emailInvalid');
     cy.get('[data-testid=username]')
       .type('tkmhouse')

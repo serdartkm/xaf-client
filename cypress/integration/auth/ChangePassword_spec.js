@@ -12,6 +12,7 @@ describe('ChangePassword', () => {
       }).as('changepassSuccess');
       cy.visit('http://localhost:3000/auth/changepassword?token=123');
     });
+
     it('passwordDoNotMatch client', () => {
       cy.get('[data-testid=password]').type('Dragonfly200!').blur();
       cy.get('[data-testid=confirm]').type('Dragonfly200!_').blur();
@@ -93,5 +94,9 @@ describe('ChangePassword', () => {
         .get('[data-testid=message-emailorusername]')
         .contains(validationMessages.INVALID_USERNAME_OR_EMAIL);
     });
+
   });
+  describe('change password with emailorusername and password',()=>{
+
+  })
 });
