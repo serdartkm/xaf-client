@@ -1,14 +1,13 @@
 import React from 'react';
 import useAuth from './useAuth';
+
 export default function AuthSuccess() {
   const { state } = useAuth();
-  if (state.email !== '')
-    return <div data-testid="welcome">Welcome, {state.email}</div>;
+
   return (
-    <div data-testid="welcome">
-      <h3>
-       Welcome, {state.emailorusername}
-      </h3>
+    <div data-testid='welcome' style={{ backgroundColor: 'yellow' }}>
+      <div>{state.successMessage}</div>
+      {state.email || state.emailorusername}
     </div>
   );
 }

@@ -1,10 +1,10 @@
 import validationMessages from '../../../src/form/validationMessages';
+import authMessages from '../../../src/auth/authMessages';
 describe('Signup e2e', () => {
-  before(() => {
-    cy.task('seed:signup', {});
-  });
+
 
   it('success', () => {
+    cy.task('seed:delete', {});
     cy.visit('http://localhost:3000/auth/signup');
     cy.get('[data-testid=username]').type('lionardo');
     cy.get('[data-testid=email]').type('lionardo@gmail.com');
@@ -12,10 +12,17 @@ describe('Signup e2e', () => {
       .type('Dragonfly1978.')
       .get('[data-testid=signup-btn]')
       .click();
-    cy.get('[data-testid=welcome]').contains('Welcome, lionardo@gmail.com');
+    cy.get('[data-testid=welcome]').contains(
+      authMessages.SIGNUP_SUCCESS_MESSAGE
+    );
   });
 
   it('username is taken, email is registered', () => {
+    cy.task('seed:user', {
+      email: 'lionardo@gmail.com',
+      username: 'lionardo',
+      password: 'Dragonfly1978.',
+    });
     cy.visit('http://localhost:3000/auth/signup');
     cy.get('[data-testid=username]').type('lionardo');
     cy.get('[data-testid=email]').type('lionardo@gmail.com');

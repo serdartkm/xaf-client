@@ -1,4 +1,5 @@
 import validationMessages from '../../../src/form/validationMessages';
+import authMessages from '../../../src/auth/authMessages';
 describe('Login e2e', () => {
   beforeEach(() => {
     cy.task('seed:login', {
@@ -13,6 +14,9 @@ describe('Login e2e', () => {
     cy.get('[data-testid=emailOrUsername]').type('test@gmail.com');
     cy.get('[data-testid=password]').type('Dragonfly1922!!');
     cy.get('[data-testid=login-btn]').click();
+    cy.get('[data-testid=welcome]').contains(
+      authMessages.LOGIN_SUCCESS_MESSAGE
+    );
   });
 
   it('invalid credentials(wrong email) provided', () => {

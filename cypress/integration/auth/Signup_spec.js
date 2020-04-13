@@ -1,4 +1,5 @@
 import validationMessages from '../../../src/form/validationMessages';
+import authMessages from '../../../src/auth/authMessages';
 describe('Signup', () => {
   beforeEach(() => {
     cy.server();
@@ -31,7 +32,9 @@ describe('Signup', () => {
       .blur()
       .get('[data-testid=signup-btn]')
       .click();
-    cy.get('[data-testid=welcome]').contains('Welcome, tkmhousenew@gmail.com');
+    cy.get('[data-testid=welcome]').contains(
+      authMessages.SIGNUP_SUCCESS_MESSAGE
+    );
   });
   it('invalid username client', () => {
     cy.get('[data-testid=username]')

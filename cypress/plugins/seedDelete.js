@@ -6,11 +6,11 @@ const client = new MongoClient(url, {
   useNewUrlParser: true,
 });
 
-module.exports = async function seedSignup() {
+module.exports = async function seedDelete() {
   try {
     const clnt = await client.connect();
-    const database = clnt.db('auth');
-    const collection = database.collection('users');
+    const database = await clnt.db('auth');
+    const collection = await database.collection('users');
     const result = await collection.deleteMany();
 
     return result;

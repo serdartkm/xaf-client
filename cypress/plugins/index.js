@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 const seedLogin = require('./seedLogin');
-const seedSignup = require('./seedSignup');
+const seedDelete = require('./seedDelete');
+const seedUser = require('./seedUser');
 /// <reference types="cypress" />
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
@@ -26,9 +27,11 @@ module.exports = (on, config) => {
     'seed:login': ({ email, username, password }) => {
       return seedLogin({ email, username, password });
     },
-
-    'seed:signup': () => {
-      return seedSignup();
+    'seed:user': ({ email, username, password }) => {
+      return seedUser({ email, username, password });
+    },
+    'seed:delete': () => {
+      return seedDelete();
     },
   });
 };

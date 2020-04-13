@@ -1,4 +1,5 @@
 import actionTypes from './actionType';
+import authMessage from './authMessages';
 export const initState = {
   email: '',
   password: '',
@@ -27,7 +28,7 @@ export default function reducer(state = initState, action) {
         token: action.token,
         isLoggedIn: true,
         password: '',
-        successMessage: 'Welcome, ',
+        successMessage: authMessage.LOGIN_SUCCESS_MESSAGE,
       };
     case actionTypes.LOGIN_FAILED:
       return { ...state, loading: false, error: action.payload.error };
@@ -41,7 +42,7 @@ export default function reducer(state = initState, action) {
         isLoggedIn: true,
         token: action.token,
         password: '',
-        successMessage: 'Welcome',
+        successMessage: authMessage.SIGNUP_SUCCESS_MESSAGE,
       };
     case actionTypes.SIGNUP_FAILED:
       return { ...state, loading: false, error: action.payload.error };
@@ -53,14 +54,19 @@ export default function reducer(state = initState, action) {
         success: true,
         loading: false,
         isPasswordChanged: true,
-        successMessage: 'Password changed successfully',
+        successMessage: authMessage.PASSWORD_CHANGE_SUCCESS_MESSAGE,
       };
     case actionTypes.CHANGE_PASSWORD_FAILED:
       return { ...state, loading: false, error: action.error };
     case actionTypes.REQUEST_PASS_CHANGE_STARTED:
       return { ...state, loading: true };
     case actionTypes.REQUEST_PASS_CHANGE_SUCCESS:
-      return { ...state, loading: false, success: true };
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        successMessage: authMessage.FORGOT_PASSWORD_SUCCESS_MESSAGE,
+      };
     case actionTypes.REQUEST_PASS_CHANGE_FAILED:
       return { ...state, loading: false, error: action.payload.error };
     case actionTypes.GOT_TOKEN_FROM_URL:
