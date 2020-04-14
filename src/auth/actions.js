@@ -162,35 +162,50 @@ export function changePassword() {
 }
 
 export function requestPassChange() {
-  return function (dispatch, getState) {
-    const { email } = getState().auth;
-    dispatch({ type: actionTypes.REQUEST_PASS_CHANGE_STARTED });
-    return fetch('/requestpasschange', {
-      method: 'post',
-      body: JSON.stringify({ email }),
-    })
-      .then((response) => {
-        if (httpStatus.serverValidationRange({ status: response.status })) {
+  debugger;
+  return async function (dispatch, getState) {
+    try {
+      dispatch({ type: actionTypes.REQUEST_PASS_CHANGE_STARTED });
+      const { email } = getState().auth;
+      const response = await fetch(
+        `${process.env.REACT_APP_XAF_SERVER_URL}/auth/requestpasschange`,
+        {
+          method: 'post',
+          body: JSON.stringify({ email }),
+        }
+      );
+      const result = await response.json();
+      if (response.status === 200) {
+        debugger;
+        dispatch({
+          type: actionTypes.REQUEST_PASS_CHANGE_SUCCESS,
+        });
+      } else if (response.status === 400) {
+        const { errors } = result;
+        errors.forEach((error) => {
           dispatch(
             serverValidation({
-              status: response.status,
+              status: error,
             })
           );
-        } else if (response.status === 200) {
-          dispatch({
-            type: actionTypes.REQUEST_PASS_CHANGE_SUCCESS,
-          });
-        } else {
-          throw new Error('RequestChange password failed');
-        }
-      })
-      .then(() => dispatch({ type: actionTypes.REQUEST_PASS_CHANGE_SUCCESS }))
-      .catch((err) =>
+        });
+      } else if (response.status === 500) {
+        const { error } = result;
+        debugger;
         dispatch({
           type: actionTypes.REQUEST_PASS_CHANGE_FAILED,
-          payload: { error: err },
-        })
-      );
+          error: error,
+        });
+      } else {
+        throw new Error('Changing password failed');
+      }
+    } catch (error) {
+      debugger;
+      dispatch({
+        type: actionTypes.REQUEST_PASS_CHANGE_FAILED,
+        payload: { error },
+      });
+    }
   };
 }
 

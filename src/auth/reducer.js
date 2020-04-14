@@ -13,6 +13,7 @@ export const initState = {
   token: null,
   isLoggedIn: false,
   isPasswordChanged: false,
+  passChangeRequested: false,
 };
 export default function reducer(state = initState, action) {
   switch (action.type) {
@@ -66,6 +67,7 @@ export default function reducer(state = initState, action) {
         loading: false,
         success: true,
         successMessage: authMessage.FORGOT_PASSWORD_SUCCESS_MESSAGE,
+        passChangeRequested: true,
       };
     case actionTypes.REQUEST_PASS_CHANGE_FAILED:
       return { ...state, loading: false, error: action.payload.error };

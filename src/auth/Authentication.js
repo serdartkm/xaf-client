@@ -17,34 +17,38 @@ export default function Authentication({ children, sidebar }) {
     handleChangePass,
     handleLogin,
     handleRequestPassChange,
-    handleSignup
+    handleSignup,
   } = useAuth();
   const history = useHistory();
   useEffect(() => {
-    if (state.isLoggedIn || state.isPasswordChanged) {
+    if (
+      state.isLoggedIn ||
+      state.isPasswordChanged ||
+      state.passChangeRequested
+    ) {
       history.push('/auth/authsuccess');
     }
-  }, [state.isLoggedIn, state.isPasswordChanged]);
+  }, [state.isLoggedIn, state.isPasswordChanged, state.passChangeRequested]);
 
   return (
-    <Suspense fallback={<div className="loading">Loading...</div>}>
+    <Suspense fallback={<div className='loading'>Loading...</div>}>
       <Switch>
-        <Route path="/auth/login">
+        <Route path='/auth/login'>
           <Login />
         </Route>
-        <Route path="/auth/signup">
+        <Route path='/auth/signup'>
           <Signup />
         </Route>
         <Route path={['/auth/changepassword/:token?', '/auth/changepassword']}>
           <ChangePassword />
         </Route>
-        <Route path="/auth/requestpasschange">
+        <Route path='/auth/requestpasschange'>
           <ForgotPassword />
         </Route>
-        <Route path="/auth/profile">
+        <Route path='/auth/profile'>
           <Profile />
         </Route>
-        <Route path="/auth/authsuccess">
+        <Route path='/auth/authsuccess'>
           <AuthSuccess />
         </Route>
       </Switch>

@@ -8,29 +8,30 @@ import './css/style.css';
 import useAuth from './useAuth';
 export default function RequestPassChange() {
   const { handleChange, handleRequestPassChange } = useAuth();
-  const state = useSelector(state => state);
-  const { email } = state.auth;
+  const state = useSelector((state) => state);
+  const { email,error } = state.auth;
   return (
-    <div data-testid="signupform" className="auth-form">
-      <Form formTitle="Forgot Password">
+    <div data-testid='signupform' className='auth-form'>
+      <Form formTitle='Forgot Password' error={error}>
         <Input
           value={email}
-          placeholder="email"
-          name="email"
+          placeholder='email'
+          name='email'
           onChange={handleChange}
-          type="email"
-          id="email"
+          type='email'
+          id='email'
           validationTypes={[
             validationTypes.EMAIL_FORMAT_VALIDATION,
-            validationTypes.EMAIL_NOT_REGISTERED
+            validationTypes.EMAIL_NOT_REGISTERED,
           ]}
         />
         <Button
-          className="btn"
-          type="button"
+          data-testid='requestpasschange-btn'
+          className='btn'
+          type='button'
           onClick={handleRequestPassChange}
-          id="requestpasschange-btn"
-          title="Send"
+          id='requestpasschange-btn'
+          title='Send'
         />
       </Form>
     </div>

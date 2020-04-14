@@ -21,7 +21,7 @@ export default function useAuth() {
     dispatch(actions.changePassword());
   }
   function handleRequestPassChange() {
-    dispatch({ type: actions.requestPassChange() });
+    dispatch(actions.requestPassChange());
   }
 
 

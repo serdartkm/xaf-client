@@ -3,5 +3,5 @@ export default {
   SIGNUP_SUCCESS_MESSAGE: 'Signup was successful !',
   PASSWORD_CHANGE_SUCCESS_MESSAGE: 'Password Changed Successfully !',
   FORGOT_PASSWORD_SUCCESS_MESSAGE:
-    'Request for password reset accepted,look into your mailbox,please !',
+    'Request for password change accepted, look into your mailbox,please !',
 };
