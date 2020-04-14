@@ -215,3 +215,11 @@ export function getTokenFromUrl({ token }) {
     token,
   };
 }
+
+export function setToken({ token }) {
+  return { type: actionTypes.SET_TOKEN, token };
+}
+
+export function logoutAction() {
+  return { type: actionTypes.LOG_OUT };
+}

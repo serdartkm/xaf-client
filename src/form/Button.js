@@ -8,7 +8,7 @@ export default function Button({ onClick, title, disabled, id }) {
       style={{ borderRadius: 2, height: 33 }}
       onClick={onClick}
     >
-      {title}
+       {!disabled ? title: 'Wait...'}
     </button>
   );
 }

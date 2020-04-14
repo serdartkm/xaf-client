@@ -18,6 +18,7 @@ export default function ChangePassword() {
     emailorusername,
     token,
     error,
+    loading
   } = state.auth;
 
   useEffect(() => {
@@ -79,6 +80,7 @@ export default function ChangePassword() {
           validationTypes={[validationTypes.PASSWORDS_MATCH_VALIDATION]}
         />
         <Button
+          disabled={loading}
           type="button"
           id="change-pass-btn"
           data-testid="change-pass-btn"

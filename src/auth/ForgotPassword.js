@@ -9,7 +9,7 @@ import useAuth from './useAuth';
 export default function RequestPassChange() {
   const { handleChange, handleRequestPassChange } = useAuth();
   const state = useSelector((state) => state);
-  const { email,error } = state.auth;
+  const { email, error, loading } = state.auth;
   return (
     <div data-testid='signupform' className='auth-form'>
       <Form formTitle='Forgot Password' error={error}>
@@ -26,6 +26,7 @@ export default function RequestPassChange() {
           ]}
         />
         <Button
+          disabled={loading}
           data-testid='requestpasschange-btn'
           className='btn'
           type='button'

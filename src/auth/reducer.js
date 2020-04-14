@@ -12,7 +12,6 @@ export const initState = {
   emailorusername: '',
   token: null,
   isLoggedIn: false,
-  isPasswordChanged: false,
   passChangeRequested: false,
 };
 export default function reducer(state = initState, action) {
@@ -54,7 +53,7 @@ export default function reducer(state = initState, action) {
         ...state,
         success: true,
         loading: false,
-        isPasswordChanged: true,
+        isLoggedIn: true,
         successMessage: authMessage.PASSWORD_CHANGE_SUCCESS_MESSAGE,
       };
     case actionTypes.CHANGE_PASSWORD_FAILED:
@@ -73,6 +72,10 @@ export default function reducer(state = initState, action) {
       return { ...state, loading: false, error: action.payload.error };
     case actionTypes.GOT_TOKEN_FROM_URL:
       return { ...state, token: action.token };
+    case actionTypes.SET_TOKEN:
+      return { ...state, token: action.token };
+    case actionTypes.LOG_OUT:
+      return { ...initState };
     default:
       return state;
   }

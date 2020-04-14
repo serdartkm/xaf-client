@@ -11,7 +11,10 @@ describe('Login', () => {
   it('Login Success', () => {
     cy.route({
       url: 'http://localhost:8000/auth/login',
-      response: { token: '123' },
+      response: {
+        token:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlOTU2ZGU2NTUyNmJhM2JkYzdjNDg4YSIsIm5hbWUiOiJ3ZWJhcGlzLmdpdGh1YkBnbWFpbC5jb20iLCJpYXQiOjE1ODY4NjQzNzksImV4cCI6MTYxODQyMTMwNX0.6ija-jjG0Uva5StvQnZucndLOiUigEoQnd88W_qbEBc',
+      },
     }).as('loginSuccess');
 
     cy.visit('http://localhost:3000');

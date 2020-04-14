@@ -9,7 +9,7 @@ import useAuth from './useAuth';
 export default function Signup() {
   const { handleChange, handleSignup } = useAuth();
   const state = useSelector((state) => state);
-  const { username, password, email, error } = state.auth;
+  const { username, password, email, error,loading } = state.auth;
   return (
     <div data-testid='signupform' className='auth-form'>
       <Form formTitle='Sign up' error={error}>
@@ -52,6 +52,7 @@ export default function Signup() {
           onClick={handleSignup}
           id='signup-btn'
           title='Signup'
+          disabled={loading}
         />
       </Form>
     </div>

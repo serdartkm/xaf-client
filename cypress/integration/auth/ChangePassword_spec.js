@@ -10,7 +10,9 @@ describe('ChangePassword', () => {
         status: 400,
         response: { errors: ['412'] },
       }).as('changepassSuccess');
-      cy.visit('http://localhost:3000/auth/changepassword?token=123');
+      cy.visit(
+        'http://localhost:3000/auth/changepassword?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlOTU2ZGU2NTUyNmJhM2JkYzdjNDg4YSIsIm5hbWUiOiJ3ZWJhcGlzLmdpdGh1YkBnbWFpbC5jb20iLCJpYXQiOjE1ODY4NjQzNzksImV4cCI6MTYxODQyMTMwNX0.6ija-jjG0Uva5StvQnZucndLOiUigEoQnd88W_qbEBc'
+      );
     });
 
     it('passwordDoNotMatch client', () => {
@@ -41,7 +43,9 @@ describe('ChangePassword', () => {
         status: 400,
         response: { errors: ['406'] },
       }).as('changepassSuccess');
-      cy.visit('http://localhost:3000/auth/changepassword?token=123');
+      cy.visit(
+        'http://localhost:3000/auth/changepassword?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlOTU2ZGU2NTUyNmJhM2JkYzdjNDg4YSIsIm5hbWUiOiJ3ZWJhcGlzLmdpdGh1YkBnbWFpbC5jb20iLCJpYXQiOjE1ODY4NjQzNzksImV4cCI6MTYxODQyMTMwNX0.6ija-jjG0Uva5StvQnZucndLOiUigEoQnd88W_qbEBc'
+      );
       cy.get('[data-testid=password]').type('Dragos1999!_').blur();
       cy.get('[data-testid=confirm]').type('Dragos1999!_').blur();
       cy.get('[data-testid=change-pass-btn]').click();
@@ -54,7 +58,9 @@ describe('ChangePassword', () => {
         status: 500,
         response: { error: { message: 'Token expired' } },
       }).as('changepassSuccess');
-      cy.visit('http://localhost:3000/auth/changepassword?token=123');
+      cy.visit(
+        'http://localhost:3000/auth/changepassword?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlOTU2ZGU2NTUyNmJhM2JkYzdjNDg4YSIsIm5hbWUiOiJ3ZWJhcGlzLmdpdGh1YkBnbWFpbC5jb20iLCJpYXQiOjE1ODY4NjQzNzksImV4cCI6MTYxODQyMTMwNX0.6ija-jjG0Uva5StvQnZucndLOiUigEoQnd88W_qbEBc'
+      );
       cy.get('[data-testid=password]').type('Dragos1999!_').blur();
       cy.get('[data-testid=confirm]').type('Dragos1999!_').blur();
       cy.get('[data-testid=change-pass-btn]').click();
@@ -94,9 +100,6 @@ describe('ChangePassword', () => {
         .get('[data-testid=message-emailorusername]')
         .contains(validationMessages.INVALID_USERNAME_OR_EMAIL);
     });
-
   });
-  describe('change password with emailorusername and password',()=>{
-
-  })
+  describe('change password with emailorusername and password', () => {});
 });
